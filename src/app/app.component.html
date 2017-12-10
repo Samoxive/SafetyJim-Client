@@ -1,0 +1,18 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<mat-toolbar color="primary" [class.mat-elevation-z6]="true">
+    <mat-toolbar-row>
+        <button mat-button routerLink="/" routerLinkActive="active">Safety Jim</button>
+        <button mat-button [matMenuTriggerFor]="menu" [disabled]="!isLogged">
+            Guilds
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngFor="let guild of guilds" (click)="onGuildClick(guild)">
+                <img class="guildIcon" [src]="guild.avatarUrl">
+                <span>{{ guild.name }}</span>
+            </button>
+        </mat-menu>
+        <span class="spacer"></span>
+        <button mat-button [disabled]="isLogged" routerLink="/login" routerLinkActive="false">Login</button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>
