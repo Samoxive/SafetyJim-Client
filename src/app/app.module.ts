@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginService } from './login.service';
 import { GuildService } from './guild.service';
 import { GuildComponent } from './guild/guild.component';
+import { LoggedUserComponent } from './logged-user/logged-user.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -28,7 +29,8 @@ const routes: Routes = [
         AppComponent,
         HomeComponent,
         LoginComponent,
-        GuildComponent
+        GuildComponent,
+        LoggedUserComponent
     ],
     imports: [
         BrowserModule,
