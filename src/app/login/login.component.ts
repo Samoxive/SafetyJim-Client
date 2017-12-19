@@ -32,12 +32,12 @@ export class LoginComponent implements OnInit {
             const code = (new URL(url)).searchParams.get('code');
             const tokenPromise = this.http.get(environment.apiUrl + '/login?code=' + code)
                                           .toPromise();
-
+            this.router.navigateByUrl('/');
             try {
                 const token = (await tokenPromise).toString();
                 this.loginService.login(token);
-            } finally {
-                this.router.navigateByUrl('/');
+            } catch (e) {
+
             }
         }
     }
