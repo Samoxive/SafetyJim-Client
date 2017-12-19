@@ -1,0 +1,12 @@
+<button *ngIf="!isLogged" mat-button routerLink="/login">Login</button>
+<span *ngIf="isLogged">
+    <button mat-button [matMenuTriggerFor]="userMenu">
+        <img class="guildIcon" src="https://cdn.discordapp.com/icons/145457131640848384/c859f45bcf9f2adf0e09fe3070149e9a.png">
+        <span>Samoxive</span>
+    </button>
+    <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="logOut()">
+            Log out
+        </button>
+    </mat-menu>
+</span>
