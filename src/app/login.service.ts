@@ -16,6 +16,12 @@ export class LoginService {
         this.eventSubject.next(true);
     }
 
+    public logout() {
+        localStorage.removeItem('token');
+        this.isLogged = false;
+        this.eventSubject.next(false);
+    }
+
     public isLoggedIn(): boolean {
         return this.isLogged;
     }
