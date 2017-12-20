@@ -2,6 +2,14 @@
 @import '~normalize.css/normalize.css';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+.code {
+  background-color: #454d5d;
+  background-clip: border-box;
+  border-radius: .1rem;
+  font-family: monospace;
+  color: #fff;
+}
+
 .signal {
     border: 5px solid #333;
     border-radius: 30px;
