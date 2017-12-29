@@ -15,7 +15,8 @@ import { MatButtonModule,
          MatExpansionModule,
          MatTooltipModule,
          MatGridListModule,
-         MatListModule } from '@angular/material';
+         MatListModule,
+         MatTabsModule } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 
@@ -57,6 +58,7 @@ const routes: Routes = [
         MatTooltipModule,
         MatGridListModule,
         MatListModule,
+        MatTabsModule,
         HttpClientModule
     ],
     providers: [
