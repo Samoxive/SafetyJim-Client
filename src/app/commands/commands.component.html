@@ -1,51 +1,36 @@
-<mat-accordion>
-    <mat-expansion-panel matTooltip="Bans specified person">
+<mat-accordion *ngFor="let command of commands" class="commands">
+    <mat-expansion-panel matTooltip="{{ command.tooltip }}">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                Ban
+                {{ command.name }}
             </mat-panel-title>
             <mat-panel-description>
-                -mod ban @Samoxive Spam | 3 days
+                {{ command.quick }}
             </mat-panel-description>
         </mat-expansion-panel-header>
 
-
-        <div style="display: flex">
-            <div style="flex-grow: 1; flex-basis: 0;">
-                <h3>Usage</h3>
+        <mat-tab-group>
+            <mat-tab label="Usages">
                 <mat-list>
-                    <mat-list-item>
-                        -mod ban @user
-                    </mat-list-item>
-                    <mat-list-item>
-                        -mod ban @user ban reason
-                    </mat-list-item>
-                    <mat-list-item>
-                        -mod ban @user ban reason | ban time
+                    <mat-list-item *ngFor="let usage of command.usages">
+                        {{ usage }}
                     </mat-list-item>
                 </mat-list>
-            </div>
-            <div style="flex-grow: 1; flex-basis: 0;">
-                <h3>Examples</h3>
+            </mat-tab>
+            <mat-tab label="Examples">
                 <mat-list>
-                    <mat-list-item>
-                        -mod ban @Samoxive#1234
-                    </mat-list-item>
-                    <mat-list-item>
-                        -mod ban @Samoxive#1234 Spam
-                    </mat-list-item>
-                    <mat-list-item>
-                        -mod ban @Samoxive#1234 Spam | 3 days
+                    <mat-list-item *ngFor="let example of command.examples">
+                        {{ example }}
                     </mat-list-item>
                 </mat-list>
-            </div>
-            <div style="flex-grow: 1; flex-basis: 0;">
-                <p>
-                        Cat ipsum dolor sit amet, intrigued by the shower, and chew foot and has closed eyes but still sees you.
-                        Stares at human while pushing stuff off a table where is my slave?
-                        I'm getting hungry man running from cops stops to pet cats, goes to jail and kick up litter and put toy mouse in food bowl run out of litter box at full speed for refuse to drink water except out of someone's glass. My slave human didn't give me any food so i pooped on the floor peer out window, chatter at birds, lure them to mouth so if it fits, i sits pounce on unsuspecting person for leave hair everywhere find a way to fit in tiny box. Decide to want nothing to do with my owner today i am the best litter kitter kitty litty little kitten big roar roar feed me. Roll over and sun my belly poop in the plant pot and hiding behind the couch until lured out by a feathery toy, but play riveting piece on synthesizer keyboard so annoy owner until he gives you food say meow repeatedly until belly rubs, feels good. Nap all day push your water glass on the floor i just saw other cats inside the house and nobody ask me before using my litter box cat is love, cat is life paw at beetle and eat it before it gets away. Curl into a furry donut meowing chowing and wowing make meme, make cute face purr for no reason sleep on dog bed, force dog to sleep on floor. Swat turds around the house purr for no reason.
-                </p>
-            </div>
-        </div>
+            </mat-tab>
+            <mat-tab label="Description">
+                <mat-list>
+                    <mat-list-item>
+                        {{ command.description }}
+                    </mat-list-item>
+                </mat-list>
+            </mat-tab>
+        </mat-tab-group>
     </mat-expansion-panel>
 </mat-accordion>
