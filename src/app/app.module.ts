@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { CookieModule } from 'ngx-cookie';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -26,12 +25,15 @@ import { GuildService } from './guild.service';
 import { GuildComponent } from './guild/guild.component';
 import { LoggedUserComponent } from './logged-user/logged-user.component';
 import { CommandsComponent } from './commands/commands.component';
+import { GuildHomeComponent } from './guild-home/guild-home.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'commands', component: CommandsComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'guild/:id', component: GuildComponent }
+    { path: 'guild/:id', component: GuildComponent, children: [
+        { path: '', component:  GuildHomeComponent }
+    ]}
 ];
 
 
@@ -41,12 +43,12 @@ const routes: Routes = [
         HomeComponent,
         LoginComponent,
         GuildComponent,
+        GuildHomeComponent,
         LoggedUserComponent,
         CommandsComponent
     ],
     imports: [
         BrowserModule,
-        CookieModule.forRoot(),
         RouterModule.forRoot(routes),
         BrowserAnimationsModule,
         MatButtonModule,
