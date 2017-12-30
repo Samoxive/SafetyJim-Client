@@ -8,8 +8,9 @@ import { environment } from '../environments/environment';
 
 @Injectable()
 export class GuildService {
-    private subscription: Subscription;
+    private guildsObservable: Observable<any>;
     private guilds: Guild[] = [];
+    private fetchingGuilds = false;
 
     constructor(private http: HttpClient,
                 private loginService: LoginService) {}
@@ -17,9 +18,16 @@ export class GuildService {
     public fetchGuilds(): Promise<Guild[]> {
         if (this.loginService.isLoggedIn()) {
             const token = this.loginService.getToken();
-            return this.http.get(environment.apiUrl + '/guilds', { headers: new HttpHeaders().set('token', token) })
-                            .toPromise()
-                            .then((guilds) => this.guilds = guilds as Guild[]);
+            if (this.guildsObservable == null) {
+                this.guildsObservable = this.http.get(environment.apiUrl + '/guilds', { headers: new HttpHeaders().set('token', token) });
+            }
+
+            return new Promise((resolve, reject) => {
+                this.guildsObservable.subscribe((data) => {
+                    this.guilds = data as Guild[];
+                    resolve(this.guilds);
+                });
+            });
         } else {
             return Promise.resolve([]);
         }
