@@ -15,25 +15,27 @@ import { MatButtonModule,
          MatTooltipModule,
          MatGridListModule,
          MatListModule,
-         MatTabsModule } from '@angular/material';
+         MatTabsModule,
+         MatSidenavModule } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { LoginService } from './login.service';
 import { GuildService } from './guild.service';
-import { GuildComponent } from './guild/guild.component';
 import { LoggedUserComponent } from './logged-user/logged-user.component';
 import { CommandsComponent } from './commands/commands.component';
 import { GuildHomeComponent } from './guild-home/guild-home.component';
+import { GuildSettingsComponent } from './guild-settings/guild-settings.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LayoutModule } from '@angular/cdk/layout';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'commands', component: CommandsComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'guild/:id', component: GuildComponent, children: [
-        { path: '', component:  GuildHomeComponent }
-    ]}
+    { path: 'guild/:id', component: GuildHomeComponent },
+    { path: 'guild/:id/settings', component: GuildSettingsComponent }
 ];
 
 
@@ -42,10 +44,10 @@ const routes: Routes = [
         AppComponent,
         HomeComponent,
         LoginComponent,
-        GuildComponent,
         GuildHomeComponent,
         LoggedUserComponent,
-        CommandsComponent
+        CommandsComponent,
+        GuildSettingsComponent
     ],
     imports: [
         BrowserModule,
@@ -61,7 +63,11 @@ const routes: Routes = [
         MatGridListModule,
         MatListModule,
         MatTabsModule,
-        HttpClientModule
+        MatSidenavModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule,
+        LayoutModule
     ],
     providers: [
         LoginService,
