@@ -49,7 +49,7 @@ export class GuildService {
             await this.fetchGuilds();
         }
 
-        const g = this.guilds.filter((guild) => guildId === guild.id)[0]
+        const g = this.guilds.filter((guild) => guildId === guild.id)[0];
         if (g == null) {
             return false;
         } else {
