@@ -3,6 +3,7 @@ import { GuildService } from '../guild.service';
 import { ParamMap } from '@angular/router';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guild } from '../entities/guild';
+import { selectGuildOrRouteIndex } from '../utils/navigation.utils';
 
 @Component({
     selector: 'app-guild-home',
@@ -10,31 +11,18 @@ import { Guild } from '../entities/guild';
     styleUrls: ['./guild-home.component.css']
 })
 export class GuildHomeComponent implements OnInit {
-    public selectedGuild: Guild;
+    public selectedGuild: Guild = null;
     public isGuildSelected = false;
 
     constructor(public guildService: GuildService,
                 private activatedRoute: ActivatedRoute,
-                private router: Router) {
-        this.changeSelectedGuild(guildService.selectedGuild);
-        this.guildService.selectedGuildObservable().subscribe((guild) => this.changeSelectedGuild(guild));
-    }
+                private router: Router) {}
 
     async ngOnInit() {
-        this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
-            const guildId = params.get('id');
-            if (guildId == null) {
-                this.router.navigate(['']);
-            } else {
-                this.guildService.selectGuild(guildId).then((success) => {
-                    if (!success) {
-                        this.router.navigate(['']);
-                    } else {
-                        this.changeSelectedGuild(this.guildService.selectedGuild);
-                    }
-                });
-            }
-        });
+        const success = await selectGuildOrRouteIndex(this.router, this.activatedRoute.paramMap, this.guildService);
+        if (success) {
+            this.changeSelectedGuild(this.guildService.selectedGuild);
+        }
     }
 
     private changeSelectedGuild(guild: Guild) {
