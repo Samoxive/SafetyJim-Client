@@ -1,0 +1,18 @@
+<mat-tab-group>
+    <mat-tab label="Guild Message Stats">
+        <div style="margin-top: 8px; margin-left: 8px;">
+            <mat-form-field>
+                <input matInput [matDatepicker]="fromPicker" placeholder="From" [value]="from" (dateChange)="onDateChange($event, 'from')" [matDatepickerFilter]="onValidateDate('from')">
+                <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+                <mat-datepicker #fromPicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [matDatepicker]="toPicker" placeholder="To" [value]="to" (dateChange)="onDateChange($event, 'to')" [matDatepickerFilter]="onValidateDate('to')">
+                <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+                <mat-datepicker #toPicker></mat-datepicker>
+            </mat-form-field>
+            <button mat-button (click)="fetchStats('guildMessages')">Go!</button>
+        </div>
+        <google-chart [data]="data"></google-chart>
+    </mat-tab>
+</mat-tab-group>
