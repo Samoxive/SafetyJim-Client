@@ -16,9 +16,17 @@ import { MatButtonModule,
          MatGridListModule,
          MatListModule,
          MatTabsModule,
-         MatSidenavModule } from '@angular/material';
+         MatSidenavModule,
+         MatDatepickerModule,
+         MatNativeDateModule,
+         MatFormFieldModule,
+         MatInputModule,
+         MatSnackBarModule,
+         MAT_DATE_LOCALE} from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { LoginService } from './login.service';
@@ -29,13 +37,15 @@ import { GuildHomeComponent } from './guild-home/guild-home.component';
 import { GuildSettingsComponent } from './guild-settings/guild-settings.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
+import { GuildStatisticsComponent } from './guild-statistics/guild-statistics.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'commands', component: CommandsComponent },
     { path: 'login', component: LoginComponent },
     { path: 'guild/:id', component: GuildHomeComponent },
-    { path: 'guild/:id/settings', component: GuildSettingsComponent }
+    { path: 'guild/:id/settings', component: GuildSettingsComponent },
+    { path: 'guild/:id/statistics', component: GuildStatisticsComponent }
 ];
 
 
@@ -47,7 +57,8 @@ const routes: Routes = [
         GuildHomeComponent,
         LoggedUserComponent,
         CommandsComponent,
-        GuildSettingsComponent
+        GuildSettingsComponent,
+        GuildStatisticsComponent
     ],
     imports: [
         BrowserModule,
@@ -64,14 +75,21 @@ const routes: Routes = [
         MatListModule,
         MatTabsModule,
         MatSidenavModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule,
         HttpClientModule,
         ReactiveFormsModule,
+        MatSnackBarModule,
         FormsModule,
-        LayoutModule
+        LayoutModule,
+        Ng2GoogleChartsModule
     ],
     providers: [
         LoginService,
-        GuildService
+        GuildService,
+        { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
     ],
     bootstrap: [AppComponent]
 })
