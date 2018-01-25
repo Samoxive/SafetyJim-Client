@@ -46,6 +46,23 @@
             </mat-form-field>
             <button mat-button (click)="fetchStats('guildMessages')">Go!</button>
         </div>
-        <google-chart [data]="data"></google-chart>
+        <google-chart [data]="guildMessageStatsData"></google-chart>
+    </mat-tab>
+    <mat-tab label="Guild Member Stats">
+        <div style="margin-top: 8px; margin-left: 8px;">
+            <mat-form-field>
+                <input matInput [matDatepicker]="fromPicker3" placeholder="From" [value]="from" (dateChange)="onDateChange($event, 'from')"
+                    [matDatepickerFilter]="onValidateDate('from')">
+                <mat-datepicker-toggle matSuffix [for]="fromPicker3"></mat-datepicker-toggle>
+                <mat-datepicker #fromPicker3></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [matDatepicker]="toPicker3" placeholder="To" [value]="to" (dateChange)="onDateChange($event, 'to')" [matDatepickerFilter]="onValidateDate('to')">
+                <mat-datepicker-toggle matSuffix [for]="toPicker3"></mat-datepicker-toggle>
+                <mat-datepicker #toPicker3></mat-datepicker>
+            </mat-form-field>
+            <button mat-button (click)="fetchStats('members')">Go!</button>
+        </div>
+        <google-chart [data]="memberStatsData"></google-chart>
     </mat-tab>
 </mat-tab-group>

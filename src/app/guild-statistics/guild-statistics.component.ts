@@ -12,6 +12,7 @@ import { MatSnackBar, MatDatepickerInputEvent, MatTableDataSource, MatSort } fro
 import { LoginService } from '../login.service';
 import { StatsOverview } from '../entities/stats-overview';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { MemberStats } from '../entities/member-stats';
 
 interface ChartData {
     chartType: string;
@@ -31,13 +32,22 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
     public overviewData = new MatTableDataSource([]);
     public overviewColumns = ['channelName', 'messageCount', 'average'];
 
-    public data: ChartData = {
+    public guildMessageStatsData: ChartData = {
         chartType: 'LineChart',
         dataTable: [
             ['Date', 'Messages per 10 minutes'],
-            ['', 1]
+            [new Date(), 1]
         ],
     };
+
+    public memberStatsData: ChartData = {
+        chartType: 'LineChart',
+        dataTable: [
+            ['Date', 'Total Member Count', 'Online Member Count'],
+            [new Date(), 1, 0]
+        ],
+    };
+
     public labels: String[] = [];
     public to = new Date();
     public from = new Date(this.to.getTime() - (1000 * 60 * 60 * 24)) ;
@@ -79,6 +89,11 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
             this.http.get(url, { params, headers })
                      .subscribe((stats) => this.processOverviewStats(stats as StatsOverview),
                                 (error) => this.handleStatFetchError(error));
+        } else if (type === 'members') {
+            const url = `${environment.apiUrl}/guilds/${this.selectedGuild.id}/memberStats`;
+            this.http.get(url, { params, headers })
+                     .subscribe((stats) => this.processMemberStats(stats as MemberStats),
+                                (error) => this.handleStatFetchError(error));
         } else {
             return;
         }
@@ -107,11 +122,21 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
     }
 
     processSingleStats(stats: Stat[]) {
-        this.data = {
+        this.guildMessageStatsData = {
             chartType: 'LineChart',
             dataTable: [
                 ['Date', 'Messages per 10 minutes'], ...stats.map((stat) => [(new Date(stat.date * 1000)), stat.count])
             ],
+        };
+    }
+
+    processMemberStats(stats: MemberStats) {
+        this.memberStatsData = {
+            chartType: 'LineChart',
+            dataTable: [
+                ['Date', 'Total Member Count', 'Online Member Count'],
+                ...(stats.onlineStats.map((stat, i) => [new Date(stat.date * 1000), stats.totalStats[i].count, stats.onlineStats[i].count]))
+            ]
         };
     }
 
