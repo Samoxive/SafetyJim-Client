@@ -1,15 +1,48 @@
 <mat-tab-group>
+    <mat-tab label="Overview">
+        <div style="margin-top: 8px; margin-left: 8px;">
+            <mat-form-field>
+                <input matInput [matDatepicker]="fromPicker1" placeholder="From" [value]="from" (dateChange)="onDateChange($event, 'from')"
+                    [matDatepickerFilter]="onValidateDate('from')">
+                <mat-datepicker-toggle matSuffix [for]="fromPicker1"></mat-datepicker-toggle>
+                <mat-datepicker #fromPicker1></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [matDatepicker]="toPicker1" placeholder="To" [value]="to" (dateChange)="onDateChange($event, 'to')" [matDatepickerFilter]="onValidateDate('to')">
+                <mat-datepicker-toggle matSuffix [for]="toPicker1"></mat-datepicker-toggle>
+                <mat-datepicker #toPicker1></mat-datepicker>
+            </mat-form-field>
+            <button mat-button (click)="fetchStats('overview')">Go!</button>
+            <mat-table #table [dataSource]="overviewData" matSort>
+                <ng-container matColumnDef="channelName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Channel</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{ element.channelName }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="messageCount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Message Count</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{ element.messageCount }}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="average">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Average Message Count (per 10 minutes)</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{ element.average }}</mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="overviewColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: overviewColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </mat-tab>
     <mat-tab label="Guild Message Stats">
         <div style="margin-top: 8px; margin-left: 8px;">
             <mat-form-field>
-                <input matInput [matDatepicker]="fromPicker" placeholder="From" [value]="from" (dateChange)="onDateChange($event, 'from')" [matDatepickerFilter]="onValidateDate('from')">
-                <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-                <mat-datepicker #fromPicker></mat-datepicker>
+                <input matInput [matDatepicker]="fromPicker2" placeholder="From" [value]="from" (dateChange)="onDateChange($event, 'from')"
+                    [matDatepickerFilter]="onValidateDate('from')">
+                <mat-datepicker-toggle matSuffix [for]="fromPicker2"></mat-datepicker-toggle>
+                <mat-datepicker #fromPicker2></mat-datepicker>
             </mat-form-field>
             <mat-form-field>
-                <input matInput [matDatepicker]="toPicker" placeholder="To" [value]="to" (dateChange)="onDateChange($event, 'to')" [matDatepickerFilter]="onValidateDate('to')">
-                <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-                <mat-datepicker #toPicker></mat-datepicker>
+                <input matInput [matDatepicker]="toPicker2" placeholder="To" [value]="to" (dateChange)="onDateChange($event, 'to')" [matDatepickerFilter]="onValidateDate('to')">
+                <mat-datepicker-toggle matSuffix [for]="toPicker2"></mat-datepicker-toggle>
+                <mat-datepicker #toPicker2></mat-datepicker>
             </mat-form-field>
             <button mat-button (click)="fetchStats('guildMessages')">Go!</button>
         </div>

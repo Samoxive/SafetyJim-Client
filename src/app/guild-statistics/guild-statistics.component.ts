@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { selectGuildOrRouteIndex } from '../utils/navigation.utils';
 import { ParamMap } from '@angular/router';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,8 +8,10 @@ import { Stat } from '../entities/stat';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar, MatDatepickerInputEvent } from '@angular/material';
+import { MatSnackBar, MatDatepickerInputEvent, MatTableDataSource, MatSort } from '@angular/material';
 import { LoginService } from '../login.service';
+import { StatsOverview } from '../entities/stats-overview';
+import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 interface ChartData {
     chartType: string;
@@ -21,9 +23,14 @@ interface ChartData {
     templateUrl: './guild-statistics.component.html',
     styleUrls: ['./guild-statistics.component.css']
 })
-export class GuildStatisticsComponent implements OnInit {
+export class GuildStatisticsComponent implements OnInit, AfterViewInit {
     public selectedGuild: Guild = null;
     public isGuildSelected = false;
+
+    @ViewChild(MatSort) sort: MatSort;
+    public overviewData = new MatTableDataSource([]);
+    public overviewColumns = ['channelName', 'messageCount', 'average'];
+
     public data: ChartData = {
         chartType: 'LineChart',
         dataTable: [
@@ -42,6 +49,10 @@ export class GuildStatisticsComponent implements OnInit {
                 private http: HttpClient,
                 private snackbar: MatSnackBar) {}
 
+    ngAfterViewInit() {
+        this.overviewData.sort = this.sort;
+    }
+
     async ngOnInit() {
         const success = await selectGuildOrRouteIndex(this.router, this.activatedRoute.paramMap, this.guildService);
         if (success) {
@@ -51,34 +62,48 @@ export class GuildStatisticsComponent implements OnInit {
     }
 
     fetchStats(type: string) {
-        let url: string;
-        let params: any;
-        if (type === 'guildMessages') {
-            url = `${environment.apiUrl}/guilds/${this.selectedGuild.id}/messageStats`;
-            params = {
-                from: this.from.getTime(),
-                to: this.to.getTime(),
-            };
-        } else {
-            return;
-        }
-
         const headers = {
             token: this.loginService.getToken()
         };
+        const params = {
+            from: this.from.getTime().toString(),
+            to: this.to.getTime().toString(),
+        };
+        if (type === 'guildMessages') {
+            const url = `${environment.apiUrl}/guilds/${this.selectedGuild.id}/messageStats`;
+            this.http.get(url, { params, headers })
+                     .subscribe((stats) => this.processSingleStats(stats as Stat[]),
+                                this.handleStatFetchError);
+        } else if (type === 'overview') {
+            const url = `${environment.apiUrl}/guilds/${this.selectedGuild.id}/statsOverview`;
+            this.http.get(url, { params, headers })
+                     .subscribe((stats) => this.processOverviewStats(stats as StatsOverview),
+                                (error) => this.handleStatFetchError(error));
+        } else {
+            return;
+        }
+    }
 
-        this.http.get(url, { params, headers })
-                 .subscribe((stats) => this.processSingleStats(stats as Stat[]),
-                            (error) => {
-                if (!(error instanceof HttpErrorResponse)) {
-                    return;
-                }
+    handleStatFetchError(error: any) {
+        if (!(error instanceof HttpErrorResponse)) {
+            return;
+        }
 
-                if (error.status === 418) {
-                    const snackbar = this.snackbar.open('Statistics aren\'t enabled for this server.', 'Okay');
-                    snackbar.onAction().subscribe(() => snackbar.dismiss());
-                }
-        });
+        if (error.status === 418) {
+            const snackbar = this.snackbar.open('Statistics aren\'t enabled for this server.', 'Okay');
+            snackbar.onAction().subscribe(() => snackbar.dismiss());
+        }
+    }
+
+    processOverviewStats(stats: StatsOverview) {
+        const averageDivider = stats.delta / (1000 * 60 * 10);
+        const data = [];
+        for (const channelName of Object.keys(stats.channelStats)) {
+            const messageCount = stats.channelStats[channelName];
+            data.push({ channelName, messageCount, average: messageCount / averageDivider });
+        }
+        this.overviewData = new MatTableDataSource(data);
+        this.overviewData.sort = this.sort;
     }
 
     processSingleStats(stats: Stat[]) {
