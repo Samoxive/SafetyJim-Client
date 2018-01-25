@@ -24,7 +24,8 @@ import { MatButtonModule,
          MatSnackBarModule,
          MAT_DATE_LOCALE,
          MatTableModule,
-         MatSortModule} from '@angular/material';
+         MatSortModule,
+         MatSelectModule} from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 
@@ -86,6 +87,7 @@ const routes: Routes = [
         MatSnackBarModule,
         MatTableModule,
         MatSortModule,
+        MatSelectModule,
         FormsModule,
         LayoutModule,
         Ng2GoogleChartsModule
