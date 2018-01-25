@@ -9,12 +9,12 @@ export async function selectGuildOrRouteIndex(router: Router, paramMap: Observab
         paramMap.subscribe(async (params) => {
             const guildId = params.get('id');
             if (guildId == null) {
-                this.router.navigate(['']);
+                router.navigate(['']);
                 res(false);
             } else {
                 const success = await guildService.selectGuild(guildId);
                 if (!success) {
-                    this.router.navigate(['']);
+                    router.navigate(['']);
                 }
                 res(success);
             }
