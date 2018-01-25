@@ -22,7 +22,9 @@ import { MatButtonModule,
          MatFormFieldModule,
          MatInputModule,
          MatSnackBarModule,
-         MAT_DATE_LOCALE} from '@angular/material';
+         MAT_DATE_LOCALE,
+         MatTableModule,
+         MatSortModule} from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 
@@ -82,6 +84,8 @@ const routes: Routes = [
         HttpClientModule,
         ReactiveFormsModule,
         MatSnackBarModule,
+        MatTableModule,
+        MatSortModule,
         FormsModule,
         LayoutModule,
         Ng2GoogleChartsModule
