@@ -65,4 +65,27 @@
         </div>
         <google-chart [data]="memberStatsData"></google-chart>
     </mat-tab>
+    <mat-tab label="Channel Message Stats">
+            <div style="margin-top: 8px; margin-left: 8px;">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="fromPicker4" placeholder="From" [value]="from" (dateChange)="onDateChange($event, 'from')"
+                        [matDatepickerFilter]="onValidateDate('from')">
+                    <mat-datepicker-toggle matSuffix [for]="fromPicker4"></mat-datepicker-toggle>
+                    <mat-datepicker #fromPicker4></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput [matDatepicker]="toPicker4" placeholder="To" [value]="to" (dateChange)="onDateChange($event, 'to')" [matDatepickerFilter]="onValidateDate('to')">
+                    <mat-datepicker-toggle matSuffix [for]="toPicker4"></mat-datepicker-toggle>
+                    <mat-datepicker #toPicker4></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field *ngIf="isGuildSelected">
+                    <mat-select [(value)]="selectedChannel">
+                        <mat-option value="-0">All</mat-option>
+                        <mat-option *ngFor="let channel of selectedGuild.channels" value="{{ channel.id }}">{{ channel.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-button (click)="fetchStats('channel')">Go!</button>
+            </div>
+            <google-chart [data]="channelStatsData"></google-chart>
+        </mat-tab>    
 </mat-tab-group>

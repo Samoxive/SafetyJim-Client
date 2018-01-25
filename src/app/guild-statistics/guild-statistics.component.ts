@@ -13,10 +13,13 @@ import { LoginService } from '../login.service';
 import { StatsOverview } from '../entities/stats-overview';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MemberStats } from '../entities/member-stats';
+import { Channel } from '../entities/channel';
+import { ChannelsStats } from '../entities/channels-stats';
 
 interface ChartData {
     chartType: string;
     dataTable: any[];
+    [key: string]: any;
 }
 
 @Component({
@@ -26,6 +29,7 @@ interface ChartData {
 })
 export class GuildStatisticsComponent implements OnInit, AfterViewInit {
     public selectedGuild: Guild = null;
+    public selectedChannel: string = null;
     public isGuildSelected = false;
 
     @ViewChild(MatSort) sort: MatSort;
@@ -45,6 +49,14 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
         dataTable: [
             ['Date', 'Total Member Count', 'Online Member Count'],
             [new Date(), 1, 0]
+        ],
+    };
+
+    public channelStatsData: ChartData = {
+        chartType: 'LineChart',
+        dataTable: [
+            ['Date', 'Message Count'],
+            [new Date(), 1]
         ],
     };
 
@@ -68,6 +80,7 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
         if (success) {
             this.selectedGuild = this.guildService.selectedGuild;
             this.isGuildSelected = true;
+            this.selectedChannel = this.selectedGuild.channels[0].id;
         }
     }
 
@@ -94,6 +107,18 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
             this.http.get(url, { params, headers })
                      .subscribe((stats) => this.processMemberStats(stats as MemberStats),
                                 (error) => this.handleStatFetchError(error));
+        } else if (type === 'channel') {
+            if (this.selectedChannel !== '-0') {
+                const url = `${environment.apiUrl}/guilds/${this.selectedGuild.id}/messageStats/channels/${this.selectedChannel}`;
+                this.http.get(url, { params, headers })
+                         .subscribe((stats) => this.processChannelStats(stats as Stat[]),
+                                    (error) => this.handleStatFetchError(error));
+            } else {
+                const url = `${environment.apiUrl}/guilds/${this.selectedGuild.id}/messageStats/channels`;
+                this.http.get(url, { params, headers })
+                         .subscribe((stats) => this.processChannelsStats(stats as ChannelsStats),
+                                    (error) => this.handleStatFetchError(error));
+            }
         } else {
             return;
         }
@@ -137,6 +162,75 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
                 ['Date', 'Total Member Count', 'Online Member Count'],
                 ...(stats.onlineStats.map((stat, i) => [new Date(stat.date * 1000), stats.totalStats[i].count, stats.onlineStats[i].count]))
             ]
+        };
+    }
+
+    processChannelStats(stats: Stat[]) {
+        let channel: any = this.selectedGuild.channels.find((c) => this.selectedChannel === c.id);
+        channel = channel ? channel.name : 'N/A';
+        this.channelStatsData = {
+            chartType: 'LineChart',
+            dataTable: [
+                ['Date', `Message Count in ${channel}`],
+                ...stats.map((stat) => [new Date(stat.date * 1000), stat.count])
+            ]
+        };
+    }
+
+    processChannelsStats(stats: ChannelsStats) {
+        const mappedData: Map<Date, Map<string, number>> = new Map();
+
+        for (const channelId of Object.keys(stats)) {
+            for (const stat of stats[channelId]) {
+                const date = new Date(stat.date * 1000);
+                if (!mappedData.get(date)) {
+                    mappedData.set(date, new Map());
+                }
+                mappedData.get(date).set(channelId, stat.count);
+            }
+        }
+
+        const channels = Object.keys(stats).map((id) => this.selectedGuild.channels.find((channel) => channel.id === id))
+                                           .filter((channel) => channel != null);
+
+        const data: any[][] = [];
+        mappedData.forEach((value, key) => {
+            const datum: any[] = [key];
+            for (const channel of channels) {
+                const count = value.get(channel.id);
+                datum.push(count != null ? count : null);
+            }
+            data.push(datum);
+        });
+
+        // clear entries with zero stats, as google charts can't handle all-null columns
+        if (data.length > 0) {
+            const datum = data[0];
+            for (let i = 1; i < datum.length; i++) {
+                let nonNull = false;
+                for (const datum2 of data) {
+                    if (datum2[i] != null) {
+                        nonNull = true;
+                    }
+                }
+
+                if (!nonNull) {
+                    data.forEach((datum3) => {
+                        datum3.splice(i, 1);
+                    });
+                    // get rid of the channel with zero stats as well
+                    channels.splice(i - 1, 1);
+                    i = 1;
+                }
+            }
+        }
+
+        this.channelStatsData = {
+            chartType: 'LineChart',
+            dataTable: [
+                ['Date', ...channels.map((channel) => channel.name)],
+                ...data
+            ],
         };
     }
 
