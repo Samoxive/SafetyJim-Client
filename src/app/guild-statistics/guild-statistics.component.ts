@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { selectGuildOrRouteIndex } from '../utils/navigation.utils';
+import { selectGuildOrRouteIndex, userNeedsLogin } from '../utils/navigation.utils';
 import { ParamMap } from '@angular/router';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GuildService } from '../guild.service';
@@ -8,7 +8,7 @@ import { Stat } from '../entities/stat';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar, MatDatepickerInputEvent, MatTableDataSource, MatSort } from '@angular/material';
+import { MatSnackBar, MatDatepickerInputEvent, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { LoginService } from '../login.service';
 import { StatsOverview } from '../entities/stats-overview';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -69,13 +69,18 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private http: HttpClient,
-                private snackbar: MatSnackBar) {}
+                private snackbar: MatSnackBar,
+                private dialog: MatDialog) {}
 
     ngAfterViewInit() {
         this.overviewData.sort = this.sort;
     }
 
     async ngOnInit() {
+        const handled = userNeedsLogin(this.loginService, this.dialog);
+        if (handled) {
+            return;
+        }
         const success = await selectGuildOrRouteIndex(this.router, this.activatedRoute.paramMap, this.guildService);
         if (success) {
             this.selectedGuild = this.guildService.selectedGuild;
