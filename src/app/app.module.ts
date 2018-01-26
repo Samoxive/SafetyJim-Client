@@ -25,7 +25,8 @@ import { MatButtonModule,
          MAT_DATE_LOCALE,
          MatTableModule,
          MatSortModule,
-         MatSelectModule} from '@angular/material';
+         MatSelectModule,
+         MatCardModule} from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 
@@ -41,6 +42,7 @@ import { GuildSettingsComponent } from './guild-settings/guild-settings.componen
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { GuildStatisticsComponent } from './guild-statistics/guild-statistics.component';
+import { LoginDialogComponent } from './utils/navigation.utils';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -61,7 +63,8 @@ const routes: Routes = [
         LoggedUserComponent,
         CommandsComponent,
         GuildSettingsComponent,
-        GuildStatisticsComponent
+        GuildStatisticsComponent,
+        LoginDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -88,6 +91,7 @@ const routes: Routes = [
         MatTableModule,
         MatSortModule,
         MatSelectModule,
+        MatCardModule,
         FormsModule,
         LayoutModule,
         Ng2GoogleChartsModule
@@ -97,6 +101,9 @@ const routes: Routes = [
         GuildService,
         { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [
+        LoginDialogComponent
+    ]
 })
 export class AppModule { }
