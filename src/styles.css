@@ -38,3 +38,7 @@
       opacity: 0;
     }
 }
+
+.mat-tab-body-wrapper {
+  height: 100%;
+}
