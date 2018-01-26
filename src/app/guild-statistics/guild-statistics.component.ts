@@ -193,16 +193,17 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
         const channels = Object.keys(stats).map((id) => this.selectedGuild.channels.find((channel) => channel.id === id))
                                            .filter((channel) => channel != null);
 
-        const data: any[][] = [];
+        let data: any[][] = [];
         mappedData.forEach((value, key) => {
             const datum: any[] = [key];
             for (const channel of channels) {
                 const count = value.get(channel.id);
-                datum.push(count != null ? count : null);
+                datum.push(count != null ? count : 0);
             }
             data.push(datum);
         });
-
+        data = data.sort((a, b) => a[0] - b[0]);
+        /*
         // clear entries with zero stats, as google charts can't handle all-null columns
         if (data.length > 0) {
             const datum = data[0];
@@ -223,7 +224,7 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
                     i = 1;
                 }
             }
-        }
+        }*/
 
         this.channelStatsData = {
             chartType: 'LineChart',
