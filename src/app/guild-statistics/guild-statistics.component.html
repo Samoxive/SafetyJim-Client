@@ -23,7 +23,7 @@
                     <mat-cell *matCellDef="let element">{{ element.messageCount }}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="average">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Average Message Count (per 10 minutes)</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Average Message Count (per minute)</mat-header-cell>
                     <mat-cell *matCellDef="let element">{{ element.average }}</mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="overviewColumns"></mat-header-row>
