@@ -42,3 +42,7 @@
 .mat-tab-body-wrapper {
   height: 100%;
 }
+
+mat-dialog-container {
+  padding: 0 !important;
+}
