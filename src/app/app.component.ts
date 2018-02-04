@@ -61,6 +61,8 @@ export class AppComponent implements OnInit, OnDestroy {
     public onSideNavClick(guild: Guild, item: string) {
         if (item === 'stats') {
             this.router.navigate([`guild/${guild.id}/statistics`]);
+        } else if (item === 'settings') {
+            this.router.navigate([`guild/${guild.id}/settings`]);
         } else {
             return;
         }
