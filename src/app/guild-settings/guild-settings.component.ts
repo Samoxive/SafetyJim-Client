@@ -5,7 +5,7 @@ import { userNeedsLogin, selectGuildOrRouteIndex } from '../utils/navigation.uti
 import { GuildService } from '../guild.service';
 import { LoginService } from '../login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Guild } from '../entities/guild';
 import { environment } from '../../environments/environment';
@@ -136,7 +136,15 @@ export class GuildSettingsComponent implements OnInit {
         };
 
         this.http.post(`${environment.apiUrl}/guilds/${this.selectedGuild.id}/settings`, settings, { headers })
-                 .subscribe(console.log, console.error);
+                 .subscribe(null, (error) => {
+            if (!(error instanceof HttpErrorResponse)) {
+                return;
+            }
+
+            if (error.status === 403) {
+                dismissableSnackbar(this.snackbar, 'You don\'t have enough permissions to modify settings!');
+            }
+        });
     }
 
     onFetch(settings: GuildSettings) {
