@@ -26,7 +26,8 @@ import { MatButtonModule,
          MatTableModule,
          MatSortModule,
          MatSelectModule,
-         MatCardModule} from '@angular/material';
+         MatCardModule,
+         MatSlideToggleModule} from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 
@@ -92,6 +93,7 @@ const routes: Routes = [
         MatSortModule,
         MatSelectModule,
         MatCardModule,
+        MatSlideToggleModule,
         FormsModule,
         LayoutModule,
         Ng2GoogleChartsModule
