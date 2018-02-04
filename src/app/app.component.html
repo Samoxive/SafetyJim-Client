@@ -31,10 +31,16 @@
                     <mat-icon>insert_chart</mat-icon>
                     <span>Statistics</span>
                 </a>
+                <a mat-list-item (click)="onSideNavClick(selectedGuild, 'settings')">
+                    <mat-icon>settings</mat-icon>
+                    <span>Server Settings</span>
+                </a>
             </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
-            <router-outlet></router-outlet>
+            <div style="margin: 8px 8px 8px 8px;">
+                <router-outlet></router-outlet>
+            </div>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
