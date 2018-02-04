@@ -136,7 +136,7 @@ export class GuildSettingsComponent implements OnInit {
         };
 
         this.http.post(`${environment.apiUrl}/guilds/${this.selectedGuild.id}/settings`, settings, { headers })
-                 .subscribe(null, (error) => {
+                 .subscribe(() => dismissableSnackbar(this.snackbar, 'Saved settings successfully!'), (error) => {
             if (!(error instanceof HttpErrorResponse)) {
                 return;
             }
