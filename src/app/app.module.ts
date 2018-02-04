@@ -34,6 +34,9 @@ import { LoginComponent } from './login/login.component';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+
 import { LoginService } from './login.service';
 import { GuildService } from './guild.service';
 import { LoggedUserComponent } from './logged-user/logged-user.component';
@@ -87,6 +90,7 @@ const routes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         HttpClientModule,
+        LoadingBarHttpClientModule,
         ReactiveFormsModule,
         MatSnackBarModule,
         MatTableModule,
