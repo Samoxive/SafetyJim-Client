@@ -40,7 +40,7 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoginService } from './login.service';
 import { GuildService } from './guild.service';
 import { LoggedUserComponent } from './logged-user/logged-user.component';
-import { CommandsComponent } from './commands/commands.component';
+import { CommandsComponent, CommandDetailComponent } from './commands/commands.component';
 import { GuildHomeComponent } from './guild-home/guild-home.component';
 import { GuildSettingsComponent } from './guild-settings/guild-settings.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -68,7 +68,8 @@ const routes: Routes = [
         CommandsComponent,
         GuildSettingsComponent,
         GuildStatisticsComponent,
-        LoginDialogComponent
+        LoginDialogComponent,
+        CommandDetailComponent
     ],
     imports: [
         BrowserModule,
@@ -109,7 +110,8 @@ const routes: Routes = [
     ],
     bootstrap: [AppComponent],
     entryComponents: [
-        LoginDialogComponent
+        LoginDialogComponent,
+        CommandDetailComponent
     ]
 })
 export class AppModule { }
