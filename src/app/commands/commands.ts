@@ -234,7 +234,4 @@ export const commands: Command[] = [
             '-mod tag remove rule1'
         ]
     }
-
 ];
-
-
