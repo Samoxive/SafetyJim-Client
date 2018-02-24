@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     public isLogged = false;
     public selectedGuild = null;
     public isGuildSelected = false;
+    private sidenavOpenedOnce = false;
 
     constructor(private http: HttpClient,
                 private router: Router,
@@ -55,7 +56,11 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     public onGuildClick(guild: Guild) {
-        this.router.navigate([`guild/${guild.id}`]);
+        this.guildService.selectGuild(guild.id);
+        if (!this.sidenavOpenedOnce) {
+            this.sidenav.open();
+            this.sidenavOpenedOnce = true;
+        }
     }
 
     public onSideNavClick(guild: Guild, item: string) {
