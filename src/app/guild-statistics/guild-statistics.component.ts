@@ -150,7 +150,7 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
     }
 
     processOverviewStats(stats: StatsOverview) {
-        const averageDivider = stats.delta / (1000 * 60);
+        const averageDivider = stats.delta / (1000 * 60 * 60);
         const data = [];
         for (const channelName of Object.keys(stats.channelStats)) {
             const messageCount = stats.channelStats[channelName];
