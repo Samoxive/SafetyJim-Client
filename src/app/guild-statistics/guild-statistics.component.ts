@@ -42,6 +42,9 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
             ['Date', 'Messages per 10 minutes'],
             [new Date(), 1]
         ],
+        options: {
+            height: '600'
+        }
     };
 
     public memberStatsData: ChartData = {
@@ -50,6 +53,9 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
             ['Date', 'Total Member Count', 'Online Member Count'],
             [new Date(), 1, 0]
         ],
+        options: {
+            height: '600'
+        }
     };
 
     public channelStatsData: ChartData = {
@@ -58,6 +64,9 @@ export class GuildStatisticsComponent implements OnInit, AfterViewInit {
             ['Date', 'Message Count'],
             [new Date(), 1]
         ],
+        options: {
+            height: '600'
+        }
     };
 
     public labels: String[] = [];
