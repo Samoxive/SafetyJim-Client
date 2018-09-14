@@ -5,7 +5,7 @@ import Jimbo from './assets/jimbo.png';
 
 const { Header } = Layout;
 
-class Navbar extends React.Component {
+export class Navbar extends React.Component {
     public render() {
         return (
             <Layout>
@@ -35,5 +35,3 @@ class Navbar extends React.Component {
         );
     }
 }
-
-export default Navbar;
