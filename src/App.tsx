@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import './App.css';
 import Jimbo from './assets/jimbo.png';
 import { Commands } from './routes/commands/commands';
+import { Dashboard } from './routes/dashboard/dashboard';
 import { Home } from './routes/home/home';
 import { Login } from './routes/login/login';
 import { LoginStore } from './stores/loginStore';
@@ -35,7 +36,7 @@ export class App extends React.Component<{loginStore?: LoginStore, selfUserStore
                                 </Link>
                             </Menu.Item>
                             <Menu.Item>
-                                <Link to="/">
+                                <Link to="/dashboard">
                                     Dashboard
                                 </Link>
                             </Menu.Item>
@@ -64,6 +65,7 @@ export class App extends React.Component<{loginStore?: LoginStore, selfUserStore
                         <Route exact={true} path="/" component={Home} />
                         <Route path="/commands" component={Commands} />
                         <Route path="/login" component={Login} />
+                        <Route path="/dashboard" component={Dashboard} />
                     </Content>
                 </Layout>
             </Router>
