@@ -13,4 +13,9 @@ export class LoginStore {
                    .then((response) => this.token = response.data as string)
                    .then((token) => localStorage.setItem('token', token))
     }
+
+    logout() {
+        localStorage.removeItem('token');
+        location.href = location.origin;
+    }
 }
