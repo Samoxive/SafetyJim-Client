@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { observable } from 'mobx';
-import { SelfUser } from '../entities/SelfUser';
+import { SelfUser } from '../entities/selfUser';
 import environment from '../environment';
 import { LoginStore } from './loginStore';
 
