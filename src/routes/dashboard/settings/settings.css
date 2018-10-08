@@ -1,0 +1,8 @@
+.setting-group {
+    margin: 4px 4px 4px 4px;
+}
+
+.setting-groups {
+    display: flex;
+    flex-wrap: wrap;
+}
