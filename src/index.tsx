@@ -4,12 +4,14 @@ import * as ReactDOM from 'react-dom';
 import { App } from './App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+import { GuildSettingsStore } from './stores/guildSettingsStore';
 import { LoginStore } from './stores/loginStore';
 import { SelfUserStore } from './stores/selfUserStore';
 
 const stores = {
     loginStore: new LoginStore(),
-    selfUserStore: new SelfUserStore()
+    selfUserStore: new SelfUserStore(),
+    guildSettingsStore: new GuildSettingsStore()
 }
 
 if (stores.loginStore.token) {
