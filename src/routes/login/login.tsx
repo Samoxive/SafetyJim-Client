@@ -2,11 +2,11 @@ import { notification } from 'antd';
 import { inject, observer } from 'mobx-react';
 import { parse } from 'query-string';
 import * as React from 'react';
-import { RouteProps } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import { routeToOauth } from '../../environment';
 import { LoginStore } from '../../stores/loginStore';
 
-type LoginProps = RouteProps & { loginStore?: LoginStore };
+type LoginProps = RouteComponentProps & { loginStore?: LoginStore };
 
 @inject('loginStore')
 @observer
@@ -16,7 +16,7 @@ export class Login extends React.Component<LoginProps> {
             return null;
         }
 
-        const query = parse(this.props.location!.search)
+        const query = parse(this.props.location.search)
         if (query.code == null) {
             routeToOauth();
             return null;
