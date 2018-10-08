@@ -1,7 +1,7 @@
 import { Avatar, Icon, Layout, Menu } from 'antd';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Jimbo from './assets/jimbo.png';
 import { Commands } from './routes/commands/commands';
@@ -13,10 +13,15 @@ import { SelfUserStore } from './stores/selfUserStore';
 
 const { Header, Content } = Layout;
 
+const NotFound = () => (
+    <div>Not Found!</div>
+)
+
 @inject('loginStore', 'selfUserStore')
 @observer
 export class App extends React.Component<{loginStore?: LoginStore, selfUserStore?: SelfUserStore}> {
     render() {
+        const { loginStore, selfUserStore } = this.props;
         return (
             <Router>
                 <Layout>
@@ -35,37 +40,66 @@ export class App extends React.Component<{loginStore?: LoginStore, selfUserStore
                                     Commands
                                 </Link>
                             </Menu.Item>
-                            <Menu.Item>
-                                <Link to="/dashboard">
-                                    Dashboard
-                                </Link>
-                            </Menu.Item>
                             {
-                                this.props.loginStore!.token == null ? (
+                                loginStore!.token == null ? (
                                     <Menu.Item>
                                         <Link to="/login">
                                             Login
                                         </Link>
                                     </Menu.Item>
                                 ) : (
-                                    <Menu.Item>
-                                        {this.props.selfUserStore!.isLoading ? (
-                                            <Icon type="loading" theme="outlined" />
+                                    <Menu.SubMenu title={
+                                        selfUserStore!.isLoading ? (
+                                            <Icon type="loading" />
                                         ) : (
-                                            <Avatar src={this.props.selfUserStore!.self!.avatarUrl}>
-                                                {this.props.selfUserStore!.self!.name}
-                                            </Avatar>
+                                            <>
+                                                <Avatar src={selfUserStore!.self!.avatarUrl} />
+                                                <span style={{marginLeft: '12px'}}>{selfUserStore!.self!.name}</span>
+                                            </>
                                         )}
-                                    </Menu.Item>
+                                    >
+                                        {
+                                            selfUserStore!.isLoading ? (
+                                                <Menu.Item>
+                                                    <Icon type="loading" />
+                                                </Menu.Item>
+                                            ) : (
+                                                selfUserStore!.self!.guilds.map((guild) => (
+                                                    <Menu.SubMenu key={guild.id}  
+                                                        title={
+                                                            <span>
+                                                                <Avatar src={guild.iconUrl} style={{marginRight: '16px'}} />
+                                                                <span>{guild.name}</span>
+                                                            </span>
+                                                        }
+                                                    >
+                                                        <Menu.Item>
+                                                            <Link to={`/dashboard/${guild.id}/settings`}>
+                                                                <Icon type="setting" />
+                                                                <span>Settings</span>
+                                                            </Link>
+                                                        </Menu.Item>
+                                                    </Menu.SubMenu>
+                                                ))
+                                            )
+                                        }
+                                        <Menu.Item onClick={loginStore!.logout} >
+                                            <Icon type="logout" />
+                                            <span>Logout</span>
+                                        </Menu.Item>
+                                    </Menu.SubMenu>
                                 )
                             }
                         </Menu>
                     </Header>
-                    <Content>
-                        <Route exact={true} path="/" component={Home} />
-                        <Route path="/commands" component={Commands} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/dashboard" component={Dashboard} />
+                    <Content style={{background: 'white'}}>
+                        <Switch>
+                            <Route exact={true} path="/" component={Home} />
+                            <Route path="/commands" component={Commands} />
+                            <Route path="/login" component={Login} />
+                            <Route path="/dashboard/:guildId" component={Dashboard} />
+                            <Route component={NotFound} />
+                        </Switch>
                     </Content>
                 </Layout>
             </Router>
