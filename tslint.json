@@ -3,7 +3,8 @@
   "rules": {
     "interface-name": false,
     "object-literal-sort-keys": false,
-    "member-access": false
+    "member-access": false,
+    "max-classes-per-file": false
   },
   "linterOptions": {
     "exclude": [
