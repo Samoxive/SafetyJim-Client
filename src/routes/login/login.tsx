@@ -23,8 +23,8 @@ export class Login extends React.Component<LoginProps> {
         }
 
         if (query.code != null) {
-            this.props.loginStore!.getToken(query.code)
-                .then(() => location.href = location.origin + (query.state ? decodeURIComponent(query.state) : '/'))
+            this.props.loginStore!.getToken(query.code as string)
+                .then(() => location.href = location.origin + (query.state ? decodeURIComponent(query.state as string) : '/'))
                 .catch(() => notification.error({ message: 'Failed to login.', description: 'Please try again later.' }));
         }
 
