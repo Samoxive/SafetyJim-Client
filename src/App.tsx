@@ -15,84 +15,94 @@ const { Header, Content } = Layout;
 
 const NotFound = () => (
     <div>Not Found!</div>
-)
+);
 
 @inject('loginStore', 'selfUserStore')
 @observer
-export class App extends React.Component<{loginStore?: LoginStore, selfUserStore?: SelfUserStore}> {
+class NavBar extends React.Component<{ loginStore?: LoginStore, selfUserStore?: SelfUserStore }> {
     render() {
         const { loginStore, selfUserStore } = this.props;
         return (
+            <Menu mode="horizontal" theme="dark" style={{ lineHeight: '64px' }}>
+                <Menu.Item>
+                    <Avatar src={Jimbo} />
+                </Menu.Item>
+                <Menu.Item>
+                    <Link to="/">
+                        Safety Jim
+                    </Link>
+                </Menu.Item>
+                <Menu.Item>
+                    <Link to="/commands">
+                        Commands
+                    </Link>
+                </Menu.Item>
+                {
+                    loginStore!.token == null ? (
+                        <Menu.Item>
+                            <Link to="/login">
+                                Login
+                            </Link>
+                        </Menu.Item>
+                    ) : (
+                            <Menu.SubMenu title={
+                                selfUserStore!.isLoading ? (
+                                    <Icon type="loading" />
+                                ) : (
+                                        <>
+                                            <Avatar src={selfUserStore!.self!.avatarUrl} />
+                                            <span style={{ marginLeft: '12px' }}>{selfUserStore!.self!.name}</span>
+                                        </>
+                                    )}
+                            >
+                                {
+                                    selfUserStore!.isLoading ? (
+                                        <Menu.Item>
+                                            <Icon type="loading" />
+                                        </Menu.Item>
+                                    ) : (
+                                            selfUserStore!.self!.guilds.map((guild) => (
+                                                <Menu.SubMenu key={guild.id}
+                                                    title={
+                                                        <span>
+                                                            <Avatar src={guild.iconUrl} style={{ marginRight: '16px' }} />
+                                                            <span>{guild.name}</span>
+                                                        </span>
+                                                    }
+                                                >
+                                                    <Menu.Item>
+                                                        <Link to={`/dashboard/${guild.id}/settings`}>
+                                                            <Icon type="setting" />
+                                                            <span>Settings</span>
+                                                        </Link>
+                                                    </Menu.Item>
+                                                </Menu.SubMenu>
+                                            ))
+                                        )
+                                }
+                                <Menu.Item onClick={loginStore!.logout} >
+                                    <Icon type="logout" />
+                                    <span>Logout</span>
+                                </Menu.Item>
+                            </Menu.SubMenu>
+                        )
+                }
+            </Menu>
+        )
+    }
+}
+
+@inject('loginStore', 'selfUserStore')
+@observer
+export class App extends React.Component<{ loginStore?: LoginStore, selfUserStore?: SelfUserStore }> {
+    render() {
+        return (
             <Router>
                 <Layout>
-                    <Header style={{padding: '0px'}}>
-                        <Menu mode="horizontal" theme="dark" style={{ lineHeight: '64px' }}>
-                            <Menu.Item>
-                                <Avatar src={Jimbo} />
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Link to="/">
-                                    Safety Jim
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Link to="/commands">
-                                    Commands
-                                </Link>
-                            </Menu.Item>
-                            {
-                                loginStore!.token == null ? (
-                                    <Menu.Item>
-                                        <Link to="/login">
-                                            Login
-                                        </Link>
-                                    </Menu.Item>
-                                ) : (
-                                    <Menu.SubMenu title={
-                                        selfUserStore!.isLoading ? (
-                                            <Icon type="loading" />
-                                        ) : (
-                                            <>
-                                                <Avatar src={selfUserStore!.self!.avatarUrl} />
-                                                <span style={{marginLeft: '12px'}}>{selfUserStore!.self!.name}</span>
-                                            </>
-                                        )}
-                                    >
-                                        {
-                                            selfUserStore!.isLoading ? (
-                                                <Menu.Item>
-                                                    <Icon type="loading" />
-                                                </Menu.Item>
-                                            ) : (
-                                                selfUserStore!.self!.guilds.map((guild) => (
-                                                    <Menu.SubMenu key={guild.id}  
-                                                        title={
-                                                            <span>
-                                                                <Avatar src={guild.iconUrl} style={{marginRight: '16px'}} />
-                                                                <span>{guild.name}</span>
-                                                            </span>
-                                                        }
-                                                    >
-                                                        <Menu.Item>
-                                                            <Link to={`/dashboard/${guild.id}/settings`}>
-                                                                <Icon type="setting" />
-                                                                <span>Settings</span>
-                                                            </Link>
-                                                        </Menu.Item>
-                                                    </Menu.SubMenu>
-                                                ))
-                                            )
-                                        }
-                                        <Menu.Item onClick={loginStore!.logout} >
-                                            <Icon type="logout" />
-                                            <span>Logout</span>
-                                        </Menu.Item>
-                                    </Menu.SubMenu>
-                                )
-                            }
-                        </Menu>
+                    <Header style={{ padding: '0px' }}>
+                        <NavBar />
                     </Header>
-                    <Content style={{background: 'white'}}>
+                    <Content style={{ background: 'white' }}>
                         <Switch>
                             <Route exact={true} path="/" component={Home} />
                             <Route path="/commands" component={Commands} />
@@ -105,5 +115,5 @@ export class App extends React.Component<{loginStore?: LoginStore, selfUserStore
             </Router>
         );
     }
-} 
+}
 
