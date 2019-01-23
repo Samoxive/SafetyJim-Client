@@ -8,7 +8,7 @@ import { LoginStore } from '../../stores/loginStore';
 import { SelfUserStore } from '../../stores/selfUserStore';
 import { SettingsRoute } from './settings/settings';
 
-type GenericGuildRouteProps  = {guild: Guild} & any;
+type GenericGuildRouteProps = { guild: Guild } & any;
 
 function injectGuild(guild: Guild, Component: React.ComponentType<GenericGuildRouteProps>): React.StatelessComponent<any> {
     return () => (<Component guild={guild} />);
@@ -40,7 +40,12 @@ export class Dashboard extends React.Component<DashboardProps, { redirectHome: b
                     okText: 'Login',
                     cancelText: 'Home',
                     onCancel: () => this.setState({ redirectHome: true }),
-                    onOk: () => routeToOauth(location!.pathname)
+                    onOk: () => routeToOauth(location!.pathname),
+                    content: (
+                        <p>
+                            You must log in through Discord to view this page.
+                        </p>
+                    )
                 })
 
                 return (<></>);
