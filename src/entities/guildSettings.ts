@@ -3,10 +3,14 @@ import { Guild } from "./guild";
 import { Role } from "./role";
 
 export function isGuildSettingsValid(settings: GuildSettings): boolean {
-    if (settings.holdingRoom) {
-        if (!settings.holdingRoomRole) {
+    if (!settings.holdingRoomRole) {
+        if (settings.holdingRoom || settings.joinCaptcha) {
             return false;
         }
+    }
+
+    if (settings.holdingRoom && settings.joinCaptcha) {
+        return false;
     }
 
     return Boolean(
@@ -14,7 +18,7 @@ export function isGuildSettingsValid(settings: GuildSettings): boolean {
         settings.holdingRoomMinutes > 0 &&
         settings.prefix &&
         settings.message
-    ); 
+    );
 }
 
 export interface GuildSettings {
@@ -33,5 +37,6 @@ export interface GuildSettings {
     prefix: string;
     silentCommands: boolean;
     noSpacePrefix: boolean;
-    statistics: boolean
+    statistics: boolean;
+    joinCaptcha: boolean;
 }

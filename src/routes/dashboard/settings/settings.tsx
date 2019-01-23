@@ -34,6 +34,7 @@ export class SettingsRoute extends React.Component<SettingsRouteProps> {
     onSilentCommands = (enabled: boolean) => this.getGuildState().silentCommands = enabled;
     onNoSpacePrefix = (enabled: boolean) => this.getGuildState().noSpacePrefix = enabled;
     onStatistics = (enabled: boolean) => this.getGuildState().statistics = enabled;
+    onJoinCaptcha = (enabled: boolean) => this.getGuildState().joinCaptcha = enabled;
 
     onSubmit = () => {
         const { guild, loginStore, guildSettingsStore } = this.props;
@@ -63,7 +64,7 @@ export class SettingsRoute extends React.Component<SettingsRouteProps> {
         return (
             <>
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px', flexDirection: 'column', justifyItems: 'center', alignItems: 'center' }} >
-                    <Form layout="inline" className="setting-groups" style={{ maxWidth: '900px' }}>
+                    <Form layout="inline" className="setting-groups" style={{ maxWidth: '1100px' }}>
                         <Card title="Moderator Log" className="setting-group">
                             <Form.Item label="Enable">
                                 <Switch onChange={this.onModlog} defaultChecked={settings.modLog} />
@@ -102,6 +103,11 @@ export class SettingsRoute extends React.Component<SettingsRouteProps> {
                             </Form.Item>
                             <Form.Item label="Minutes">
                                 <InputNumber onChange={this.onHoldingRoomMinutes} defaultValue={settings.holdingRoomMinutes} />
+                            </Form.Item>
+                        </Card>
+                        <Card title="Join Captcha" className="setting-group">
+                            <Form.Item label="Enable">
+                                <Switch onChange={this.onJoinCaptcha} defaultChecked={settings.joinCaptcha} />
                             </Form.Item>
                         </Card>
                         <Card title="Invite Link Remover" className="setting-group">
