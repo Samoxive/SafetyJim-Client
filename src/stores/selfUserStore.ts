@@ -1,19 +1,20 @@
 import axios from 'axios';
-import { observable } from 'mobx';
-import { SelfUser } from '../entities/selfUser';
+import {observable} from 'mobx';
+import {SelfUser} from '../entities/selfUser';
 import environment from '../environment';
-import { LoginStore } from './loginStore';
+import {LoginStore} from './loginStore';
 
 const apiUrl = environment.apiUrl;
 
 export class SelfUserStore {
-    @observable
-    isLoading = true;
-    @observable
-    self?: SelfUser;
+    @observable isLoading = true;
+    @observable self?: SelfUser;
 
     async getSelf(loginStore: LoginStore) {
-        await axios.get(`${apiUrl}/@me`, { headers: { token: loginStore.token }})
-                   .then((response) => { this.self = response.data as SelfUser; this.isLoading = false; });
+        await axios.get(`${apiUrl}/@me`, {headers: {token: loginStore.token}})
+            .then((response) => {
+                this.self = response.data as SelfUser;
+                this.isLoading = false;
+            });
     }
 }

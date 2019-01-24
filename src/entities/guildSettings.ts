@@ -1,6 +1,6 @@
-import { Channel } from "./channel";
-import { Guild } from "./guild";
-import { Role } from "./role";
+import {Channel} from './channel';
+import {Guild} from './guild';
+import {Role} from './role';
 
 export function isGuildSettingsValid(settings: GuildSettings): boolean {
     if (!settings.holdingRoomRole) {
@@ -14,11 +14,9 @@ export function isGuildSettingsValid(settings: GuildSettings): boolean {
     }
 
     return Boolean(
-        settings.holdingRoomMinutes === Math.floor(settings.holdingRoomMinutes) &&
-        settings.holdingRoomMinutes > 0 &&
-        settings.prefix &&
-        settings.message
-    );
+        settings.holdingRoomMinutes ===
+            Math.floor(settings.holdingRoomMinutes) &&
+        settings.holdingRoomMinutes > 0 && settings.prefix && settings.message);
 }
 
 export interface GuildSettings {

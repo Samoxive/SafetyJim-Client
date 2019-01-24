@@ -6,7 +6,7 @@ import { commands } from './commands_resource';
 const { Meta } = Card;
 
 export const Commands = (props: {}) => (
-    <div style={{margin: '8px 8px 8px 8px'}} className="commands">
+    <div style={{ margin: '8px 8px 8px 8px' }} className="commands">
         {
             commands.sort((a, b) => a.name.localeCompare(b.name)).map((command) => {
                 const actions = [
@@ -35,10 +35,10 @@ export const Commands = (props: {}) => (
                 ]
                 return (
                     <Card hoverable={true}
-                          title={command.name}
-                          key={command.name}
-                          className="command"
-                          actions={actions}>
+                        title={command.name}
+                        key={command.name}
+                        className="command"
+                        actions={actions}>
                         <Meta title={command.tooltip} description={command.description} />
                     </Card>
                 );

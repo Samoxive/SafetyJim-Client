@@ -1,4 +1,4 @@
-import { Guild } from "./guild";
+import {Guild} from './guild';
 
 export interface SelfUser {
     id: string;
