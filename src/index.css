@@ -3,3 +3,9 @@ body {
     padding: 0;
     font-family: sans-serif;
 }
+
+code {
+    font-size: 87.5%;
+    color: #e83e8c;
+    word-break: break-word;
+}
