@@ -13,7 +13,13 @@ export const Commands = (props: {}) => (
                     (
                         <Popover trigger="click" title="Usages" content={
                             <ul>
-                                {command.usages.map((usage, i) => (<li key={i}>{usage}</li>))}
+                                {command.usages.map((usage, i) => (
+                                    <li key={i}>
+                                        <code>
+                                            {usage}
+                                        </code>
+                                    </li>
+                                ))}
                             </ul>
                         }>
                             <Button>
@@ -24,7 +30,13 @@ export const Commands = (props: {}) => (
                     (
                         <Popover trigger="click" title="Examples" content={
                             <ul>
-                                {command.examples.map((example, i) => (<li key={i}>{example}</li>))}
+                                {command.examples.map((example, i) => (
+                                    <li key={i}>
+                                        <code>
+                                            {example}
+                                        </code>
+                                    </li>
+                                ))}
                             </ul>
                         }>
                             <Button>
