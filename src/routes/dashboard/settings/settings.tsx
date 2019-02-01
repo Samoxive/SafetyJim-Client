@@ -80,7 +80,7 @@ export class Settings extends React.Component<{ settings: GuildSettings, onSubmi
                             <Select
                                 onChange={this.onModLogChannel}
                                 defaultValue={settings.modLogChannel.name}
-                                style={{ width: '100px' }}
+                                style={{ width: '150px' }}
                             >
                                 {
                                     settings.channels.map(channel => (
@@ -98,7 +98,7 @@ export class Settings extends React.Component<{ settings: GuildSettings, onSubmi
                             <Select
                                 onChange={this.onHoldingRoomRole as any}
                                 defaultValue={settings.holdingRoomRole ? settings.holdingRoomRole.id : ''}
-                                style={{ width: '100px' }}
+                                style={{ width: '150px' }}
                             >
                                 <Option key={''} value={''} />
                                 {
@@ -109,7 +109,7 @@ export class Settings extends React.Component<{ settings: GuildSettings, onSubmi
                             </Select>
                         </Form.Item>
                         <Form.Item label="Minutes">
-                            <InputNumber onChange={this.onHoldingRoomMinutes} defaultValue={settings.holdingRoomMinutes} />
+                            <InputNumber onChange={this.onHoldingRoomMinutes} defaultValue={settings.holdingRoomMinutes} style={{ width: '50px' }} />
                         </Form.Item>
                     </SettingsGroup>
                     <SettingsGroup title="Join Captcha" infoKey="joinCaptcha">
@@ -130,7 +130,7 @@ export class Settings extends React.Component<{ settings: GuildSettings, onSubmi
                             <Select
                                 onChange={this.onWelcomeMessageChannel}
                                 defaultValue={settings.welcomeMessageChannel.name}
-                                style={{ width: '100px' }}
+                                style={{ width: '150px' }}
                             >
                                 {
                                     settings.channels.map(channel => (
@@ -140,11 +140,11 @@ export class Settings extends React.Component<{ settings: GuildSettings, onSubmi
                             </Select>
                         </Form.Item>
                         <Form.Item label="Message">
-                            <TextArea rows={1} onChange={this.onMessage} defaultValue={settings.message} />
+                            <TextArea rows={1} onChange={this.onMessage} defaultValue={settings.message} style={{ width: '372px' }} />
                         </Form.Item>
                     </SettingsGroup>
                     <SettingsGroup title="Prefix Settings" infoKey="prefix">
-                        <Form.Item label="No Space Prefix Enable">
+                        <Form.Item label="No Space Prefix">
                             <Switch onChange={this.onNoSpacePrefix} defaultChecked={settings.noSpacePrefix} />
                         </Form.Item>
                         <Form.Item label="Prefix">
