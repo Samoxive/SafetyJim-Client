@@ -158,7 +158,7 @@ export class Settings extends React.Component<{ settings: GuildSettings, onSubmi
                     </SettingsGroup>
                     <SettingsGroup title="Statistics" infoKey="statistics">
                         <Form.Item label="Enable">
-                            <Switch onChange={this.onStatistics} defaultChecked={settings.statistics} disabled=true />
+                            <Switch onChange={this.onStatistics} defaultChecked={settings.statistics} disabled={true} />
                         </Form.Item>
                     </SettingsGroup>
                 </Form>
