@@ -1,0 +1,19 @@
+.setting-group {
+    display: flex;
+}
+
+.setting-group > * {
+    margin-left: 4px;
+    margin-right: 8px;
+}
+
+.settings-container {
+    display: flex;
+    justify-items: stretch;
+    flex-wrap: wrap;
+}
+
+.settings-container > div {
+    height: 200px;
+    margin-top: 8px;
+}
