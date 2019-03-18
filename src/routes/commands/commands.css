@@ -5,7 +5,6 @@
     margin-top: 8px;
 }
 
-
 @media only screen and (min-width: 400px) {
     .commands {
         -moz-column-count: 1;
