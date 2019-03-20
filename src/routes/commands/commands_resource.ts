@@ -304,9 +304,9 @@ export const commands: Command[] = [
         usages: [
             "-mod tag list",
             "-mod tag <name>",
-            "-mod add <name> <response>",
-            "-mod edit <name> <response>",
-            "-mod remove <name>"
+            "-mod tag add <name> <response>",
+            "-mod tag edit <name> <response>",
+            "-mod tag remove <name>"
         ],
         examples: [
             "-mod tag list",
