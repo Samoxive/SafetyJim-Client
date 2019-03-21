@@ -37,7 +37,7 @@ export const commands: Command[] = [
         quick: "-mod hardban @Samoxive#1234 Spam",
         description:
             "Bans the specified user, banning them and deleting every message they sent in the last week. " +
-            "The syntax is equivalent to that of the command `ban`.",
+            "In addition, a reason may be provided.",
         usages: [
             "-mod hardban @user",
             "-mod hardban @user <reason>",
@@ -121,7 +121,7 @@ export const commands: Command[] = [
         quick: "-mod softban @Samoxive#1234 Spamming nsfw pictures",
         description:
             "Bans the specified user, then unbans them afterwards, effectively kicking them. This deletes " +
-            "the specified user's messages in the last 1-7 days, default 1. " +
+            "the specified user's messages in the last 1-7 days, defaulting to those from the last 1 day. " +
             "If a text is given after the identifier, that text is used as the reason. To customise " +
             'the number of days from which to delete messages, you can use the separator "|", followed by a number.',
         usages: [
@@ -173,7 +173,7 @@ export const commands: Command[] = [
     },
     {
         name: "Invite",
-        tooltip: "Display links to invite Jim",
+        tooltip: "Display links to invite Jim and get support",
         quick: "-mod invite",
         description:
             "This command provides the link to invite Jim, and the support server link.",
