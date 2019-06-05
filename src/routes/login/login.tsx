@@ -25,8 +25,8 @@ export class Login extends React.Component<LoginProps> {
             getTokenFromApi(query.code as string)
                 .then(
                     () =>
-                        (location.href =
-                            location.origin +
+                        (window.location.href =
+                            window.location.origin +
                             (query.state
                                 ? decodeURIComponent(query.state as string)
                                 : "/"))
