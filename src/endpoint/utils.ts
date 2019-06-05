@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosError } from "axios";
-const cogoToast = require("cogo-toast");
+import cogoToast from "cogo-toast";
 
 export function getToken(): string | null {
     return localStorage.getItem("token");
