@@ -3,7 +3,6 @@ import { Guild } from "./guild";
 import { Role } from "./role";
 
 export function isGuildSettingsValid(settings: GuildSettings): boolean {
-    console.log(settings);
     if (!settings.holdingRoomRole) {
         if (settings.holdingRoom || settings.joinCaptcha) {
             return false;

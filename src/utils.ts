@@ -17,7 +17,6 @@ export function routeToOauth(route?: string) {
 
 export function booleanListener(listener: (value: boolean) => any) {
     return (event: any) => {
-        console.log(event);
         listener(event.target.value === "on");
     };
 }
