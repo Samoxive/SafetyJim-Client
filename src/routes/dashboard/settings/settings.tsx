@@ -7,16 +7,12 @@ import {
 } from "../../../utils";
 import "./settings.css";
 import {
-    Card,
     Tooltip,
     OverlayTrigger,
     Col,
     Form,
-    Container,
-    Row,
     Button,
-    Popover,
-    FormGroup
+    Popover
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GuildSettings } from "../../../entities/guildSettings";

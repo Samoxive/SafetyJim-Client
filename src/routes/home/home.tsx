@@ -10,7 +10,7 @@ const donateLink = "https://www.patreon.com/safetyjim";
 
 export const Home = () => (
     <div className="home-center">
-        <img className="home-jim-logo" src={Jimbo} />
+        <img className="home-jim-logo" src={Jimbo} alt="Jim's handsome face" />
         <h2 className="home-jim-desc">
             Jim is a hardworking bot who will help you with your moderation and
             server management needs.

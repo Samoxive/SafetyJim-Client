@@ -1,4 +1,4 @@
-import { GuildSettings, isGuildSettingsValid } from "../entities/guildSettings";
+import { GuildSettings } from "../entities/guildSettings";
 import { Guild } from "../entities/guild";
 import { getHTTPParams, handleError } from "./utils";
 import axios from "axios";

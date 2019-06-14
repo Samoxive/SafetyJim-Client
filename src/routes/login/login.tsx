@@ -2,8 +2,6 @@ import { parse } from "query-string";
 import * as React from "react";
 import { RouteComponentProps } from "react-router";
 import { routeToOauth, notifyError } from "../../utils";
-import environment from "../../environment";
-import axios from "axios";
 import { getToken } from "../../endpoint/utils";
 import { getTokenFromApi } from "../../endpoint/login";
 
