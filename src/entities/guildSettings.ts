@@ -29,7 +29,7 @@ export interface GuildSettings {
     modLog: boolean;
     modLogChannel: Channel;
     holdingRoom: boolean;
-    holdingRoomRole?: Role;
+    holdingRoomRole: Role | null;
     holdingRoomMinutes: number;
     inviteLinkRemover: boolean;
     welcomeMessage: boolean;

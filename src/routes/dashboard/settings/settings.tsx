@@ -18,7 +18,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GuildSettings } from "../../../entities/guildSettings";
 import { Component } from "react";
 import { Channel } from "../../../entities/channel";
-import { Role } from "../../../entities/role";
 import {
     updateSettings,
     fetchSettings,
@@ -71,8 +70,10 @@ export class SettingsRoute extends Component<
     findChannel = (state: SettingsRouteState, id: string): Channel =>
         state.settings!.channels.find(channel => channel.id === id)!;
 
-    findRole = (state: SettingsRouteState, id: string): Role =>
-        state.settings!.roles.find(role => role.id === id)!;
+    findRole = (state: SettingsRouteState, id: string) => {
+        const role = state.settings!.roles.find(role => role.id === id);
+        return role || null;
+    }
 
     onSetting = <K extends keyof GuildSettings>(
         key: K,
@@ -286,15 +287,20 @@ export class SettingsRoute extends Component<
                                 value={
                                     settings.holdingRoomRole
                                         ? settings.holdingRoomRole.id
-                                        : undefined
+                                        : "none"
                                 }
                                 onChange={this.onHoldingRoomRole}
                             >
-                                {settings.roles.map(role => (
-                                    <option key={role.id} value={role.id}>
-                                        {role.name}
-                                    </option>
-                                ))}
+                                {[
+                                    <option key="none" value="none">
+                                        None
+                                    </option>,
+                                    ...settings.roles.map(role => (
+                                        <option key={role.id} value={role.id}>
+                                            {role.name}
+                                        </option>
+                                    ))
+                                ]}
                             </Form.Control>
                         </Form.Group>
 
@@ -358,6 +364,7 @@ export class SettingsRoute extends Component<
                         </Form.Group>
                     </Form.Row>
                 </SettingsGroup>
+                <Form.Row style={{height: '16px'}} />
                 <OverlayTrigger
                     trigger={["click", "focus"]}
                     placement="auto"
