@@ -73,20 +73,19 @@ export class SettingsRoute extends Component<
     findRole = (state: SettingsRouteState, id: string) => {
         const role = state.settings!.roles.find(role => role.id === id);
         return role || null;
-    }
+    };
 
     onSetting = <K extends keyof GuildSettings>(
         key: K,
         value: GuildSettings[K]
-    ) => {
-        this.setState(state => {
-            const newState = {
-                settings: { ...state.settings! }
-            };
-            newState.settings[key] = value;
-            return newState;
-        });
-    };
+    ) =>
+        this.setState(state => ({
+            ...state,
+            settings: {
+                ...state.settings!,
+                [key]: value
+            }
+        }));
 
     onModlog = booleanListener(enabled => this.onSetting("modLog", enabled));
     onModLogChannel = stringListener((channelId: string) =>
@@ -364,7 +363,7 @@ export class SettingsRoute extends Component<
                         </Form.Group>
                     </Form.Row>
                 </SettingsGroup>
-                <Form.Row style={{height: '16px'}} />
+                <Form.Row style={{ height: "16px" }} />
                 <OverlayTrigger
                     trigger={["click", "focus"]}
                     placement="auto"
