@@ -26,6 +26,16 @@ const NavbarUserMenu = ({ selfUser }: SelfUserProps) => {
     } else {
         return (
             <NavDropdown title="Dashboard" id="self-user-dropdown">
+                <NavDropdown.Item>
+                    <Image
+                        src={selfUser.avatarUrl}
+                        rounded
+                        width="32px"
+                        style={{ marginRight: "4px" }}
+                    />
+                    {selfUser.name}
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
                 {selfUser.guilds.map(guild => (
                     <LinkContainer to={`/dashboard/${guild.id}`} key={guild.id}>
                         <NavDropdown.Item>
