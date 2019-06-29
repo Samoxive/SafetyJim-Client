@@ -1,5 +1,5 @@
 import * as React from "react";
-import Jimbo from "../../assets/jimbo.png";
+import Jimbo from "../../assets/jimbo.jpg";
 import "./home.css";
 import { Button } from "react-bootstrap";
 
