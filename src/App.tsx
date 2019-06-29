@@ -16,6 +16,10 @@ export type SelfUserProps = { selfUser?: SelfUser };
 
 const NotFound = () => <h1>Not Found!</h1>;
 
+const onLogout = () => {
+    clearToken("/");
+};
+
 const NavbarUserMenu = ({ selfUser }: SelfUserProps) => {
     if (!selfUser) {
         return (
@@ -50,7 +54,7 @@ const NavbarUserMenu = ({ selfUser }: SelfUserProps) => {
                     </LinkContainer>
                 ))}
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={clearToken}>
+                <NavDropdown.Item onClick={onLogout}>
                     <FontAwesomeIcon
                         icon="sign-out-alt"
                         style={{ marginRight: "4px" }}

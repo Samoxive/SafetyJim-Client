@@ -5,9 +5,9 @@ export function getToken(): string | null {
     return localStorage.getItem("token");
 }
 
-export function clearToken() {
+export function clearToken(redirectHref: string) {
     window.localStorage.removeItem("token");
-    window.location.href = "/";
+    window.location.href = redirectHref;
 }
 
 export function getHTTPParams(): AxiosRequestConfig {
@@ -31,6 +31,11 @@ export function handleError(error: AxiosError): undefined {
                 position: "top-right",
                 heading: "Error"
             });
+            return;
+        }
+
+        if (error.response.status === 401) {
+            clearToken(window.location.href);
             return;
         }
 
