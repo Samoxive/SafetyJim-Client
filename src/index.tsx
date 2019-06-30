@@ -9,7 +9,7 @@ import {
     faCog,
     faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons";
-import App from "./App";
+import App from "./app";
 import * as serviceWorker from "./serviceWorker";
 
 library.add(faSignOutAlt);
