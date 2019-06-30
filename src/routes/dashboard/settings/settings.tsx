@@ -24,6 +24,7 @@ import {
     resetSettings
 } from "../../../endpoint/guildSettings";
 import { INFO_TEXT } from "./settings_resource";
+import { Loading } from "../../../components/loading/loading";
 
 const SettingsTitleTooltip = ({ infoKey }: { infoKey: string }) => (
     <OverlayTrigger
@@ -173,7 +174,7 @@ export class SettingsRoute extends Component<
     render() {
         const { settings } = this.state;
         if (!settings) {
-            return <></>;
+            return <Loading />;
         }
 
         return (

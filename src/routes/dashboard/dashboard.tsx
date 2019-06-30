@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LinkContainer } from "react-router-bootstrap";
 import "./dashboard.css";
 import { getToken } from "../../endpoint/utils";
+import { Loading } from "../../components/loading/loading";
 
 type GenericGuildRouteProps = { guild: Guild } & any;
 
@@ -70,7 +71,7 @@ export class Dashboard extends React.Component<
         }
 
         if (!selfUser) {
-            return <FontAwesomeIcon icon="spinner" spin />;
+            return <Loading />;
         }
 
         const selectedGuild = selfUser.guilds.find(
