@@ -11,6 +11,7 @@ import { SelfUser } from "./entities/selfUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { clearToken, getToken } from "./endpoint/utils";
 import { fetchSelfUser } from "./endpoint/selfUser";
+import { FAQ } from "./routes/faq/faq";
 
 export type SelfUserProps = { selfUser?: SelfUser };
 
@@ -113,6 +114,7 @@ class App extends Component<{}, { selfUser?: SelfUser }> {
                     <Switch>
                         <Route exact={true} path="/" component={Home} />
                         <Route path="/commands" component={Commands} />
+                        <Route path="/faq" component={FAQ} />
                         <Route path="/login" component={Login} />
                         <Route
                             path="/dashboard/:guildId"
