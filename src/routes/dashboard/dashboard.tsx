@@ -3,7 +3,7 @@ import { Redirect, Route, RouteComponentProps } from "react-router";
 import { Guild } from "../../entities/guild";
 import { SettingsRoute } from "./settings/settings";
 import { routeToOauth, notifyError } from "../../utils";
-import { SelfUserProps } from "../../App";
+import { SelfUserProps } from "../../app";
 import { Modal, Button, Container, Row, Col, ListGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LinkContainer } from "react-router-bootstrap";
