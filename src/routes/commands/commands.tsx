@@ -39,7 +39,7 @@ export const Commands = (props: {}) => (
                             </Card.Subtitle>
                             <Card.Text>{command.description}</Card.Text>
                             <OverlayTrigger
-                                trigger="click"
+                                trigger="focus"
                                 placement="top"
                                 overlay={usagesOverlay}
                             >
@@ -50,7 +50,7 @@ export const Commands = (props: {}) => (
                                 </Card.Link>
                             </OverlayTrigger>
                             <OverlayTrigger
-                                trigger="click"
+                                trigger="focus"
                                 placement="top"
                                 overlay={examplesOverlay}
                             >
