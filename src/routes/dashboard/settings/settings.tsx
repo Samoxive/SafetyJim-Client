@@ -7,7 +7,7 @@ import {
 } from "../../../utils";
 import "./settings.css";
 import {
-    Tooltip,
+    // Tooltip,
     OverlayTrigger,
     Col,
     Form,
@@ -25,19 +25,7 @@ import {
 } from "../../../endpoint/guildSettings";
 import { INFO_TEXT } from "./settings_resource";
 import { Loading } from "../../../components/loading/loading";
-
-const SettingsTitleTooltip = ({ infoKey }: { infoKey: string }) => (
-    <OverlayTrigger
-        placement="auto"
-        overlay={
-            <Tooltip id={`settings-tooltip-${infoKey}`}>
-                {INFO_TEXT[infoKey]}
-            </Tooltip>
-        }
-    >
-        <FontAwesomeIcon icon="info-circle" style={{ marginLeft: "4px" }} />
-    </OverlayTrigger>
-);
+import Markdown from "react-markdown";
 
 type SettingsGroupProps = {
     children: React.ReactChild[] | React.ReactChild;
@@ -48,9 +36,14 @@ type SettingsGroupProps = {
 const SettingsGroup = ({ children, title, infoKey }: SettingsGroupProps) => (
     <Form className="setting-group">
         <Form.Row>
-            <h5>
-                {title} <SettingsTitleTooltip infoKey={infoKey} />
-            </h5>
+            <h5>{title}</h5>
+        </Form.Row>
+        <Form.Row>
+            <h6>
+                <small className="text-muted setting-tooltip">
+                    <Markdown source={INFO_TEXT[infoKey]} />
+                </small>
+            </h6>
         </Form.Row>
         {children}
     </Form>
