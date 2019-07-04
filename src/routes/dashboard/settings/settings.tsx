@@ -184,7 +184,7 @@ export class SettingsRoute extends Component<
                         </Form.Group>
 
                         <Form.Group as={Col}>
-                            <Form.Label>Channel</Form.Label>
+                            <Form.Label>Log Channel</Form.Label>
                             <Form.Control
                                 as="select"
                                 onChange={this.onModLogChannel}
@@ -202,7 +202,7 @@ export class SettingsRoute extends Component<
                 <SettingsGroup title="Prefix Settings" infoKey="prefix">
                     <Form.Row>
                         <Form.Group as={Col}>
-                            <Form.Label>No Space</Form.Label>
+                            <Form.Label>No Space Prefix</Form.Label>
                             <Form.Check
                                 type="checkbox"
                                 defaultChecked={settings.noSpacePrefix}
