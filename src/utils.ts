@@ -1,5 +1,5 @@
 import environment from "./environment";
-const cogoToast = require("cogo-toast");
+import cogoToast from "cogo-toast";
 
 export function notifyError(heading: string, message: string) {
     cogoToast.error(message, { position: "top-right", heading });
