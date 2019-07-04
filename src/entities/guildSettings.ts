@@ -2,26 +2,6 @@ import { Channel } from "./channel";
 import { Guild } from "./guild";
 import { Role } from "./role";
 
-export function isGuildSettingsValid(settings: GuildSettings): boolean {
-    if (!settings.holdingRoomRole) {
-        if (settings.holdingRoom || settings.joinCaptcha) {
-            return false;
-        }
-    }
-
-    if (settings.holdingRoom && settings.joinCaptcha) {
-        return false;
-    }
-
-    return Boolean(
-        settings.holdingRoomMinutes ===
-            Math.floor(settings.holdingRoomMinutes) &&
-            settings.holdingRoomMinutes > 0 &&
-            settings.prefix &&
-            settings.message
-    );
-}
-
 export interface GuildSettings {
     guild: Guild;
     channels: Channel[];
@@ -40,4 +20,6 @@ export interface GuildSettings {
     noSpacePrefix: boolean;
     statistics: boolean;
     joinCaptcha: boolean;
+    silentCommandsLevel: number;
+    modActionConfirmationMessage: boolean;
 }
