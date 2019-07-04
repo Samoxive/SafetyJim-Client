@@ -144,6 +144,14 @@ export class SettingsRoute extends Component<
         this.onSetting("joinCaptcha", enabled)
     );
 
+    onSilentCommandsLevel = integerListener(level =>
+        this.onSetting("silentCommandsLevel", level)
+    );
+
+    onModActionConfirmationMessage = booleanListener(enabled => {
+        this.onSetting("modActionConfirmationMessage", enabled);
+    });
+
     onSave = () => {
         const { settings } = this.state;
         const { guild } = this.props;
@@ -341,6 +349,27 @@ export class SettingsRoute extends Component<
                                 defaultChecked={settings.silentCommands}
                                 onChange={this.onSilentCommands}
                             />
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>Confirmation Message</Form.Label>
+                            <Form.Check
+                                type="checkbox"
+                                defaultChecked={
+                                    settings.modActionConfirmationMessage
+                                }
+                                onChange={this.onModActionConfirmationMessage}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>Silence Level</Form.Label>
+                            <Form.Control
+                                as="select"
+                                onChange={this.onSilentCommandsLevel}
+                                value={settings.silentCommandsLevel + ""}
+                            >
+                                <option value={0}>Moderation only</option>
+                                <option value={1}>All</option>
+                            </Form.Control>
                         </Form.Group>
                     </Form.Row>
                 </SettingsGroup>

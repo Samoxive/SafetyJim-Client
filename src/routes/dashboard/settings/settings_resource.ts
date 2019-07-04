@@ -12,7 +12,9 @@ export const INFO_TEXT: { [index: string]: string } = {
     prefix:
         "If **No Space Prefix** is enabled, Jim's commands can be issued without a space between command and the prefix (if prefix is set to `/`, example usage will be `/ban`).",
     silentCommands:
-        "If enabled, the command message user sent will be deleted if the command was a moderation action like ban, kick or warning.",
+        "If enabled, the command message user sent will be deleted after command has been executed (messages with content like `-mod ping`).\n\n" +
+        "By default only moderation commands like ban, kick or warning will be deleted, this can be changed to delete all command messages through **Level** setting.\n\n" +
+        "After each moderation command Jim sends a confirmation message like \"Banned Lowestofthelow#5084 (408770622957551616) (Indefinitely)\", this message can be disable via **Confirmation Message** setting.",
     statistics:
         "Enabling this will allow Jim to collect statistics about your server. Jim never stores message contents. This setting isn't open to the public yet as it's a work-in-progress."
 };
