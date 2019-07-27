@@ -14,21 +14,3 @@ export function routeToOauth(route?: string) {
     }
     window.location.href = url;
 }
-
-export function booleanListener(listener: (value: boolean) => any) {
-    return (event: any) => {
-        listener(event.target.checked);
-    };
-}
-
-export function stringListener(listener: (value: string) => any) {
-    return (event: any) => {
-        listener(event.target.value);
-    };
-}
-
-export function integerListener(listener: (value: number) => any) {
-    return (event: any) => {
-        listener(Math.floor(parseInt(event.target.value)));
-    };
-}
