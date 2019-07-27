@@ -14,9 +14,11 @@ export const INFO_TEXT: { [index: string]: string } = {
     silentCommands:
         "If enabled, the command message user sent will be deleted after command has been executed (messages with content like `-mod ping`).\n\n" +
         "By default only moderation commands like ban, kick or warning will be deleted, this can be changed to delete all command messages through **Level** setting.\n\n" +
-        "After each moderation command Jim sends a confirmation message like \"Banned Lowestofthelow#5084 (408770622957551616) (Indefinitely)\", this message can be disable via **Confirmation Message** setting.",
+        'After each moderation command Jim sends a confirmation message like "Banned Lowestofthelow#5084 (408770622957551616) (Indefinitely)", this message can be disable via **Confirmation Message** setting.',
     statistics:
         "Enabling this will allow Jim to collect statistics about your server. Jim never stores message contents. This setting isn't open to the public yet as it's a work-in-progress.",
     wordFilter:
-        "Yadda yadda yadda."
+        "Enabling this will make Jim scan every message for blacklisted words (swear words by default) and remove offending messages. Setting filter level to `High` will result in a deeper search within words but it can increase false positives.\n\n" +
+        "Blacklisted word list can also be customized, by default Jim uses a list of English swear words (you can find the list [here](https://raw.githubusercontent.com/Samoxive/Google-profanity-words/master/list.txt))\n\n" +
+        "You can also choose a specific action to be taken after message is removed, for `Mute` and `Ban` actions some time duration can be set to make them temporary (set duration to 0 to make them permanent)."
 };
