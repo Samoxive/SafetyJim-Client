@@ -205,7 +205,7 @@ export class ModActionSelect extends React.Component<ModActionSelectProps> {
         const durationPicker = isActionTimed ? (
             <>
                 <IntegerSelect
-                    label="Type"
+                    label="Time Unit"
                     defaultOption={defaultDurationType}
                     options={[
                         [C.DURATION_TYPE_SECONDS, "Seconds"],
