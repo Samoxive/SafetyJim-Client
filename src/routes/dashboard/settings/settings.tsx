@@ -1,21 +1,12 @@
 import * as React from "react";
 import { Guild } from "../../../entities/guild";
-import {
-    booleanListener,
-    stringListener,
-    integerListener
-} from "../../../utils";
 import "./settings.css";
-import {
-    // Tooltip,
-    OverlayTrigger,
-    Col,
-    Form,
-    Button,
-    Popover
-} from "react-bootstrap";
+import { OverlayTrigger, Form, Button, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { GuildSettings } from "../../../entities/guildSettings";
+import {
+    GuildSettings,
+    GuildSettingsConstants
+} from "../../../entities/guildSettings";
 import { Component } from "react";
 import { Channel } from "../../../entities/channel";
 import {
@@ -26,6 +17,17 @@ import {
 import { INFO_TEXT } from "./settings_resource";
 import { Loading } from "../../../components/loading/loading";
 import Markdown from "react-markdown";
+import {
+    Checkbox,
+    StringSelect,
+    IntegerSelect,
+    TextArea,
+    TextInput,
+    IntegerInput,
+    ModActionSelect
+} from "./form_utils";
+
+const C = GuildSettingsConstants;
 
 type SettingsGroupProps = {
     children: React.ReactChild[] | React.ReactChild;
@@ -60,12 +62,13 @@ export class SettingsRoute extends Component<
     };
 
     // onChange events can only fire when settings are fetched so we are sure that settings exist.
-    // We also don't care if user modified the DOM or did other things and managed to find a channel id that doesn't exist
-    findChannel = (state: SettingsRouteState, id: string): Channel =>
-        state.settings!.channels.find(channel => channel.id === id)!;
+    // We also don't care if user modified the DOM or did other things and managed to
+    // find a channel id that doesn't exist
+    findChannel = (id: string): Channel =>
+        this.state.settings!.channels.find(channel => channel.id === id)!;
 
-    findRole = (state: SettingsRouteState, id: string) => {
-        const role = state.settings!.roles.find(role => role.id === id);
+    findRole = (id: string) => {
+        const role = this.state.settings!.roles.find(role => role.id === id);
         return role || null;
     };
 
@@ -81,76 +84,66 @@ export class SettingsRoute extends Component<
             }
         }));
 
-    onModlog = booleanListener(enabled => this.onSetting("modLog", enabled));
-    onModLogChannel = stringListener((channelId: string) =>
-        this.setState(state => ({
-            settings: {
-                ...state.settings!,
-                modLogChannel: this.findChannel(state, channelId)
-            }
-        }))
-    );
+    onModlog = (enabled: boolean) => this.onSetting("modLog", enabled);
 
-    onHoldingRoom = booleanListener(enabled =>
-        this.onSetting("holdingRoom", enabled)
-    );
+    onModLogChannel = (channelId: string) =>
+        this.onSetting("modLogChannel", this.findChannel(channelId));
 
-    onHoldingRoomRole = stringListener((roleId: string) =>
-        this.setState(state => ({
-            settings: {
-                ...state.settings!,
-                holdingRoomRole: this.findRole(state, roleId)
-            }
-        }))
-    );
+    onHoldingRoom = (enabled: boolean) =>
+        this.onSetting("holdingRoom", enabled);
 
-    onHoldingRoomMinutes = integerListener(minutes =>
-        this.onSetting("holdingRoomMinutes", minutes)
-    );
+    onHoldingRoomRole = (roleId: string) =>
+        this.onSetting("holdingRoomRole", this.findRole(roleId));
 
-    onInviteLinkRemover = booleanListener(enabled =>
-        this.onSetting("inviteLinkRemover", enabled)
-    );
+    onHoldingRoomMinutes = (minutes: number) =>
+        this.onSetting("holdingRoomMinutes", minutes);
 
-    onWelcomeMessage = booleanListener(enabled =>
-        this.onSetting("welcomeMessage", enabled)
-    );
+    onInviteLinkRemover = (enabled: boolean) =>
+        this.onSetting("inviteLinkRemover", enabled);
 
-    onMessage = stringListener(message => this.onSetting("message", message));
+    onWelcomeMessage = (enabled: boolean) =>
+        this.onSetting("welcomeMessage", enabled);
 
-    onWelcomeMessageChannel = stringListener((channelId: string) =>
-        this.setState(state => ({
-            settings: {
-                ...state.settings!,
-                welcomeMessageChannel: this.findChannel(state, channelId)
-            }
-        }))
-    );
-    onPrefix = stringListener(message => this.onSetting("prefix", message));
+    onMessage = (message: string) => this.onSetting("message", message);
 
-    onSilentCommands = booleanListener(enabled =>
-        this.onSetting("silentCommands", enabled)
-    );
+    onWelcomeMessageChannel = (channelId: string) =>
+        this.onSetting("welcomeMessageChannel", this.findChannel(channelId));
 
-    onNoSpacePrefix = booleanListener(enabled =>
-        this.onSetting("noSpacePrefix", enabled)
-    );
+    onPrefix = (message: string) => this.onSetting("prefix", message);
 
-    onStatistics = booleanListener(enabled =>
-        this.onSetting("statistics", enabled)
-    );
+    onSilentCommands = (enabled: boolean) =>
+        this.onSetting("silentCommands", enabled);
 
-    onJoinCaptcha = booleanListener(enabled =>
-        this.onSetting("joinCaptcha", enabled)
-    );
+    onNoSpacePrefix = (enabled: boolean) =>
+        this.onSetting("noSpacePrefix", enabled);
 
-    onSilentCommandsLevel = integerListener(level =>
-        this.onSetting("silentCommandsLevel", level)
-    );
+    onStatistics = (enabled: boolean) => this.onSetting("statistics", enabled);
 
-    onModActionConfirmationMessage = booleanListener(enabled => {
+    onJoinCaptcha = (enabled: boolean) =>
+        this.onSetting("joinCaptcha", enabled);
+
+    onSilentCommandsLevel = (level: number) =>
+        this.onSetting("silentCommandsLevel", level);
+
+    onModActionConfirmationMessage = (enabled: boolean) =>
         this.onSetting("modActionConfirmationMessage", enabled);
-    });
+
+    onWordFilter = (enabled: boolean) => this.onSetting("wordFilter", enabled);
+
+    onWordFilterBlacklist = (wordFilterBlacklist: string) =>
+        this.onSetting("wordFilterBlacklist", wordFilterBlacklist);
+
+    onWordFilterLevel = (level: number) =>
+        this.onSetting("wordFilterLevel", level);
+
+    onWordFilterAction = (action: number) =>
+        this.onSetting("wordFilterAction", action);
+
+    onWordFilterActionDuration = (duration: number) =>
+        this.onSetting("wordFilterActionDuration", duration);
+
+    onWordFilterActionDurationType = (type: number) =>
+        this.onSetting("wordFilterActionDurationType", type);
 
     onSave = () => {
         const { settings } = this.state;
@@ -158,12 +151,11 @@ export class SettingsRoute extends Component<
         updateSettings(guild, settings!);
     };
 
-    onReset = () => {
+    onReset = async () => {
         const { guild } = this.props;
-        resetSettings(guild);
-        fetchSettings(this.props.guild).then(settings =>
-            this.setState({ settings })
-        );
+        await resetSettings(guild);
+        const settings = await fetchSettings(this.props.guild);
+        this.setState({ settings });
     };
 
     componentDidMount() {
@@ -182,50 +174,37 @@ export class SettingsRoute extends Component<
             <div className="setting-groups">
                 <SettingsGroup title="Moderator Log" infoKey="modLog">
                     <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Label>Enable</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                defaultChecked={settings.modLog}
-                                onChange={this.onModlog}
-                            />
-                        </Form.Group>
+                        <Checkbox
+                            label="Enable"
+                            defaultValue={settings.modLog}
+                            onChange={this.onModlog}
+                        />
 
-                        <Form.Group as={Col}>
-                            <Form.Label>Log Channel</Form.Label>
-                            <Form.Control
-                                as="select"
-                                onChange={this.onModLogChannel}
-                                value={settings.modLogChannel.id}
-                            >
-                                {settings.channels.map(channel => (
-                                    <option key={channel.id} value={channel.id}>
-                                        {channel.name}
-                                    </option>
-                                ))}
-                            </Form.Control>
-                        </Form.Group>
+                        <StringSelect
+                            label="Log Channel"
+                            defaultOption={settings.modLogChannel.id}
+                            onSelect={this.onModLogChannel}
+                            options={settings.channels.map(channel => [
+                                channel.id,
+                                channel.name
+                            ])}
+                        />
                     </Form.Row>
                 </SettingsGroup>
                 <SettingsGroup title="Prefix Settings" infoKey="prefix">
                     <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Label>No Space Prefix</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                defaultChecked={settings.noSpacePrefix}
-                                onChange={this.onNoSpacePrefix}
-                            />
-                        </Form.Group>
+                        <Checkbox
+                            label="No Space Prefix"
+                            defaultValue={settings.noSpacePrefix}
+                            onChange={this.onNoSpacePrefix}
+                        />
 
-                        <Form.Group as={Col}>
-                            <Form.Label>Prefix</Form.Label>
-                            <Form.Control
-                                placeholder="-mod"
-                                value={settings.prefix}
-                                onChange={this.onPrefix}
-                            />
-                        </Form.Group>
+                        <TextInput
+                            label="Prefix"
+                            placeholder="-mod"
+                            defaultValue={settings.prefix}
+                            onChange={this.onPrefix}
+                        />
                     </Form.Row>
                 </SettingsGroup>
                 <SettingsGroup
@@ -233,187 +212,184 @@ export class SettingsRoute extends Component<
                     infoKey="welcomeMessage"
                 >
                     <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Label>Enable</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                defaultChecked={settings.welcomeMessage}
-                                onChange={this.onWelcomeMessage}
-                            />
-                        </Form.Group>
+                        <Checkbox
+                            label="Enable"
+                            defaultValue={settings.welcomeMessage}
+                            onChange={this.onWelcomeMessage}
+                        />
 
-                        <Form.Group as={Col}>
-                            <Form.Label>Channel</Form.Label>
-                            <Form.Control
-                                as="select"
-                                value={settings.welcomeMessageChannel.id}
-                                onChange={this.onWelcomeMessageChannel}
-                            >
-                                {settings.channels.map(channel => (
-                                    <option key={channel.id} value={channel.id}>
-                                        {channel.name}
-                                    </option>
-                                ))}
-                            </Form.Control>
-                        </Form.Group>
+                        <StringSelect
+                            label="Channel"
+                            defaultOption={settings.welcomeMessageChannel.id}
+                            onSelect={this.onWelcomeMessageChannel}
+                            options={settings.channels.map(channel => [
+                                channel.id,
+                                channel.name
+                            ])}
+                        />
                     </Form.Row>
 
                     <Form.Row>
-                        <Form.Group style={{ width: "100%" }}>
-                            <Form.Label>Message</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows="3"
-                                value={settings.message}
-                                onChange={this.onMessage}
-                            />
-                        </Form.Group>
+                        <TextArea
+                            label="Message"
+                            defaultValue={settings.message}
+                            placeholder="Welcome to $guild $user!"
+                            rows={3}
+                            onChange={this.onMessage}
+                        />
                     </Form.Row>
                 </SettingsGroup>
                 <SettingsGroup title="Holding Room" infoKey="holdingRoom">
                     <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Label>Enable</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                defaultChecked={settings.holdingRoom}
-                                onChange={this.onHoldingRoom}
-                            />
-                        </Form.Group>
+                        <Checkbox
+                            label="Enable"
+                            defaultValue={settings.holdingRoom}
+                            onChange={this.onHoldingRoom}
+                        />
 
-                        <Form.Group as={Col}>
-                            <Form.Label>Role</Form.Label>
-                            <Form.Control
-                                as="select"
-                                value={
-                                    settings.holdingRoomRole
-                                        ? settings.holdingRoomRole.id
-                                        : "none"
-                                }
-                                onChange={this.onHoldingRoomRole}
-                            >
-                                {[
-                                    <option key="none" value="none">
-                                        None
-                                    </option>,
-                                    ...settings.roles.map(role => (
-                                        <option key={role.id} value={role.id}>
-                                            {role.name}
-                                        </option>
-                                    ))
-                                ]}
-                            </Form.Control>
-                        </Form.Group>
+                        <StringSelect
+                            label="Role"
+                            defaultOption={
+                                settings.holdingRoomRole
+                                    ? settings.holdingRoomRole.id
+                                    : "none"
+                            }
+                            onSelect={this.onHoldingRoomRole}
+                            options={[
+                                ["none", "None"],
+                                ...settings.roles.map(
+                                    role =>
+                                        [role.id, role.name] as [string, string]
+                                )
+                            ]}
+                        />
 
-                        <Form.Group as={Col}>
-                            <Form.Label>Minutes</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={`${settings.holdingRoomMinutes}`}
-                                onChange={this.onHoldingRoomMinutes}
-                            />
-                        </Form.Group>
+                        <IntegerInput
+                            label="Minutes"
+                            defaultValue={settings.holdingRoomMinutes}
+                            onChange={this.onHoldingRoomMinutes}
+                        />
                     </Form.Row>
                 </SettingsGroup>
                 <SettingsGroup title="Join Captcha" infoKey="joinCaptcha">
                     <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Label>Enable</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                style={{ marginBottom: "30px" }}
-                                defaultChecked={settings.joinCaptcha}
-                                onChange={this.onJoinCaptcha}
-                            />
-                        </Form.Group>
+                        <Checkbox
+                            label="Enable"
+                            defaultValue={settings.joinCaptcha}
+                            onChange={this.onJoinCaptcha}
+                        />
                     </Form.Row>
                 </SettingsGroup>
                 <SettingsGroup title="Invite Link Remover" infoKey="inviteLink">
                     <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Label>Enable</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                defaultChecked={settings.inviteLinkRemover}
-                                onChange={this.onInviteLinkRemover}
-                            />
-                        </Form.Group>
+                        <Checkbox
+                            label="Enable"
+                            defaultValue={settings.inviteLinkRemover}
+                            onChange={this.onInviteLinkRemover}
+                        />
                     </Form.Row>
                 </SettingsGroup>
                 <SettingsGroup title="Silent Commands" infoKey="silentCommands">
                     <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Label>Enable</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                defaultChecked={settings.silentCommands}
-                                onChange={this.onSilentCommands}
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col}>
-                            <Form.Label>Confirmation Message</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                defaultChecked={
-                                    settings.modActionConfirmationMessage
-                                }
-                                onChange={this.onModActionConfirmationMessage}
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col}>
-                            <Form.Label>Silence Level</Form.Label>
-                            <Form.Control
-                                as="select"
-                                onChange={this.onSilentCommandsLevel}
-                                value={settings.silentCommandsLevel + ""}
-                            >
-                                <option value={0}>Moderation only</option>
-                                <option value={1}>All</option>
-                            </Form.Control>
-                        </Form.Group>
+                        <Checkbox
+                            label="Enable"
+                            defaultValue={settings.silentCommands}
+                            onChange={this.onSilentCommands}
+                        />
+                        <Checkbox
+                            label="Confirmation Message"
+                            defaultValue={settings.modActionConfirmationMessage}
+                            onChange={this.onModActionConfirmationMessage}
+                        />
+                        <IntegerSelect
+                            label="Silence Level"
+                            defaultOption={settings.silentCommandsLevel}
+                            onSelect={this.onSilentCommandsLevel}
+                            options={[
+                                [C.SILENT_COMMANDS_MOD_ONLY, "Moderation Only"],
+                                [C.SILENT_COMMANDS_ALL, "All"]
+                            ]}
+                        />
                     </Form.Row>
                 </SettingsGroup>
                 <SettingsGroup title="Statistics" infoKey="statistics">
                     <Form.Row>
-                        <Form.Group as={Col}>
-                            <Form.Label>Enable</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                disabled
-                                defaultChecked={settings.statistics}
-                                onChange={this.onStatistics}
-                            />
-                        </Form.Group>
+                        <Checkbox
+                            label="Enable"
+                            defaultValue={settings.statistics}
+                            onChange={this.onStatistics}
+                        />
+                    </Form.Row>
+                </SettingsGroup>
+                <SettingsGroup title="Word Filter" infoKey="wordFilter">
+                    <Form.Row>
+                        <Checkbox
+                            label="Enable"
+                            defaultValue={settings.wordFilter}
+                            onChange={this.onWordFilter}
+                        />
+                        <IntegerSelect
+                            label="Filter Level"
+                            defaultOption={settings.wordFilterLevel}
+                            onSelect={this.onWordFilterLevel}
+                            options={[
+                                [C.WORD_FILTER_LEVEL_LOW, "Low"],
+                                [C.WORD_FILTER_LEVEL_HIGH, "High"]
+                            ]}
+                        />
+                    </Form.Row>
+                    <Form.Row>
+                        <TextArea
+                            label="Blacklisted Words"
+                            defaultValue={settings.wordFilterBlacklist || ""}
+                            placeholder="Using Jim's default list..."
+                            rows={3}
+                            onChange={this.onWordFilterBlacklist}
+                        />
+                    </Form.Row>
+                    <Form.Row>
+                        <ModActionSelect
+                            defaultAction={settings.wordFilterAction}
+                            defaultDuration={settings.wordFilterActionDuration}
+                            defaultDurationType={
+                                settings.wordFilterActionDurationType
+                            }
+                            onAction={this.onWordFilterAction}
+                            onDuration={this.onWordFilterActionDuration}
+                            onDurationType={this.onWordFilterActionDurationType}
+                        />
                     </Form.Row>
                 </SettingsGroup>
                 <Form.Row style={{ height: "16px" }} />
-                <OverlayTrigger
-                    trigger={["click", "focus"]}
-                    placement="auto"
-                    overlay={
-                        <Popover
-                            id="settings-reset-popover"
-                            title="Are you sure?"
-                        >
-                            <Button variant="danger" onClick={this.onReset}>
-                                <FontAwesomeIcon
-                                    icon="exclamation-triangle"
-                                    style={{ marginRight: "4px" }}
-                                />
-                                Reset Settings
-                            </Button>
-                        </Popover>
-                    }
-                >
-                    <Button variant="danger">Reset</Button>
-                </OverlayTrigger>
-                <Button
-                    variant="primary"
-                    onClick={this.onSave}
-                    style={{ marginLeft: "8px" }}
-                >
-                    Save
-                </Button>
+                <Form.Row style={{ justifyContent: "center" }}>
+                    <OverlayTrigger
+                        trigger={["click", "focus"]}
+                        placement="auto"
+                        overlay={
+                            <Popover
+                                id="settings-reset-popover"
+                                title="Are you sure?"
+                            >
+                                <Button variant="danger" onClick={this.onReset}>
+                                    <FontAwesomeIcon
+                                        icon="exclamation-triangle"
+                                        style={{ marginRight: "4px" }}
+                                    />
+                                    Reset Settings
+                                </Button>
+                            </Popover>
+                        }
+                    >
+                        <Button variant="danger">Reset</Button>
+                    </OverlayTrigger>
+                    <Button
+                        variant="primary"
+                        onClick={this.onSave}
+                        style={{ marginLeft: "8px" }}
+                    >
+                        Save
+                    </Button>
+                </Form.Row>
             </div>
         );
     }
