@@ -102,24 +102,6 @@ export class Dashboard extends React.Component<
                                     Settings
                                 </ListGroup.Item>
                             </LinkContainer>
-                            <LinkContainer to={`/dashboard/${guildId}/#`}>
-                                <ListGroup.Item>
-                                    <FontAwesomeIcon
-                                        icon="cog"
-                                        style={{ marginRight: "4px" }}
-                                    />
-                                    Super Ultra Long Dummy
-                                </ListGroup.Item>
-                            </LinkContainer>
-                            <LinkContainer to={`/dashboard/${guildId}/##`}>
-                                <ListGroup.Item>
-                                    <FontAwesomeIcon
-                                        icon="cog"
-                                        style={{ marginRight: "4px" }}
-                                    />
-                                    Dummy
-                                </ListGroup.Item>
-                            </LinkContainer>
                         </ListGroup>
                     </Col>
                     <Col xs="12" md="9" lg="10">
