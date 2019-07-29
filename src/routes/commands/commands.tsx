@@ -2,9 +2,14 @@ import { Card, Popover, OverlayTrigger, Button } from "react-bootstrap";
 import * as React from "react";
 import "./commands.css";
 import { commands } from "./commands_resource";
+import { MetaTag } from "../../components/meta_tag";
 
 export const Commands = (props: {}) => (
     <div style={{ margin: "8px 8px 8px 8px" }} className="commands">
+        <MetaTag
+            title="Safety Jim - Commands"
+            description="Commands and stuff"
+        />
         {commands
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(command => {
