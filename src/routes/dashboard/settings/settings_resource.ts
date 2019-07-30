@@ -18,7 +18,7 @@ export const INFO_TEXT: { [index: string]: string } = {
     statistics:
         "Enabling this will allow Jim to collect statistics about your server. Jim never stores message contents. This setting isn't open to the public yet as it's a work-in-progress.",
     wordFilter:
-        "Enabling this will make Jim scan every message for blacklisted words (swear words by default) and remove offending messages. Setting filter level to `High` will result in a deeper search within words but it can increase false positives.\n\n" +
-        "Blacklisted word list can also be customized, by default Jim uses a list of English swear words (you can find the list [here](https://raw.githubusercontent.com/Samoxive/Google-profanity-words/master/list.txt))\n\n" +
-        "You can also choose a specific action to be taken after message is removed, for `Mute` and `Ban` actions some time duration can be set to make them temporary (set duration to 0 to make them permanent)."
+        "Enabling this will make Jim scan every message for blacklisted words (swear words by default) and remove offending messages. Setting **Filter Level** to `High` will result in a deeper search within words but it can increase false positives.\n\n" +
+        "Blacklisted word list can also be customized, by default Jim uses a list of English swear words (you can find the list [here](https://raw.githubusercontent.com/Samoxive/Google-profanity-words/master/list.txt)). Each word in blacklist needs to be **comma seperated**.\n\n" +
+        "You can also choose a specific action to be taken after message is removed, for `Mute` and `Ban` actions some time duration can be set to make them temporary actions (set **Duration** to 0 to make them permanent)."
 };
