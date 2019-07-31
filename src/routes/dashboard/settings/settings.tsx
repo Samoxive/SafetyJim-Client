@@ -145,6 +145,13 @@ export class SettingsRoute extends Component<
     onWordFilterActionDurationType = (type: number) =>
         this.onSetting("wordFilterActionDurationType", type);
 
+    onInviteLinkRemoverAction = (action: number) =>
+        this.onSetting("inviteLinkRemoverAction", action);
+    onInviteLinkRemoverActionDuration = (duration: number) =>
+        this.onSetting("inviteLinkRemoverActionDuration", duration);
+    onInviteLinkRemoverActionDurationType = (type: number) =>
+        this.onSetting("inviteLinkRemoverActionDurationType", type);
+
     onSave = () => {
         const { settings } = this.state;
         const { guild } = this.props;
@@ -286,6 +293,20 @@ export class SettingsRoute extends Component<
                             label="Enable"
                             defaultValue={settings.inviteLinkRemover}
                             onChange={this.onInviteLinkRemover}
+                        />
+                        <ModActionSelect
+                            defaultAction={settings.inviteLinkRemoverAction}
+                            defaultDuration={
+                                settings.inviteLinkRemoverActionDuration
+                            }
+                            defaultDurationType={
+                                settings.inviteLinkRemoverActionDurationType
+                            }
+                            onAction={this.onInviteLinkRemoverAction}
+                            onDuration={this.onInviteLinkRemoverActionDuration}
+                            onDurationType={
+                                this.onInviteLinkRemoverActionDurationType
+                            }
                         />
                     </Form.Row>
                 </SettingsGroup>

@@ -46,4 +46,7 @@ export interface GuildSettings {
     wordFilterAction: number;
     wordFilterActionDuration: number;
     wordFilterActionDurationType: number;
+    inviteLinkRemoverAction: number;
+    inviteLinkRemoverActionDuration: number;
+    inviteLinkRemoverActionDurationType: number;
 }

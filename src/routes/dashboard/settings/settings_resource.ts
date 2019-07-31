@@ -6,7 +6,8 @@ export const INFO_TEXT: { [index: string]: string } = {
     joinCaptcha:
         "Enabling this will cause Jim to send a captcha challenge to new members to get the role specified in holding room setting. Cannot be used while **Holding Room** is enabled.",
     inviteLink:
-        "Enabling this will remove messages that contain any discord invite links, it will also kick new members that have an invite link as their username. Members with moderation related permissions will be allowed to send links.",
+        "Enabling this will remove messages that contain any discord invite links, it will also kick new members that have an invite link as their username. Members with moderation related permissions will be allowed to send links.\n\n" +
+        "You can also choose a specific action to be taken after message is removed, for `Mute` and `Ban` actions some time duration can be set to make them temporary actions (set **Duration** to 0 to make them permanent).",
     welcomeMessage:
         "Enabling this will make Jim welcome new members by messaging in specified channel. The welcome message can be customized. Placeholders `$user` and `$guild` can be used to message member's and your server's name.\n\nIf holding room is enabled, `$minute` placeholder can be used to specify the time left until they get their role assigned.",
     prefix:
