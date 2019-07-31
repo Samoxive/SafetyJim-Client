@@ -10,7 +10,8 @@ interface Command {
 export const commands: Command[] = [
     {
         name: "Ban",
-        tooltip: "Bans the specified user but does not delete their recent messages",
+        tooltip:
+            "Bans the specified user but does not delete their recent messages",
         quick: "-mod ban @Samoxive#1234 Spam | 3 days",
         description:
             "Bans the specified user, if additional text follows the identifier, " +
@@ -117,7 +118,8 @@ export const commands: Command[] = [
     },
     {
         name: "Softban",
-        tooltip: "Bans, then unbans, the specified user, deleting their recent messages",
+        tooltip:
+            "Bans, then unbans, the specified user, deleting their recent messages",
         quick: "-mod softban @Samoxive#1234 Spamming nsfw pictures",
         description:
             "Bans the specified user, then unbans them afterwards, effectively kicking them. This deletes " +
@@ -137,28 +139,6 @@ export const commands: Command[] = [
             "-mod softban @Samoxive#1234 Spamming | 3",
             "-mod softban Samoxive For reasons unknown",
             "-mod softban 145456746721312768 | 6"
-        ]
-    },
-    {
-        name: "Settings",
-        tooltip: "Modify or view server specific settings",
-        quick: "-mod settings set InviteLinkRemover enabled",
-        description:
-            "This command has multiple subcommands, to view current state of server wide settings, " +
-            "use the subcommand `display`. To change settings, you can use the subcommand `set` with a setting's key " +
-            "and its new value. To view the settings' keys, and their possible values, use the subcommand `list`. " +
-            "You can also use the subcommand `reset`, with no arguments, to revert every setting to its default value.",
-        usages: [
-            "-mod settings display",
-            "-mod settings list",
-            "-mod settings set <setting key> <value>",
-            "-mod settings reset"
-        ],
-        examples: [
-            "-mod settings display",
-            "-mod settings list",
-            "-mod settings set Prefix -jim",
-            "-mod settings reset"
         ]
     },
     {
