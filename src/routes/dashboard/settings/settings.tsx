@@ -24,7 +24,8 @@ import {
     TextArea,
     TextInput,
     IntegerInput,
-    ModActionSelect
+    ModActionSelect,
+    PrivacySelect
 } from "./form_utils";
 
 const C = GuildSettingsConstants;
@@ -147,10 +148,17 @@ export class SettingsRoute extends Component<
 
     onInviteLinkRemoverAction = (action: number) =>
         this.onSetting("inviteLinkRemoverAction", action);
+
     onInviteLinkRemoverActionDuration = (duration: number) =>
         this.onSetting("inviteLinkRemoverActionDuration", duration);
+
     onInviteLinkRemoverActionDurationType = (type: number) =>
         this.onSetting("inviteLinkRemoverActionDurationType", type);
+
+    onPrivacySettings = (mode: number) =>
+        this.onSetting("privacySettings", mode);
+
+    onPrivacyModLog = (mode: number) => this.onSetting("privacyModLog", mode);
 
     onSave = () => {
         const { settings } = this.state;
@@ -378,6 +386,20 @@ export class SettingsRoute extends Component<
                             onAction={this.onWordFilterAction}
                             onDuration={this.onWordFilterActionDuration}
                             onDurationType={this.onWordFilterActionDurationType}
+                        />
+                    </Form.Row>
+                </SettingsGroup>
+                <SettingsGroup title="Privacy" infoKey="privacy">
+                    <Form.Row>
+                        <PrivacySelect
+                            label="Settings"
+                            defaultPrivacy={settings.privacySettings}
+                            onPrivacy={this.onPrivacySettings}
+                        />
+                        <PrivacySelect
+                            label="Moderator Log"
+                            defaultPrivacy={settings.privacyModLog}
+                            onPrivacy={this.onPrivacyModLog}
                         />
                     </Form.Row>
                 </SettingsGroup>

@@ -249,3 +249,31 @@ export class ModActionSelect extends React.Component<ModActionSelectProps> {
         );
     }
 }
+
+type PrivacySelectProps = {
+    label: string;
+    defaultPrivacy: number;
+    onPrivacy: (mode: number) => void;
+};
+
+export class PrivacySelect extends React.Component<PrivacySelectProps> {
+    onPrivacy = (mode: number) => {
+        this.props.onPrivacy(mode);
+    };
+
+    render() {
+        const { label, defaultPrivacy } = this.props;
+        return (
+            <IntegerSelect
+                label={label}
+                defaultOption={defaultPrivacy}
+                onSelect={this.onPrivacy}
+                options={[
+                    [C.PRIVACY_EVERYONE, "Everyone"],
+                    [C.PRIVACY_STAFF_ONLY, "Staff only"],
+                    [C.PRIVACY_ADMIN_ONLY, "Administrators only"]
+                ]}
+            />
+        );
+    }
+}

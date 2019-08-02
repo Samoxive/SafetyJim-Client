@@ -17,7 +17,10 @@ export const GuildSettingsConstants = {
     DURATION_TYPE_SECONDS: 0,
     DURATION_TYPE_MINUTES: 1,
     DURATION_TYPE_HOURS: 2,
-    DURATION_TYPE_DAYS: 3
+    DURATION_TYPE_DAYS: 3,
+    PRIVACY_EVERYONE: 0,
+    PRIVACY_STAFF_ONLY: 1,
+    PRIVACY_ADMIN_ONLY: 2
 };
 
 export interface GuildSettings {
@@ -49,4 +52,6 @@ export interface GuildSettings {
     inviteLinkRemoverAction: number;
     inviteLinkRemoverActionDuration: number;
     inviteLinkRemoverActionDurationType: number;
+    privacySettings: number;
+    privacyModLog: number;
 }
