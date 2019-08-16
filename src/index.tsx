@@ -7,7 +7,10 @@ import {
     faSignOutAlt,
     faInfoCircle,
     faCog,
-    faExclamationTriangle
+    faFileAlt,
+    faHammer,
+    faExclamationCircle,
+    faMicrophoneSlash
 } from "@fortawesome/free-solid-svg-icons";
 import App from "./app";
 import * as serviceWorker from "./serviceWorker";
@@ -15,7 +18,10 @@ import * as serviceWorker from "./serviceWorker";
 library.add(faSignOutAlt);
 library.add(faInfoCircle);
 library.add(faCog);
-library.add(faExclamationTriangle);
+library.add(faFileAlt);
+library.add(faHammer);
+library.add(faExclamationCircle);
+library.add(faMicrophoneSlash);
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
