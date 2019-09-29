@@ -3,27 +3,27 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.21",
-        "@fortawesome/free-solid-svg-icons": "^5.10.1",
+        "@fortawesome/fontawesome-svg-core": "^1.2.25",
+        "@fortawesome/free-solid-svg-icons": "^5.11.2",
         "@fortawesome/react-fontawesome": "^0.1.4",
-        "@types/jest": "24.0.17",
-        "@types/node": "12.7.1",
-        "@types/react": "16.9.1",
-        "@types/react-dom": "16.8.5",
+        "@types/jest": "24.0.18",
+        "@types/node": "12.7.8",
+        "@types/react": "16.9.3",
+        "@types/react-dom": "16.9.1",
         "axios": "^0.19.0",
         "bootstrap": "^4.3.1",
-        "cogo-toast": "^3.2.1",
-        "query-string": "^6.8.2",
-        "react": "^16.9.0",
-        "react-bootstrap": "^1.0.0-beta.11",
-        "react-dom": "^16.9.0",
+        "cogo-toast": "^4.1.1",
+        "query-string": "^6.8.3",
+        "react": "^16.10.0",
+        "react-bootstrap": "^1.0.0-beta.12",
+        "react-dom": "^16.10.0",
         "react-helmet": "^5.2.1",
-        "react-markdown": "^4.1.0",
-        "react-router": "^5.0.1",
+        "react-markdown": "^4.2.2",
+        "react-router": "^5.1.1",
         "react-router-bootstrap": "^0.25.0",
-        "react-router-dom": "^5.0.1",
-        "react-scripts": "3.1.0",
-        "typescript": "3.5.3"
+        "react-router-dom": "^5.1.1",
+        "react-scripts": "3.1.2",
+        "typescript": "3.6.3"
     },
     "scripts": {
         "start": "react-scripts start",
@@ -42,10 +42,10 @@
         "not op_mini all"
     ],
     "devDependencies": {
-        "@types/react-helmet": "^5.0.9",
-        "@types/react-router": "^5.0.3",
+        "@types/react-helmet": "^5.0.11",
+        "@types/react-router": "^5.1.1",
         "@types/react-router-bootstrap": "^0.24.5",
-        "@types/react-router-dom": "^4.3.4",
-        "source-map-explorer": "^2.0.1"
+        "@types/react-router-dom": "^5.1.0",
+        "source-map-explorer": "^2.1.0"
     }
 }
