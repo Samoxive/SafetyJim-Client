@@ -71,7 +71,9 @@ export class BanListRoute extends Component<
                                       ).toUTCString()
                                     : "-"}
                             </td>
-                            <td>{ban.unbanned ? "✔" : "✘"}</td>
+                            <td style={{ textAlign: "center" }}>
+                                {ban.unbanned ? "✔" : "✘"}
+                            </td>
                             <td>{ban.reason}</td>
                         </tr>
                     ))}
