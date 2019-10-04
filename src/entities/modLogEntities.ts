@@ -3,7 +3,7 @@ import { User } from "./user";
 type ModLogResponse<T> = {
     currentPage: number;
     totalPages: number;
-    entries: T;
+    entries: T[];
 };
 
 export interface Ban {
