@@ -45,7 +45,7 @@ export class HardbanListRoute extends Component<
         const { entries, currentPage, totalPages } = hardbans;
 
         return (
-            <Container>
+            <Container style={{ maxWidth: "none" }}>
                 <Row>
                     <Table striped>
                         <thead>
@@ -102,7 +102,7 @@ export class HardbanListRoute extends Component<
                     >{`${currentPage} / ${totalPages}`}</Pagination.Item>
                     <Pagination.Next
                         onClick={this.onNext}
-                        disabled={currentPage > totalPages}
+                        disabled={currentPage >= totalPages}
                     />
                 </Row>
             </Container>
