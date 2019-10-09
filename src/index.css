@@ -1,4 +1,0 @@
-/* hack for removing list icons from react-bootstrap pagination controls */
-.page-item {
-    list-style: none;
-}

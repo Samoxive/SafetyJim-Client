@@ -97,17 +97,19 @@ export class MuteListRoute extends Component<
                     </Table>
                 </Row>
                 <Row style={{ justifyContent: "center" }}>
-                    <Pagination.Prev
-                        onClick={this.onPrev}
-                        disabled={currentPage <= 1}
-                    />
-                    <Pagination.Item
-                        active
-                    >{`${currentPage} / ${totalPages}`}</Pagination.Item>
-                    <Pagination.Next
-                        onClick={this.onNext}
-                        disabled={currentPage >= totalPages}
-                    />
+                    <Pagination>
+                        <Pagination.Prev
+                            onClick={this.onPrev}
+                            disabled={currentPage <= 1}
+                        />
+                        <Pagination.Item
+                            active
+                        >{`${currentPage} / ${totalPages}`}</Pagination.Item>
+                        <Pagination.Next
+                            onClick={this.onNext}
+                            disabled={currentPage >= totalPages}
+                        />
+                    </Pagination>
                 </Row>
             </Container>
         );
