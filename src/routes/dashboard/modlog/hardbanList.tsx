@@ -5,6 +5,7 @@ import { Hardbans } from "../../../entities/modLogEntities";
 import { fetchHardbans } from "../../../endpoint/modLog";
 import { Loading } from "../../../components/loading/loading";
 import { Table, Image, Container, Row, Pagination } from "react-bootstrap";
+import { UserText } from "../../../components/user_text";
 
 type HardbanListRouteState = { hardbans?: Hardbans };
 
@@ -68,7 +69,7 @@ export class HardbanListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {hardban.user.username}
+                                        <UserText user={hardban.user} />
                                     </td>
                                     <td>
                                         <Image
@@ -79,7 +80,9 @@ export class HardbanListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {hardban.moderatorUser.username}
+                                        <UserText
+                                            user={hardban.moderatorUser}
+                                        />
                                     </td>
                                     <td>
                                         {new Date(

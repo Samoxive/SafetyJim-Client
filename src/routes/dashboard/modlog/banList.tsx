@@ -5,6 +5,7 @@ import { Bans } from "../../../entities/modLogEntities";
 import { fetchBans } from "../../../endpoint/modLog";
 import { Loading } from "../../../components/loading/loading";
 import { Table, Image, Container, Row, Pagination } from "react-bootstrap";
+import { UserText } from "../../../components/user_text";
 
 type BanListRouteState = { bans?: Bans };
 
@@ -66,7 +67,7 @@ export class BanListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {ban.user.username}
+                                        <UserText user={ban.user} />
                                     </td>
                                     <td>
                                         <Image
@@ -75,7 +76,7 @@ export class BanListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {ban.moderatorUser.username}
+                                        <UserText user={ban.moderatorUser} />
                                     </td>
                                     <td>
                                         {new Date(

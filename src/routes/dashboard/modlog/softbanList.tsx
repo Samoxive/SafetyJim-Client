@@ -5,6 +5,7 @@ import { Softbans } from "../../../entities/modLogEntities";
 import { fetchSoftbans } from "../../../endpoint/modLog";
 import { Loading } from "../../../components/loading/loading";
 import { Table, Image, Container, Row, Pagination } from "react-bootstrap";
+import { UserText } from "../../../components/user_text";
 
 type SoftbanListRouteState = { softbans?: Softbans };
 
@@ -68,7 +69,7 @@ export class SoftbanListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {softban.user.username}
+                                        <UserText user={softban.user} />
                                     </td>
                                     <td>
                                         <Image
@@ -79,7 +80,9 @@ export class SoftbanListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {softban.moderatorUser.username}
+                                        <UserText
+                                            user={softban.moderatorUser}
+                                        />
                                     </td>
                                     <td>
                                         {new Date(

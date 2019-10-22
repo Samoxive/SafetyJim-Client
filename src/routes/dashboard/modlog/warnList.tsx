@@ -5,6 +5,7 @@ import { Warns } from "../../../entities/modLogEntities";
 import { fetchWarns } from "../../../endpoint/modLog";
 import { Loading } from "../../../components/loading/loading";
 import { Table, Image, Container, Row, Pagination } from "react-bootstrap";
+import { UserText } from "../../../components/user_text";
 
 type WarnListRouteState = { warns?: Warns };
 
@@ -64,7 +65,7 @@ export class WarnListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {warn.user.username}
+                                        <UserText user={warn.user} />
                                     </td>
                                     <td>
                                         <Image
@@ -73,7 +74,7 @@ export class WarnListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {warn.moderatorUser.username}
+                                        <UserText user={warn.moderatorUser} />
                                     </td>
                                     <td>
                                         {new Date(

@@ -5,6 +5,7 @@ import { Mutes } from "../../../entities/modLogEntities";
 import { fetchMutes } from "../../../endpoint/modLog";
 import { Loading } from "../../../components/loading/loading";
 import { Table, Image, Container, Row, Pagination } from "react-bootstrap";
+import { UserText } from "../../../components/user_text";
 
 type MuteListRouteState = { mutes?: Mutes };
 
@@ -66,7 +67,7 @@ export class MuteListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {mute.user.username}
+                                        <UserText user={mute.user} />
                                     </td>
                                     <td>
                                         <Image
@@ -75,7 +76,7 @@ export class MuteListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {mute.moderatorUser.username}
+                                        <UserText user={mute.moderatorUser} />
                                     </td>
                                     <td>
                                         {new Date(

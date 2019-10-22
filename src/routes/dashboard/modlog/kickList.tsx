@@ -5,6 +5,7 @@ import { Kicks } from "../../../entities/modLogEntities";
 import { fetchKicks } from "../../../endpoint/modLog";
 import { Loading } from "../../../components/loading/loading";
 import { Table, Image, Container, Row, Pagination } from "react-bootstrap";
+import { UserText } from "../../../components/user_text";
 
 type KickListRouteState = { kicks?: Kicks };
 
@@ -64,7 +65,7 @@ export class KickListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {kick.user.username}
+                                        <UserText user={kick.user} />
                                     </td>
                                     <td>
                                         <Image
@@ -73,7 +74,7 @@ export class KickListRoute extends Component<
                                             width="32px"
                                             style={{ marginRight: "4px" }}
                                         />
-                                        {kick.moderatorUser.username}
+                                        <UserText user={kick.moderatorUser} />
                                     </td>
                                     <td>
                                         {new Date(
