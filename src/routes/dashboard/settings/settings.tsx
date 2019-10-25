@@ -160,6 +160,39 @@ export class SettingsRoute extends Component<
 
     onPrivacyModLog = (mode: number) => this.onSetting("privacyModLog", mode);
 
+    onSoftbanThreshold = (threshold: number) =>
+        this.onSetting("softbanThreshold", threshold);
+    onSoftbanAction = (action: number) =>
+        this.onSetting("softbanAction", action);
+    onSoftbanActionDuration = (duration: number) =>
+        this.onSetting("softbanActionDuration", duration);
+    onSoftbanActionDurationType = (type: number) =>
+        this.onSetting("softbanActionDurationType", type);
+
+    onKickThreshold = (threshold: number) =>
+        this.onSetting("kickThreshold", threshold);
+    onKickAction = (action: number) => this.onSetting("kickAction", action);
+    onKickActionDuration = (duration: number) =>
+        this.onSetting("kickActionDuration", duration);
+    onKickActionDurationType = (type: number) =>
+        this.onSetting("kickActionDurationType", type);
+
+    onMuteThreshold = (threshold: number) =>
+        this.onSetting("muteThreshold", threshold);
+    onMuteAction = (action: number) => this.onSetting("muteAction", action);
+    onMuteActionDuration = (duration: number) =>
+        this.onSetting("muteActionDuration", duration);
+    onMuteActionDurationType = (type: number) =>
+        this.onSetting("muteActionDurationType", type);
+
+    onWarnThreshold = (threshold: number) =>
+        this.onSetting("warnThreshold", threshold);
+    onWarnAction = (action: number) => this.onSetting("warnAction", action);
+    onWarnActionDuration = (duration: number) =>
+        this.onSetting("warnActionDuration", duration);
+    onWarnActionDurationType = (type: number) =>
+        this.onSetting("warnActionDurationType", type);
+
     onSave = () => {
         const { settings } = this.state;
         const { guild } = this.props;
@@ -180,8 +213,8 @@ export class SettingsRoute extends Component<
     }
 
     render() {
-        const { settings } = this.state;
-        if (!settings) {
+        const { settings: s } = this.state;
+        if (!s) {
             return <Loading />;
         }
 
@@ -191,15 +224,15 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <Checkbox
                             label="Enable"
-                            defaultValue={settings.modLog}
+                            defaultValue={s.modLog}
                             onChange={this.onModlog}
                         />
 
                         <StringSelect
                             label="Log Channel"
-                            defaultOption={settings.modLogChannel.id}
+                            defaultOption={s.modLogChannel.id}
                             onSelect={this.onModLogChannel}
-                            options={settings.channels.map(channel => [
+                            options={s.channels.map(channel => [
                                 channel.id,
                                 channel.name
                             ])}
@@ -210,14 +243,14 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <Checkbox
                             label="No Space Prefix"
-                            defaultValue={settings.noSpacePrefix}
+                            defaultValue={s.noSpacePrefix}
                             onChange={this.onNoSpacePrefix}
                         />
 
                         <TextInput
                             label="Prefix"
                             placeholder="-mod"
-                            defaultValue={settings.prefix}
+                            defaultValue={s.prefix}
                             onChange={this.onPrefix}
                         />
                     </Form.Row>
@@ -229,15 +262,15 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <Checkbox
                             label="Enable"
-                            defaultValue={settings.welcomeMessage}
+                            defaultValue={s.welcomeMessage}
                             onChange={this.onWelcomeMessage}
                         />
 
                         <StringSelect
                             label="Channel"
-                            defaultOption={settings.welcomeMessageChannel.id}
+                            defaultOption={s.welcomeMessageChannel.id}
                             onSelect={this.onWelcomeMessageChannel}
-                            options={settings.channels.map(channel => [
+                            options={s.channels.map(channel => [
                                 channel.id,
                                 channel.name
                             ])}
@@ -247,7 +280,7 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <TextArea
                             label="Message"
-                            defaultValue={settings.message}
+                            defaultValue={s.message}
                             placeholder="Welcome to $guild $user!"
                             rows={3}
                             onChange={this.onMessage}
@@ -258,21 +291,21 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <Checkbox
                             label="Enable"
-                            defaultValue={settings.holdingRoom}
+                            defaultValue={s.holdingRoom}
                             onChange={this.onHoldingRoom}
                         />
 
                         <StringSelect
                             label="Role"
                             defaultOption={
-                                settings.holdingRoomRole
-                                    ? settings.holdingRoomRole.id
+                                s.holdingRoomRole
+                                    ? s.holdingRoomRole.id
                                     : "none"
                             }
                             onSelect={this.onHoldingRoomRole}
                             options={[
                                 ["none", "None"],
-                                ...settings.roles.map(
+                                ...s.roles.map(
                                     role =>
                                         [role.id, role.name] as [string, string]
                                 )
@@ -281,7 +314,7 @@ export class SettingsRoute extends Component<
 
                         <IntegerInput
                             label="Minutes"
-                            defaultValue={settings.holdingRoomMinutes}
+                            defaultValue={s.holdingRoomMinutes}
                             onChange={this.onHoldingRoomMinutes}
                         />
                     </Form.Row>
@@ -290,7 +323,7 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <Checkbox
                             label="Enable"
-                            defaultValue={settings.joinCaptcha}
+                            defaultValue={s.joinCaptcha}
                             onChange={this.onJoinCaptcha}
                         />
                     </Form.Row>
@@ -299,16 +332,14 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <Checkbox
                             label="Enable"
-                            defaultValue={settings.inviteLinkRemover}
+                            defaultValue={s.inviteLinkRemover}
                             onChange={this.onInviteLinkRemover}
                         />
                         <ModActionSelect
-                            defaultAction={settings.inviteLinkRemoverAction}
-                            defaultDuration={
-                                settings.inviteLinkRemoverActionDuration
-                            }
+                            defaultAction={s.inviteLinkRemoverAction}
+                            defaultDuration={s.inviteLinkRemoverActionDuration}
                             defaultDurationType={
-                                settings.inviteLinkRemoverActionDurationType
+                                s.inviteLinkRemoverActionDurationType
                             }
                             onAction={this.onInviteLinkRemoverAction}
                             onDuration={this.onInviteLinkRemoverActionDuration}
@@ -322,17 +353,17 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <Checkbox
                             label="Enable"
-                            defaultValue={settings.silentCommands}
+                            defaultValue={s.silentCommands}
                             onChange={this.onSilentCommands}
                         />
                         <Checkbox
                             label="Confirmation Message"
-                            defaultValue={settings.modActionConfirmationMessage}
+                            defaultValue={s.modActionConfirmationMessage}
                             onChange={this.onModActionConfirmationMessage}
                         />
                         <IntegerSelect
                             label="Silence Level"
-                            defaultOption={settings.silentCommandsLevel}
+                            defaultOption={s.silentCommandsLevel}
                             onSelect={this.onSilentCommandsLevel}
                             options={[
                                 [C.SILENT_COMMANDS_MOD_ONLY, "Moderation Only"],
@@ -345,7 +376,7 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <Checkbox
                             label="Enable"
-                            defaultValue={settings.statistics}
+                            defaultValue={s.statistics}
                             onChange={this.onStatistics}
                         />
                     </Form.Row>
@@ -354,12 +385,12 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <Checkbox
                             label="Enable"
-                            defaultValue={settings.wordFilter}
+                            defaultValue={s.wordFilter}
                             onChange={this.onWordFilter}
                         />
                         <IntegerSelect
                             label="Filter Level"
-                            defaultOption={settings.wordFilterLevel}
+                            defaultOption={s.wordFilterLevel}
                             onSelect={this.onWordFilterLevel}
                             options={[
                                 [C.WORD_FILTER_LEVEL_LOW, "Low"],
@@ -370,7 +401,7 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <TextArea
                             label="Blacklisted Words"
-                            defaultValue={settings.wordFilterBlacklist || ""}
+                            defaultValue={s.wordFilterBlacklist || ""}
                             placeholder="Using Jim's default list..."
                             rows={3}
                             onChange={this.onWordFilterBlacklist}
@@ -378,11 +409,9 @@ export class SettingsRoute extends Component<
                     </Form.Row>
                     <Form.Row>
                         <ModActionSelect
-                            defaultAction={settings.wordFilterAction}
-                            defaultDuration={settings.wordFilterActionDuration}
-                            defaultDurationType={
-                                settings.wordFilterActionDurationType
-                            }
+                            defaultAction={s.wordFilterAction}
+                            defaultDuration={s.wordFilterActionDuration}
+                            defaultDurationType={s.wordFilterActionDurationType}
                             onAction={this.onWordFilterAction}
                             onDuration={this.onWordFilterActionDuration}
                             onDurationType={this.onWordFilterActionDurationType}
@@ -393,13 +422,75 @@ export class SettingsRoute extends Component<
                     <Form.Row>
                         <PrivacySelect
                             label="Settings"
-                            defaultPrivacy={settings.privacySettings}
+                            defaultPrivacy={s.privacySettings}
                             onPrivacy={this.onPrivacySettings}
                         />
                         <PrivacySelect
                             label="Moderator Log"
-                            defaultPrivacy={settings.privacyModLog}
+                            defaultPrivacy={s.privacyModLog}
                             onPrivacy={this.onPrivacyModLog}
+                        />
+                    </Form.Row>
+                </SettingsGroup>
+                <SettingsGroup title="Automatic Actions" infoKey="autoActions">
+                    <Form.Row>
+                        <IntegerInput
+                            label="After x count of soft bans"
+                            defaultValue={s.softbanThreshold}
+                            onChange={this.onSoftbanThreshold}
+                        />
+                        <ModActionSelect
+                            defaultAction={s.softbanAction}
+                            defaultDuration={s.softbanActionDuration}
+                            defaultDurationType={s.softbanActionDurationType}
+                            onAction={this.onSoftbanAction}
+                            onDuration={this.onSoftbanActionDuration}
+                            onDurationType={this.onSoftbanActionDurationType}
+                        />
+                    </Form.Row>
+                    <Form.Row>
+                        <IntegerInput
+                            label="After x count of kicks"
+                            defaultValue={s.kickThreshold}
+                            onChange={this.onKickThreshold}
+                        />
+                        <ModActionSelect
+                            defaultAction={s.kickAction}
+                            defaultDuration={s.kickActionDuration}
+                            defaultDurationType={s.kickActionDurationType}
+                            onAction={this.onKickAction}
+                            onDuration={this.onKickActionDuration}
+                            onDurationType={this.onKickActionDurationType}
+                        />
+                    </Form.Row>
+                    <Form.Row>
+                        <IntegerInput
+                            label="After x count of mutes"
+                            defaultValue={s.muteThreshold}
+                            onChange={this.onMuteThreshold}
+                        />
+                        <ModActionSelect
+                            defaultAction={s.muteAction}
+                            defaultDuration={s.muteActionDuration}
+                            defaultDurationType={s.muteActionDurationType}
+                            onAction={this.onMuteAction}
+                            onDuration={this.onMuteActionDuration}
+                            onDurationType={this.onMuteActionDurationType}
+                        />
+                    </Form.Row>
+                    <Form.Row>
+                        <IntegerInput
+                            label="After x count of warns"
+                            defaultValue={s.warnThreshold}
+                            onChange={this.onWarnThreshold}
+                        />
+                        <ModActionSelect
+                            defaultAction={s.warnAction}
+                            defaultDuration={s.warnActionDuration}
+                            defaultDurationType={s.warnActionDurationType}
+                            onAction={this.onWarnAction}
+                            onDuration={this.onWarnActionDuration}
+                            onDurationType={this.onWarnActionDurationType}
                         />
                     </Form.Row>
                 </SettingsGroup>

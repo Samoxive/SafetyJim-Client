@@ -23,5 +23,9 @@ export const INFO_TEXT: { [index: string]: string } = {
         "Blacklisted word list can also be customized, by default Jim uses a list of English swear words (you can find the list [here](https://raw.githubusercontent.com/Samoxive/Google-profanity-words/master/list.txt)). Each word in blacklist needs to be **comma seperated**.\n\n" +
         "You can also choose a specific action to be taken after message is removed, for `Mute` and `Ban` actions some time duration can be set to make them temporary actions (set **Duration** to 0 to make them permanent).",
     privacy:
-        "By default any user can view server specific data on the dashboard but modifying it requires specific permissions. Using these levels you can choose who can view server data including settings and moderator log entries."
+        "By default any user can view server specific data on the dashboard but modifying it requires specific permissions. Using these levels you can choose who can view server data including settings and moderator log entries.",
+    autoActions:
+        "With automatic actions, you can have Jim issue moderation actions when users had too many actions issued against them. For example, you can have Jim automatically mute a person if they have been warned 3 times (warned by word filter perhaps).\n\n" +
+        "You can set threshold of a specific action to 0 to disable automatic actions, to prevent infinite loops, chain of automatic actions will only be issued 3 times. (scenario of kicked because threshold of mutes was exceeded because threshold of warnings was exceeded).\n\n" +
+        "Actions are taken after **every** violation of the threshold (if threshold is 3, automatic action will be taken for 3rd, 4th, 5th... violation). You can pardon past violations to reduce a user's violation count."
 };

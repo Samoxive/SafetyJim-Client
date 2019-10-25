@@ -54,4 +54,20 @@ export interface GuildSettings {
     inviteLinkRemoverActionDurationType: number;
     privacySettings: number;
     privacyModLog: number;
+    softbanThreshold: number;
+    softbanAction: number;
+    softbanActionDuration: number;
+    softbanActionDurationType: number;
+    kickThreshold: number;
+    kickAction: number;
+    kickActionDuration: number;
+    kickActionDurationType: number;
+    muteThreshold: number;
+    muteAction: number;
+    muteActionDuration: number;
+    muteActionDurationType: number;
+    warnThreshold: number;
+    warnAction: number;
+    warnActionDuration: number;
+    warnActionDurationType: number;
 }
