@@ -49,7 +49,7 @@ function injectGuild(
     guild: Guild,
     Component: React.ComponentType<GenericGuildRouteProps>
 ): React.StatelessComponent<any> {
-    return () => <Component guild={guild} />;
+    return (props: any) => <Component {...props} guild={guild} />;
 }
 
 type DashboardProps = RouteComponentProps<{ guildId: string }> & SelfUserProps;
@@ -129,7 +129,7 @@ export class Dashboard extends React.Component<
                                 title="Settings"
                             />
                             <SidebarMenuItem
-                                to={`/dashboard/${guildId}/bans`}
+                                to={`/dashboard/${guildId}/bans/:banId/`}
                                 icon="hammer"
                                 title="Bans"
                             />
