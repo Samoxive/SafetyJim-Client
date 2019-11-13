@@ -14,6 +14,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import App from "./app";
 import * as serviceWorker from "./serviceWorker";
+import moment from "moment";
+import momentLocalizer from "react-widgets-moment";
+
+moment.locale("en");
+momentLocalizer();
 
 library.add(faSignOutAlt);
 library.add(faInfoCircle);

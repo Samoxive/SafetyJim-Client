@@ -1,118 +1,54 @@
 import * as React from "react";
 import { Component } from "react";
 import { Guild } from "../../../entities/guild";
-import { Mutes } from "../../../entities/modLogEntities";
+import { Mute } from "../../../entities/modLogEntities";
+import { ColumnType, ModLogList } from "./modLogList";
 import { fetchMutes } from "../../../endpoint/modLog";
-import { Loading } from "../../../components/loading/loading";
-import { Table, Image, Container, Row, Pagination } from "react-bootstrap";
-import { UserText } from "../../../components/user_text";
 
-type MuteListRouteState = { mutes?: Mutes };
+type MuteListRouteState = {};
 
 export class MuteListRoute extends Component<
     { guild: Guild },
     MuteListRouteState
 > {
-    state: MuteListRouteState = {
-        mutes: undefined
-    };
-
-    componentDidMount() {
-        fetchMutes(this.props.guild).then(mutes => this.setState({ mutes }));
-    }
-
-    onPrev = () => {
-        fetchMutes(this.props.guild, this.state.mutes!!.currentPage - 1).then(
-            mutes => this.setState({ mutes })
-        );
-    };
-
-    onNext = () => {
-        fetchMutes(this.props.guild, this.state.mutes!!.currentPage + 1).then(
-            mutes => this.setState({ mutes })
-        );
-    };
+    state: MuteListRouteState = {};
+    onSelectMute = (mute: Mute) => console.log(mute);
 
     render() {
-        const { mutes } = this.state;
-        if (!mutes) {
-            return <Loading />;
-        }
-
-        const { entries, currentPage, totalPages } = mutes;
-
+        const { guild } = this.props;
         return (
-            <Container style={{ maxWidth: "none" }}>
-                <Row>
-                    <Table striped>
-                        <thead>
-                            <tr>
-                                <th>#id</th>
-                                <th>User</th>
-                                <th>Moderator</th>
-                                <th>Issued on</th>
-                                <th>Expires on</th>
-                                <th>Expired</th>
-                                <th>Reason</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {entries.map(mute => (
-                                <tr key={mute.id}>
-                                    <td>{mute.id}</td>
-                                    <td>
-                                        <Image
-                                            src={mute.user.avatarUrl}
-                                            rounded
-                                            width="32px"
-                                            style={{ marginRight: "4px" }}
-                                        />
-                                        <UserText user={mute.user} />
-                                    </td>
-                                    <td>
-                                        <Image
-                                            src={mute.moderatorUser.avatarUrl}
-                                            rounded
-                                            width="32px"
-                                            style={{ marginRight: "4px" }}
-                                        />
-                                        <UserText user={mute.moderatorUser} />
-                                    </td>
-                                    <td>
-                                        {new Date(
-                                            mute.actionTime * 1000
-                                        ).toUTCString()}
-                                    </td>
-                                    <td>
-                                        {mute.expirationTime
-                                            ? new Date(
-                                                  mute.expirationTime * 1000
-                                              ).toUTCString()
-                                            : "-"}
-                                    </td>
-                                    <td>{mute.unmuted ? "✔" : "✘"}</td>
-                                    <td>{mute.reason}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                </Row>
-                <Row style={{ justifyContent: "center" }}>
-                    <Pagination>
-                        <Pagination.Prev
-                            onClick={this.onPrev}
-                            disabled={currentPage <= 1}
-                        />
-                        <Pagination.Item
-                            active
-                        >{`${currentPage} / ${totalPages}`}</Pagination.Item>
-                        <Pagination.Next
-                            onClick={this.onNext}
-                            disabled={currentPage >= totalPages}
-                        />
-                    </Pagination>
-                </Row>
-            </Container>
+            <ModLogList
+                guild={guild}
+                fetchEntities={fetchMutes}
+                onSelectEntity={this.onSelectMute}
+                columnKeys={[
+                    "id",
+                    "user",
+                    "moderatorUser",
+                    "actionTime",
+                    "expirationTime",
+                    "unmuted",
+                    "reason"
+                ]}
+                columnNames={[
+                    "#id",
+                    "User",
+                    "Moderator",
+                    "Issued on",
+                    "Expires on",
+                    "Expired",
+                    "Reason"
+                ]}
+                columnTypes={[
+                    ColumnType.ID,
+                    ColumnType.USER,
+                    ColumnType.USER,
+                    ColumnType.DATE,
+                    ColumnType.DATE,
+                    ColumnType.EXPIRES,
+                    ColumnType.REASON
+                ]}
+            />
         );
     }
 }

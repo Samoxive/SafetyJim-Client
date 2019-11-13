@@ -129,7 +129,7 @@ export class Dashboard extends React.Component<
                                 title="Settings"
                             />
                             <SidebarMenuItem
-                                to={`/dashboard/${guildId}/bans/:banId/`}
+                                to={`/dashboard/${guildId}/bans`}
                                 icon="hammer"
                                 title="Bans"
                             />
@@ -169,39 +169,39 @@ export class Dashboard extends React.Component<
                             )}
                         />
                         <Route
-                            path={`${path}/bans`}
+                            path={`${path}/bans/:banId?`}
                             component={injectGuild(selectedGuild, BanListRoute)}
                         />
                         <Route
-                            path={`${path}/softbans`}
+                            path={`${path}/softbans/:softbanId?`}
                             component={injectGuild(
                                 selectedGuild,
                                 SoftbanListRoute
                             )}
                         />
                         <Route
-                            path={`${path}/hardbans`}
+                            path={`${path}/hardbans/:hardbanId?`}
                             component={injectGuild(
                                 selectedGuild,
                                 HardbanListRoute
                             )}
                         />
                         <Route
-                            path={`${path}/kicks`}
+                            path={`${path}/kicks/:kickId?`}
                             component={injectGuild(
                                 selectedGuild,
                                 KickListRoute
                             )}
                         />
                         <Route
-                            path={`${path}/mutes`}
+                            path={`${path}/mutes/:muteId?`}
                             component={injectGuild(
                                 selectedGuild,
                                 MuteListRoute
                             )}
                         />
                         <Route
-                            path={`${path}/warns`}
+                            path={`${path}/warns/:warnId?`}
                             component={injectGuild(
                                 selectedGuild,
                                 WarnListRoute

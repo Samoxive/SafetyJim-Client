@@ -18,15 +18,17 @@ import { INFO_TEXT } from "./settings_resource";
 import { Loading } from "../../../components/loading/loading";
 import Markdown from "react-markdown";
 import {
-    Checkbox,
-    StringSelect,
-    IntegerSelect,
-    TextArea,
-    TextInput,
-    IntegerInput,
     ModActionSelect,
     PrivacySelect
-} from "./form_utils";
+} from "./settings_form_utils";
+import {
+    Checkbox,
+    IntegerInput,
+    IntegerSelect,
+    StringSelect,
+    TextArea,
+    TextInput
+} from "../../../components/form_components";
 
 const C = GuildSettingsConstants;
 

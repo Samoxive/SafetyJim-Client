@@ -1,6 +1,6 @@
 import { User } from "./user";
 
-type ModLogResponse<T> = {
+export type ModLogResponse<T> = {
     currentPage: number;
     totalPages: number;
     entries: T[];
@@ -23,6 +23,7 @@ export interface Softban {
     moderatorUser: User;
     actionTime: number;
     reason: string;
+    pardoned: boolean;
 }
 export type Softbans = ModLogResponse<Softban>;
 
@@ -41,6 +42,7 @@ export interface Kick {
     moderatorUser: User;
     actionTime: number;
     reason: string;
+    pardoned: boolean;
 }
 export type Kicks = ModLogResponse<Kick>;
 
@@ -52,6 +54,7 @@ export interface Mute {
     expirationTime?: number;
     unmuted: boolean;
     reason: string;
+    pardoned: boolean;
 }
 export type Mutes = ModLogResponse<Mute>;
 
@@ -61,5 +64,6 @@ export interface Warn {
     moderatorUser: User;
     actionTime: number;
     reason: string;
+    pardoned: boolean;
 }
 export type Warns = ModLogResponse<Warn>;
