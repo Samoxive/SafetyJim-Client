@@ -1,17 +1,25 @@
 import { User } from "./user";
 
+export type FetchModeratorsResponse = {
+    banMods: User[];
+    kickMods: User[];
+    roleMods: User[];
+};
+
 export type ModLogResponse<T> = {
     currentPage: number;
     totalPages: number;
     entries: T[];
 };
 
+export type ModLogEntity = Ban | Softban | Hardban | Kick | Mute | Warn;
+
 export interface Ban {
     id: number;
     user: User;
     moderatorUser: User;
     actionTime: number;
-    expirationTime?: number;
+    expirationTime: number;
     unbanned: boolean;
     reason: string;
 }
@@ -51,7 +59,7 @@ export interface Mute {
     user: User;
     moderatorUser: User;
     actionTime: number;
-    expirationTime?: number;
+    expirationTime: number;
     unmuted: boolean;
     reason: string;
     pardoned: boolean;

@@ -10,7 +10,8 @@ import {
     faFileAlt,
     faHammer,
     faExclamationCircle,
-    faMicrophoneSlash
+    faMicrophoneSlash,
+    faTimesCircle
 } from "@fortawesome/free-solid-svg-icons";
 import App from "./app";
 import * as serviceWorker from "./serviceWorker";
@@ -27,6 +28,7 @@ library.add(faFileAlt);
 library.add(faHammer);
 library.add(faExclamationCircle);
 library.add(faMicrophoneSlash);
+library.add(faTimesCircle);
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

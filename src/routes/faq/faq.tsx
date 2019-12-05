@@ -4,7 +4,7 @@ import { faqs } from "./faq_resource";
 import Markdown from "react-markdown";
 import { MetaTag } from "../../components/meta_tag";
 
-export const FAQ = (props: {}) => (
+export const FAQ = () => (
     <div style={{ margin: "8px 8px 8px 8px" }}>
         <MetaTag
             title="Safety Jim - FAQ"

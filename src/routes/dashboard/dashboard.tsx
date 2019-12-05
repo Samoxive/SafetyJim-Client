@@ -48,7 +48,7 @@ type GenericGuildRouteProps = { guild: Guild } & any;
 function injectGuild(
     guild: Guild,
     Component: React.ComponentType<GenericGuildRouteProps>
-): React.StatelessComponent<any> {
+): React.FunctionComponent<any> {
     return (props: any) => <Component {...props} guild={guild} />;
 }
 

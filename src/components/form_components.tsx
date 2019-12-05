@@ -22,7 +22,7 @@ export class Checkbox extends React.Component<CheckboxProps> {
                     type="checkbox"
                     defaultChecked={defaultValue}
                     onChange={this.onChange}
-                    disabled={disabled ? true : false}
+                    disabled={!!disabled}
                 />
             </Form.Group>
         );

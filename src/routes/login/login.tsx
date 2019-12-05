@@ -19,20 +19,18 @@ export class Login extends React.Component<LoginProps> {
             return null;
         }
 
-        if (query.code != null) {
-            getTokenFromApi(query.code as string)
-                .then(
-                    () =>
-                        (window.location.href =
-                            window.location.origin +
-                            (query.state
-                                ? decodeURIComponent(query.state as string)
-                                : "/"))
-                )
-                .catch(() =>
-                    notifyError("Failed to login.", "Please try again later.")
-                );
-        }
+        getTokenFromApi(query.code as string)
+            .then(
+                () =>
+                    (window.location.href =
+                        window.location.origin +
+                        (query.state
+                            ? decodeURIComponent(query.state as string)
+                            : "/"))
+            )
+            .catch(() =>
+                notifyError("Failed to login.", "Please try again later.")
+            );
 
         return null;
     }

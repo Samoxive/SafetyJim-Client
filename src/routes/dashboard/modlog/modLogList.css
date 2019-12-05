@@ -1,3 +1,7 @@
 tr.pardoned {
     background-color: rgba(0, 0, 0, 0.05);
 }
+
+.modal-disable-padding > .form-group {
+    padding: 0;
+}

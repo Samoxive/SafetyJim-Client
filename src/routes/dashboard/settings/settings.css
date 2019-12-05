@@ -1,17 +1,18 @@
-.setting-groups {}
+.setting-groups {
+}
 
 .setting-group {
     margin-top: 8px;
     border-bottom: 1px solid #e0e0e0;
 }
 
-.setting-groups>.setting-group:last-child {
+.setting-groups > .setting-group:last-child {
     border: 0;
 }
 
-.setting-tooltip>p {
-    margin-bottom: 0px !important;
-    margin-block-start: 0px !important;
-    margin-block-end: 0px !important;
+.setting-tooltip > p {
+    margin-bottom: 0 !important;
+    margin-block-start: 0 !important;
+    margin-block-end: 0 !important;
     line-height: initial;
 }

@@ -4,7 +4,7 @@ import "./commands.css";
 import { commands } from "./commands_resource";
 import { MetaTag } from "../../components/meta_tag";
 
-export const Commands = (props: {}) => (
+export const Commands = () => (
     <div style={{ margin: "8px 8px 8px 8px" }} className="commands">
         <MetaTag
             title="Safety Jim - Commands"

@@ -2,8 +2,8 @@ import * as React from "react";
 import { Component } from "react";
 import { Guild } from "../../../entities/guild";
 import { Ban } from "../../../entities/modLogEntities";
-import { fetchBans, fetchBan } from "../../../endpoint/modLog";
-import { ModLogList, ColumnType, EntityModal } from "./modLogList";
+import { fetchBan, fetchBans, updateBan } from "../../../endpoint/modLog";
+import { ColumnType, EntityModal, ModLogList } from "./modLogList";
 import { RouteComponentProps } from "react-router";
 
 type BanListRouteProps = RouteComponentProps<{ banId?: string }> & {
@@ -16,7 +16,12 @@ export class BanListRoute extends Component<
     BanListRouteState
 > {
     state: BanListRouteState = {};
-    onSelectBan = (ban: Ban) => console.log(ban);
+    onSelectBan = (ban: Ban) =>
+        this.props.history.push(
+            `/dashboard/${this.props.guild.id}/bans/${ban.id}`
+        );
+    onModalBack = () =>
+        this.props.history.push(`/dashboard/${this.props.guild.id}/bans`);
 
     render() {
         const {
@@ -35,7 +40,8 @@ export class BanListRoute extends Component<
                         expires
                         expirationKey="unbanned"
                         fetchEntity={fetchBan}
-                        onClose={() => console.log("close")}
+                        updateEntity={updateBan}
+                        onClose={this.onModalBack}
                     />
                 )}
                 <ModLogList

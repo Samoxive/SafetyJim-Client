@@ -13,7 +13,10 @@ import {
     Hardban,
     Ban,
     Mute,
-    Warn
+    Warn,
+    ModLogEntity,
+    ModLogResponse,
+    FetchModeratorsResponse
 } from "../entities/modLogEntities";
 import { Guild } from "../entities/guild";
 
@@ -28,110 +31,159 @@ function getModLogParams(page?: number): AxiosRequestConfig {
     return params;
 }
 
+export function fetchModerators(
+    guild: Guild
+): Promise<FetchModeratorsResponse | undefined> {
+    return axios
+        .get(`${apiUrl}/guilds/${guild.id}/mods`, getHTTPParams())
+        .then(response => response.data as FetchModeratorsResponse)
+        .catch(handleError);
+}
+
+type EntityType = "ban" | "softban" | "hardban" | "kick" | "mute" | "warn";
+
+export function fetchEntities<EntityT extends ModLogEntity>(
+    entityType: EntityType,
+    guild: Guild,
+    page?: number
+): Promise<ModLogResponse<EntityT> | undefined> {
+    return axios
+        .get(
+            `${apiUrl}/guilds/${guild.id}/${entityType}s`,
+            getModLogParams(page)
+        )
+        .then(response => response.data as ModLogResponse<EntityT>)
+        .catch(handleError);
+}
+
+export function fetchEntity<EntityT extends ModLogEntity>(
+    entityType: EntityType,
+    guild: Guild,
+    id: number
+): Promise<EntityT | undefined> {
+    return axios
+        .get(
+            `${apiUrl}/guilds/${guild.id}/${entityType}s/${id}`,
+            getHTTPParams()
+        )
+        .then(response => response.data as EntityT)
+        .catch(handleError);
+}
+
+export function updateEntity<EntityT extends ModLogEntity>(
+    entityType: EntityType,
+    guild: Guild,
+    entity: EntityT
+): Promise<boolean> {
+    return axios
+        .post(
+            `${apiUrl}/guilds/${guild.id}/${entityType}s/${entity.id}`,
+            entity,
+            getHTTPParams()
+        )
+        .then(() => true)
+        .catch(handleError)
+        .then(() => false);
+}
+
 export function fetchBans(
     guild: Guild,
     page?: number
 ): Promise<Bans | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/bans`, getModLogParams(page))
-        .then(response => response.data as Bans)
-        .catch(handleError);
+    return fetchEntities<Ban>("ban", guild, page);
 }
 
 export function fetchBan(guild: Guild, id: number): Promise<Ban | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/bans/${id}`, getHTTPParams())
-        .then(response => response.data as Ban)
-        .catch(handleError);
+    return fetchEntity<Ban>("ban", guild, id);
+}
+
+export function updateBan(guild: Guild, ban: Ban): Promise<boolean> {
+    return updateEntity("ban", guild, ban);
 }
 
 export function fetchSoftbans(
     guild: Guild,
     page?: number
 ): Promise<Softbans | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/softbans`, getModLogParams(page))
-        .then(response => response.data as Softbans)
-        .catch(handleError);
+    return fetchEntities<Softban>("softban", guild, page);
 }
 
 export function fetchSoftban(
     guild: Guild,
     id: number
 ): Promise<Softban | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/softbans/${id}`, getHTTPParams())
-        .then(response => response.data as Softban)
-        .catch(handleError);
+    return fetchEntity<Softban>("softban", guild, id);
+}
+
+export function updateSoftban(
+    guild: Guild,
+    softban: Softban
+): Promise<boolean> {
+    return updateEntity("softban", guild, softban);
 }
 
 export function fetchHardbans(
     guild: Guild,
     page?: number
 ): Promise<Hardbans | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/hardbans`, getModLogParams(page))
-        .then(response => response.data as Hardbans)
-        .catch(handleError);
+    return fetchEntities<Hardban>("hardban", guild, page);
 }
 
 export function fetchHardban(
     guild: Guild,
     id: number
 ): Promise<Hardban | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/hardbans/${id}`, getHTTPParams())
-        .then(response => response.data as Hardban)
-        .catch(handleError);
+    return fetchEntity<Hardban>("hardban", guild, id);
+}
+
+export function updateHardban(
+    guild: Guild,
+    hardban: Hardban
+): Promise<boolean> {
+    return updateEntity("hardban", guild, hardban);
 }
 
 export function fetchKicks(
     guild: Guild,
     page?: number
 ): Promise<Kicks | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/kicks`, getModLogParams(page))
-        .then(response => response.data as Kicks)
-        .catch(handleError);
+    return fetchEntities<Kick>("kick", guild, page);
 }
 
 export function fetchKick(guild: Guild, id: number): Promise<Kick | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/kicks/${id}`, getHTTPParams())
-        .then(response => response.data as Kick)
-        .catch(handleError);
+    return fetchEntity<Kick>("kick", guild, id);
+}
+
+export function updateKick(guild: Guild, kick: Kick): Promise<boolean> {
+    return updateEntity("kick", guild, kick);
 }
 
 export function fetchMutes(
     guild: Guild,
     page?: number
 ): Promise<Mutes | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/mutes`, getModLogParams(page))
-        .then(response => response.data as Mutes)
-        .catch(handleError);
+    return fetchEntities<Mute>("mute", guild, page);
 }
 
 export function fetchMute(guild: Guild, id: number): Promise<Mute | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/mutes/${id}`, getHTTPParams())
-        .then(response => response.data as Mute)
-        .catch(handleError);
+    return fetchEntity<Mute>("mute", guild, id);
+}
+
+export function updateMute(guild: Guild, mute: Mute): Promise<boolean> {
+    return updateEntity("mute", guild, mute);
 }
 
 export function fetchWarns(
     guild: Guild,
     page?: number
 ): Promise<Warns | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/warns`, getModLogParams(page))
-        .then(response => response.data as Warns)
-        .catch(handleError);
+    return fetchEntities<Warn>("warn", guild, page);
 }
 
 export function fetchWarn(guild: Guild, id: number): Promise<Warn | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/warns/${id}`, getHTTPParams())
-        .then(response => response.data as Warn)
-        .catch(handleError);
+    return fetchEntity<Warn>("warn", guild, id);
+}
+
+export function updateWarn(guild: Guild, warn: Warn): Promise<boolean> {
+    return updateEntity("warn", guild, warn);
 }

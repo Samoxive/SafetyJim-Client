@@ -25,23 +25,21 @@ export function handleError(error: AxiosError): undefined {
         return;
     }
 
-    if (error.response != null) {
-        if (error.response.status > 500) {
-            cogoToast.error("Jim could not deal with your request!", {
-                position: "top-right",
-                heading: "Error"
-            });
-            return;
-        }
-
-        if (error.response.status === 401) {
-            clearToken(window.location.href);
-            return;
-        }
-
-        cogoToast.warn(error.response.data, {
+    if (error.response.status > 500) {
+        cogoToast.error("Jim could not deal with your request!", {
             position: "top-right",
-            heading: "Warning"
+            heading: "Error"
         });
+        return;
     }
+
+    if (error.response.status === 401) {
+        clearToken(window.location.href);
+        return;
+    }
+
+    cogoToast.warn(error.response.data, {
+        position: "top-right",
+        heading: "Warning"
+    });
 }
