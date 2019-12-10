@@ -70,4 +70,5 @@ export interface GuildSettings {
     warnAction: number;
     warnActionDuration: number;
     warnActionDurationType: number;
+    modsCanEditTags: boolean;
 }

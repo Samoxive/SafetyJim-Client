@@ -17,10 +17,7 @@ import {
 import { INFO_TEXT } from "./settings_resource";
 import { Loading } from "../../../components/loading/loading";
 import Markdown from "react-markdown";
-import {
-    ModActionSelect,
-    PrivacySelect
-} from "./settings_form_utils";
+import { ModActionSelect, PrivacySelect } from "./settings_form_utils";
 import {
     Checkbox,
     IntegerInput,
@@ -194,6 +191,9 @@ export class SettingsRoute extends Component<
         this.onSetting("warnActionDuration", duration);
     onWarnActionDurationType = (type: number) =>
         this.onSetting("warnActionDurationType", type);
+
+    onModsCanEditTags = (canThey: boolean) =>
+        this.onSetting("modsCanEditTags", canThey);
 
     onSave = () => {
         const { settings } = this.state;
@@ -493,6 +493,15 @@ export class SettingsRoute extends Component<
                             onAction={this.onWarnAction}
                             onDuration={this.onWarnActionDuration}
                             onDurationType={this.onWarnActionDurationType}
+                        />
+                    </Form.Row>
+                </SettingsGroup>
+                <SettingsGroup title="Tag Permission" infoKey="tagPermission">
+                    <Form.Row>
+                        <Checkbox
+                            label="Mods can edit tags"
+                            defaultValue={s.modsCanEditTags}
+                            onChange={this.onModsCanEditTags}
                         />
                     </Form.Row>
                 </SettingsGroup>
