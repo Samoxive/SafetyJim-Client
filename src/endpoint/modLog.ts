@@ -15,8 +15,7 @@ import {
     Mute,
     Warn,
     ModLogEntity,
-    ModLogResponse,
-    FetchModeratorsResponse
+    ModLogResponse
 } from "../entities/modLogEntities";
 import { Guild } from "../entities/guild";
 
@@ -29,15 +28,6 @@ function getModLogParams(page?: number): AxiosRequestConfig {
     }
 
     return params;
-}
-
-export function fetchModerators(
-    guild: Guild
-): Promise<FetchModeratorsResponse | undefined> {
-    return axios
-        .get(`${apiUrl}/guilds/${guild.id}/mods`, getHTTPParams())
-        .then(response => response.data as FetchModeratorsResponse)
-        .catch(handleError);
 }
 
 type EntityType = "ban" | "softban" | "hardban" | "kick" | "mute" | "warn";

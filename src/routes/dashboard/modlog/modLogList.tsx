@@ -1,10 +1,6 @@
 import * as React from "react";
 import { Component } from "react";
-import {
-    FetchModeratorsResponse,
-    ModLogEntity,
-    ModLogResponse
-} from "../../../entities/modLogEntities";
+import { ModLogEntity, ModLogResponse } from "../../../entities/modLogEntities";
 import { Guild } from "../../../entities/guild";
 import { Loading } from "../../../components/loading/loading";
 import {
@@ -19,13 +15,8 @@ import {
 } from "react-bootstrap";
 import { User } from "../../../entities/user";
 import { UserText } from "../../../components/user_text";
-import {
-    Checkbox,
-    StringSelect,
-    TextArea
-} from "../../../components/form_components";
+import { Checkbox, TextArea } from "../../../components/form_components";
 import { DateTimePicker } from "react-widgets";
-import { fetchModerators } from "../../../endpoint/modLog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./modLogList.css";
 
@@ -74,19 +65,6 @@ function matchKeyToColumn(entity: ModLogEntity, key: string, type: ColumnType) {
 
 type ActionType = "Ban" | "Hardban" | "Softban" | "Kick" | "Mute" | "Warn";
 
-function getMods(
-    mods: FetchModeratorsResponse,
-    actionType: ActionType
-): User[] {
-    if (actionType === "Mute") {
-        return mods.roleMods;
-    } else if (actionType === "Kick" || actionType === "Warn") {
-        return mods.kickMods;
-    } else {
-        return mods.banMods;
-    }
-}
-
 type EntityModalProps<EntityT extends ModLogEntity> = {
     guild: Guild;
     id: string;
@@ -101,7 +79,6 @@ type EntityModalProps<EntityT extends ModLogEntity> = {
 
 type EntityModalState<EntityT extends ModLogEntity> = {
     entity?: EntityT;
-    mods?: FetchModeratorsResponse;
 };
 
 export class EntityModal<EntityT extends ModLogEntity> extends Component<
@@ -109,8 +86,7 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
     EntityModalState<EntityT>
 > {
     state: EntityModalState<EntityT> = {
-        entity: undefined,
-        mods: undefined
+        entity: undefined
     };
 
     componentDidMount() {
@@ -119,7 +95,6 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
             .then(entity =>
                 entity ? this.setState({ entity }) : this.props.onClose()
             );
-        fetchModerators(this.props.guild).then(mods => this.setState({ mods }));
     }
 
     onExpired = (expired: boolean) => {
@@ -188,24 +163,6 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
         }));
     };
 
-    onModerator = (id: string) => {
-        const moderatorUser = getMods(
-            this.state.mods!!,
-            this.props.actionType
-        ).find(mod => mod.id === id);
-        if (!moderatorUser) {
-            return;
-        }
-
-        this.setState(state => ({
-            ...state,
-            entity: {
-                ...state.entity!,
-                moderatorUser
-            }
-        }));
-    };
-
     onUpdate = () => {
         this.props
             .updateEntity(this.props.guild, this.state.entity!!)
@@ -223,7 +180,7 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
             expirationKey,
             pardonable
         } = this.props;
-        const { entity, mods } = this.state;
+        const { entity } = this.state;
 
         const idNumber = Number(id);
         if (isNaN(idNumber)) {
@@ -248,11 +205,6 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
         const expired = (entity as any)[expirationKey!!] as boolean;
         const pardoned = (entity as any).pardoned as boolean;
 
-        let actualMods: User[];
-        if (mods) {
-            actualMods = getMods(mods!, actionType);
-        }
-
         return (
             <Modal centered show onHide={onClose}>
                 <Modal.Header closeButton>
@@ -266,25 +218,11 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
                         <Form.Row>
                             <UserColumn user={entity.user} />
                         </Form.Row>
-                        {!mods ? (
-                            <Form.Row>
-                                <label>Responsible Moderator</label>
-                            </Form.Row>
-                        ) : null}
+                        <Form.Row>
+                            <label>Responsible Moderator</label>
+                        </Form.Row>
                         <Form.Row className="modal-disable-padding">
-                            {!mods ? (
-                                <UserColumn user={entity.moderatorUser} />
-                            ) : (
-                                <StringSelect
-                                    label="Responsible Moderator"
-                                    defaultOption={entity.moderatorUser.id}
-                                    onSelect={this.onModerator}
-                                    options={actualMods!.map(mod => [
-                                        mod.id,
-                                        mod.username
-                                    ])}
-                                />
-                            )}
+                            <UserColumn user={entity.moderatorUser} />
                         </Form.Row>
                         <Form.Row>
                             <label>Issued on</label>
