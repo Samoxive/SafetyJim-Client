@@ -1,5 +1,11 @@
 import { User } from "./user";
 
+export type FetchModeratorsResponse = {
+    banMods: User[];
+    kickMods: User[];
+    roleMods: User[];
+};
+
 export type ModLogResponse<T> = {
     currentPage: number;
     totalPages: number;

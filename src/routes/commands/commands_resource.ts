@@ -21,12 +21,14 @@ export const commands: Command[] = [
             "-mod ban @user",
             "-mod ban @user <reason>",
             "-mod ban @user [reason] | <time>",
+            "-mod ban <username> [reason] [| <time>]",
             "-mod ban <user_id> [reason] [| <time>]"
         ],
         examples: [
             "-mod ban @Samoxive#1234",
             "-mod ban @Samoxive#1234 Spamming",
             "-mod ban @Samoxive#1234 Posting invite links | 1 day",
+            "-mod ban Samoxi | 3 days",
             "-mod ban 145456746721312768"
         ]
     },
@@ -40,11 +42,13 @@ export const commands: Command[] = [
         usages: [
             "-mod hardban @user",
             "-mod hardban @user <reason>",
+            "-mod hardban <username> [reason]",
             "-mod hardban <user_id> [reason]"
         ],
         examples: [
             "-mod hardban @Samoxive#1234",
             "-mod hardban @Samoxive#1234 Spamming",
+            "-mod hardban Samox",
             "-mod hardban 145456746721312768 Bad Samoxive no cookie"
         ]
     },
@@ -58,11 +62,13 @@ export const commands: Command[] = [
         usages: [
             "-mod kick @user",
             "-mod kick @user <reason>",
+            "-mod kick <username> [reason]",
             "-mod kick <user_id> [reason]"
         ],
         examples: [
             "-mod kick @Samoxive#1234",
             "-mod kick @Samoxive#1234 Breaking the rules",
+            "-mod kick Sam For being samoxive",
             "-mod kick 145456746721312768"
         ]
     },
@@ -79,12 +85,14 @@ export const commands: Command[] = [
             "-mod mute @user",
             "-mod mute @user <reason>",
             "-mod mute @user [reason] | <time>",
+            "-mod mute <username> [reason] [| <time>]",
             "-mod mute <user_id> [reason] [| <time>]"
         ],
         examples: [
             "-mod mute @Samoxive#1234",
             "-mod mute @Samoxive#1234 Spamming",
             "-mod mute @Samoxive#1234 Playing loud music | 6 hours",
+            "-mod mute Samoxive | 1 hour",
             "-mod mute 145456746721312768 Spamming the chat"
         ]
     },
@@ -98,11 +106,13 @@ export const commands: Command[] = [
         usages: [
             "-mod warn @user",
             "-mod warn @user <reason>",
+            "-mod warn <username> [reason]",
             "-mod warn <user_id> [reason]"
         ],
         examples: [
             "-mod warn @Samoxive#1234",
             "-mod warn @Samoxive#1234 Selfbots are not allowed",
+            "-mod warn Samo Your username is too long",
             "-mod warn 145456746721312768"
         ]
     },
@@ -120,12 +130,14 @@ export const commands: Command[] = [
             "-mod softban @user",
             "-mod softban @user <reason>",
             "-mod softban @user [reason] | <number of days to delete messages>",
+            "-mod softban <username> [reason] [| <number of days to delete messages>]",
             "-mod softban <user_id> [reason] [| <number of days to delete messages>]"
         ],
         examples: [
             "-mod softban @Samoxive#1234",
             "-mod softban @Samoxive#1234 Spamming",
             "-mod softban @Samoxive#1234 Spamming | 3",
+            "-mod softban Samoxive For reasons unknown",
             "-mod softban 145456746721312768 | 6"
         ]
     },
@@ -202,12 +214,14 @@ export const commands: Command[] = [
             "-mod clean <number>",
             "-mod clean <number> bot",
             "-mod clean <number> @user",
+            "-mod clean <number> <username>",
             "-mod clean <number> <user_id>"
         ],
         examples: [
             "-mod clean 5",
             "-mod clean 2 bot",
             "-mod clean 10 @Samoxive#1234",
+            "-mod clean 50 Samoxi",
             "-mod clean 3 145456746721312768"
         ]
     },
@@ -247,9 +261,14 @@ export const commands: Command[] = [
         quick: "-mod unban @Samoxive#1234",
         description:
             "Unmutes the specified user; removing the Muted role from them.",
-        usages: ["-mod unmute @user", "-mod unmute <user_id>"],
+        usages: [
+            "-mod unmute @user",
+            "-mod unmute <username>",
+            "-mod unmute <user_id>"
+        ],
         examples: [
             "-mod unmute @Samoxive#1234",
+            "-mod unmute Samoxive#1234",
             "-mod unmute 129819557115199488"
         ]
     },
