@@ -8,7 +8,7 @@ export function notifyError(heading: string, message: string) {
 export function routeToOauth(route?: string) {
     const { clientId, redirectUrl } = environment;
     const safeRedirectUrl = encodeURIComponent(redirectUrl);
-    let url = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${safeRedirectUrl}&response_type=code&scope=identify`;
+    let url = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${safeRedirectUrl}&response_type=code&scope=identify%20guilds`;
     if (route) {
         url += `&state=${route}`;
     }
