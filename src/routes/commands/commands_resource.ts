@@ -12,7 +12,7 @@ export const commands: Command[] = [
         name: "Ban",
         tooltip:
             "Bans the specified user but does not delete their recent messages",
-        quick: "-mod ban @Samoxive#1234 Spam | 3 days",
+        quick: "-mod ban @Samoxive#8634 Spam | 3 days",
         description:
             "Bans the specified user, if additional text follows the identifier, " +
             "that text is used as the reason. To ban a user temporarily, you can specify " +
@@ -24,16 +24,16 @@ export const commands: Command[] = [
             "-mod ban <user_id> [reason] [| <time>]"
         ],
         examples: [
-            "-mod ban @Samoxive#1234",
-            "-mod ban @Samoxive#1234 Spamming",
-            "-mod ban @Samoxive#1234 Posting invite links | 1 day",
+            "-mod ban @Samoxive#8634",
+            "-mod ban @Samoxive#8634 Spamming",
+            "-mod ban @Samoxive#8634 Posting invite links | 1 day",
             "-mod ban 145456746721312768"
         ]
     },
     {
         name: "Hardban",
         tooltip: "Bans the specified user and deletes their recent messages",
-        quick: "-mod hardban @Samoxive#1234 Spam",
+        quick: "-mod hardban @Samoxive#8634 Spam",
         description:
             "Bans the specified user, banning them and deleting every message they sent in the last week. " +
             "In addition, a reason may be provided.",
@@ -43,15 +43,15 @@ export const commands: Command[] = [
             "-mod hardban <user_id> [reason]"
         ],
         examples: [
-            "-mod hardban @Samoxive#1234",
-            "-mod hardban @Samoxive#1234 Spamming",
+            "-mod hardban @Samoxive#8634",
+            "-mod hardban @Samoxive#8634 Spamming",
             "-mod hardban 145456746721312768 Bad Samoxive no cookie"
         ]
     },
     {
         name: "Kick",
         tooltip: "Kicks the specified user",
-        quick: "-mod kick @Samoxive#1234 Advertisement",
+        quick: "-mod kick @Samoxive#8634 Advertisement",
         description:
             "Kicks the specified user, if additional text follows the identifier, " +
             "that text is used as the reason.",
@@ -61,15 +61,15 @@ export const commands: Command[] = [
             "-mod kick <user_id> [reason]"
         ],
         examples: [
-            "-mod kick @Samoxive#1234",
-            "-mod kick @Samoxive#1234 Breaking the rules",
+            "-mod kick @Samoxive#8634",
+            "-mod kick @Samoxive#8634 Breaking the rules",
             "-mod kick 145456746721312768"
         ]
     },
     {
         name: "Mute",
         tooltip: "Mutes the specified user",
-        quick: "-mod mute @Samoxive#1234 Using profanity",
+        quick: "-mod mute @Samoxive#8634 Using profanity",
         description:
             "Mutes the specified user. While muted, a user cannot send messages in any text channel, or " +
             "use their microphone in any voice channel. If additional text follows the identifier, " +
@@ -82,16 +82,16 @@ export const commands: Command[] = [
             "-mod mute <user_id> [reason] [| <time>]"
         ],
         examples: [
-            "-mod mute @Samoxive#1234",
-            "-mod mute @Samoxive#1234 Spamming",
-            "-mod mute @Samoxive#1234 Playing loud music | 6 hours",
+            "-mod mute @Samoxive#8634",
+            "-mod mute @Samoxive#8634 Spamming",
+            "-mod mute @Samoxive#8634 Playing loud music | 6 hours",
             "-mod mute 145456746721312768 Spamming the chat"
         ]
     },
     {
         name: "Warn",
         tooltip: "Warns the specified user",
-        quick: "-mod warn @Samoxive#1234 Harassing users",
+        quick: "-mod warn @Samoxive#8634 Harassing users",
         description:
             "Warns the specified user, sending them a direct message including the reason specified, if any. " +
             "Any text following the identifier is used as the reason.",
@@ -101,8 +101,8 @@ export const commands: Command[] = [
             "-mod warn <user_id> [reason]"
         ],
         examples: [
-            "-mod warn @Samoxive#1234",
-            "-mod warn @Samoxive#1234 Selfbots are not allowed",
+            "-mod warn @Samoxive#8634",
+            "-mod warn @Samoxive#8634 Selfbots are not allowed",
             "-mod warn 145456746721312768"
         ]
     },
@@ -110,7 +110,7 @@ export const commands: Command[] = [
         name: "Softban",
         tooltip:
             "Bans, then unbans, the specified user, deleting their recent messages",
-        quick: "-mod softban @Samoxive#1234 Spamming nsfw pictures",
+        quick: "-mod softban @Samoxive#8634 Spamming nsfw pictures",
         description:
             "Bans the specified user, then unbans them afterwards, effectively kicking them. This deletes " +
             "the specified user's messages in the last 1-7 days, defaulting to those from the last 1 day. " +
@@ -123,9 +123,9 @@ export const commands: Command[] = [
             "-mod softban <user_id> [reason] [| <number of days to delete messages>]"
         ],
         examples: [
-            "-mod softban @Samoxive#1234",
-            "-mod softban @Samoxive#1234 Spamming",
-            "-mod softban @Samoxive#1234 Spamming | 3",
+            "-mod softban @Samoxive#8634",
+            "-mod softban @Samoxive#8634 Spamming",
+            "-mod softban @Samoxive#8634 Spamming | 3",
             "-mod softban 145456746721312768 | 6"
         ]
     },
@@ -207,7 +207,7 @@ export const commands: Command[] = [
         examples: [
             "-mod clean 5",
             "-mod clean 2 bot",
-            "-mod clean 10 @Samoxive#1234",
+            "-mod clean 10 @Samoxive#8634",
             "-mod clean 3 145456746721312768"
         ]
     },
@@ -228,7 +228,7 @@ export const commands: Command[] = [
     {
         name: "Unban",
         tooltip: "Unbans the specified user",
-        quick: "-mod unban Samoxive#1234",
+        quick: "-mod unban Samoxive#8634",
         description: "Unbans the specified user.",
         usages: [
             "-mod unban @user",
@@ -236,7 +236,7 @@ export const commands: Command[] = [
             "-mod unban <user_id>"
         ],
         examples: [
-            "-mod unban @Samoxive#1234",
+            "-mod unban @Samoxive#8634",
             "-mod unban samox",
             "-mod unban 145456746721312768"
         ]
@@ -244,7 +244,7 @@ export const commands: Command[] = [
     {
         name: "Unmute",
         tooltip: "Unmutes the specified user",
-        quick: "-mod unban @Samoxive#1234",
+        quick: "-mod unban @Samoxive#8634",
         description:
             "Unmutes the specified user; removing the Muted role from them.",
         usages: [
@@ -252,7 +252,7 @@ export const commands: Command[] = [
             "-mod unmute <user_id>"
         ],
         examples: [
-            "-mod unmute @Samoxive#1234",
+            "-mod unmute @Samoxive#8634",
             "-mod unmute 129819557115199488"
         ]
     },
@@ -278,6 +278,22 @@ export const commands: Command[] = [
             "-mod tag add rule1 No advertising.",
             "-mod tag edit rule1 No advertising without a moderator's permission.",
             "-mod tag remove rule1"
+        ]
+    },
+    {
+        name: "Whois",
+        tooltip: "Displays information about given user or server member",
+        quick: "-mod whoise @Samoxive#8634",
+        description:
+            "When a mention or user id is given, Jim displays membership related information about the user if they are in " +
+            "the server, it displays Discord user information if they aren't in the server.",
+        usages: [
+            "-mod whois @user",
+            "-mod whois <user_id>"
+        ],
+        examples: [
+            "-mod whois @Samoxive#8634",
+            "-mod whois 129819557115199488"
         ]
     }
 ];
