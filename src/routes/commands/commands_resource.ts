@@ -35,7 +35,7 @@ export const commands: Command[] = [
         tooltip: "Bans the specified user and deletes their recent messages",
         quick: "-mod hardban @Samoxive#8634 Spam",
         description:
-            "Bans the specified user, banning them and deleting every message they sent in the last week. " +
+            "Bans the specified user and deletes every message they sent in the last week. " +
             "In addition, a reason may be provided.",
         usages: [
             "-mod hardban @user",
@@ -283,7 +283,7 @@ export const commands: Command[] = [
     {
         name: "Whois",
         tooltip: "Displays information about given user or server member",
-        quick: "-mod whoise @Samoxive#8634",
+        quick: "-mod whois @Samoxive#8634",
         description:
             "When a mention or user id is given, Jim displays membership related information about the user if they are in " +
             "the server, it displays Discord user information if they aren't in the server.",
@@ -294,6 +294,21 @@ export const commands: Command[] = [
         examples: [
             "-mod whois @Samoxive#8634",
             "-mod whois 129819557115199488"
+        ]
+    },
+    {
+        name: "Massban",
+        tooltip: "Displays information about given user or server member",
+        quick: "-mod whois @Samoxive#8634 @Someone#1234 @Another#5678",
+        description:
+            "Bans specified users and deletes every message they sent in the last week.",
+        usages: [
+            "-mod massban @user1 @user2 @user3 @userN",
+            "-mod massban <user_id1> <user_id2> <user_id3> <user_idN>"
+        ],
+        examples: [
+            "-mod massban @Samoxive#8634 @Someone#1234 @Another#5678",
+            "-mod massban 129819557115199488 1234567890123456789"
         ]
     }
 ];
