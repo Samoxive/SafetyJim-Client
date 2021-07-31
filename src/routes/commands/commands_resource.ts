@@ -298,7 +298,7 @@ export const commands: Command[] = [
     },
     {
         name: "Massban",
-        tooltip: "Displays information about given user or server member",
+        tooltip: "Hardbans multiple users",
         quick: "-mod whois @Samoxive#8634 @Someone#1234 @Another#5678",
         description:
             "Bans specified users and deletes every message they sent in the last week.",
