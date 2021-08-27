@@ -5,14 +5,13 @@ import { OverlayTrigger, Form, Button, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     GuildSettings,
-    GuildSettingsConstants
+    GuildSettingsConstants,
 } from "../../../entities/guildSettings";
 import { Component } from "react";
-import { Channel } from "../../../entities/channel";
 import {
     updateSettings,
     fetchSettings,
-    resetSettings
+    resetSettings,
 } from "../../../endpoint/guildSettings";
 import { INFO_TEXT } from "./settings_resource";
 import { Loading } from "../../../components/loading/loading";
@@ -24,7 +23,7 @@ import {
     IntegerSelect,
     StringSelect,
     TextArea,
-    TextInput
+    TextInput,
 } from "../../../components/form_components";
 
 const C = GuildSettingsConstants;
@@ -58,17 +57,21 @@ export class SettingsRoute extends Component<
     SettingsRouteState
 > {
     state: SettingsRouteState = {
-        settings: undefined
+        settings: undefined,
     };
 
     // onChange events can only fire when settings are fetched so we are sure that settings exist.
     // We also don't care if user modified the DOM or did other things and managed to
     // find a channel id that doesn't exist
-    findChannel = (id: string): Channel =>
-        this.state.settings!.channels.find(channel => channel.id === id)!;
+    findChannel = (id: string) => {
+        const channel = this.state.settings!.channels.find(
+            (channel) => channel.id === id
+        );
+        return channel || null;
+    };
 
     findRole = (id: string) => {
-        const role = this.state.settings!.roles.find(role => role.id === id);
+        const role = this.state.settings!.roles.find((role) => role.id === id);
         return role || null;
     };
 
@@ -76,12 +79,12 @@ export class SettingsRoute extends Component<
         key: K,
         value: GuildSettings[K]
     ) =>
-        this.setState(state => ({
+        this.setState((state) => ({
             ...state,
             settings: {
                 ...state.settings!,
-                [key]: value
-            }
+                [key]: value,
+            },
         }));
 
     onModlog = (enabled: boolean) => this.onSetting("modLog", enabled);
@@ -209,7 +212,7 @@ export class SettingsRoute extends Component<
     };
 
     componentDidMount() {
-        fetchSettings(this.props.guild).then(settings =>
+        fetchSettings(this.props.guild).then((settings) =>
             this.setState({ settings })
         );
     }
@@ -232,12 +235,20 @@ export class SettingsRoute extends Component<
 
                         <StringSelect
                             label="Log Channel"
-                            defaultOption={s.modLogChannel.id}
+                            defaultOption={
+                                s.modLogChannel ? s.modLogChannel.id : "none"
+                            }
                             onSelect={this.onModLogChannel}
-                            options={s.channels.map(channel => [
-                                channel.id,
-                                channel.name
-                            ])}
+                            options={[
+                                ["none", "None"],
+                                ...s.channels.map(
+                                    (channel) =>
+                                        [channel.id, channel.name] as [
+                                            string,
+                                            string
+                                        ]
+                                ),
+                            ]}
                         />
                     </Form.Row>
                 </SettingsGroup>
@@ -270,12 +281,19 @@ export class SettingsRoute extends Component<
 
                         <StringSelect
                             label="Channel"
-                            defaultOption={s.welcomeMessageChannel.id}
+                            defaultOption={
+                                s.welcomeMessageChannel
+                                    ? s.welcomeMessageChannel.id
+                                    : "none"
+                            }
                             onSelect={this.onWelcomeMessageChannel}
-                            options={s.channels.map(channel => [
-                                channel.id,
-                                channel.name
-                            ])}
+                            options={[
+                                ["none", "None"],
+                                ...s.channels.map(
+                                    (channel) =>
+                                        [channel.id, channel.name] as [string, string]
+                                ),
+                            ]}
                         />
                     </Form.Row>
 
@@ -308,9 +326,9 @@ export class SettingsRoute extends Component<
                             options={[
                                 ["none", "None"],
                                 ...s.roles.map(
-                                    role =>
+                                    (role) =>
                                         [role.id, role.name] as [string, string]
-                                )
+                                ),
                             ]}
                         />
 
@@ -369,7 +387,7 @@ export class SettingsRoute extends Component<
                             onSelect={this.onSilentCommandsLevel}
                             options={[
                                 [C.SILENT_COMMANDS_MOD_ONLY, "Moderation Only"],
-                                [C.SILENT_COMMANDS_ALL, "All"]
+                                [C.SILENT_COMMANDS_ALL, "All"],
                             ]}
                         />
                     </Form.Row>
@@ -396,7 +414,7 @@ export class SettingsRoute extends Component<
                             onSelect={this.onWordFilterLevel}
                             options={[
                                 [C.WORD_FILTER_LEVEL_LOW, "Low"],
-                                [C.WORD_FILTER_LEVEL_HIGH, "High"]
+                                [C.WORD_FILTER_LEVEL_HIGH, "High"],
                             ]}
                         />
                     </Form.Row>

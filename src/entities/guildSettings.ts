@@ -28,14 +28,14 @@ export interface GuildSettings {
     channels: Channel[];
     roles: Role[];
     modLog: boolean;
-    modLogChannel: Channel;
+    modLogChannel: Channel | null;
     holdingRoom: boolean;
     holdingRoomRole: Role | null;
     holdingRoomMinutes: number;
     inviteLinkRemover: boolean;
     welcomeMessage: boolean;
     message: string;
-    welcomeMessageChannel: Channel;
+    welcomeMessageChannel: Channel | null;
     prefix: string;
     silentCommands: boolean;
     noSpacePrefix: boolean;
