@@ -5,9 +5,8 @@ import { Button } from "react-bootstrap";
 import { MetaTag } from "../../components/meta_tag";
 
 const inviteLink =
-    "https://discordapp.com/oauth2/authorize?client_id=313749262687141888&permissions=272706646&scope=bot";
+    "https://discord.com/oauth2/authorize?client_id=313749262687141888&permissions=1099918552278&scope=applications.commands%20bot";
 const supportLink = "https://discord.io/safetyjim";
-const donateLink = "https://www.patreon.com/safetyjim";
 
 export const Home = () => (
     <div className="home-center">
@@ -34,13 +33,6 @@ export const Home = () => (
                 href={supportLink}
             >
                 Support
-            </Button>
-            <Button
-                variant="outline-primary"
-                className="home-button"
-                href={donateLink}
-            >
-                Donate
             </Button>
         </div>
     </div>
