@@ -12,7 +12,7 @@ export function clearToken(redirectHref: string) {
 
 export function getHTTPParams(): AxiosRequestConfig {
     return {
-        headers: { token: getToken() }
+        headers: { token: getToken() ?? "" }
     };
 }
 

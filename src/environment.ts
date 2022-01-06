@@ -6,7 +6,7 @@ const environment =
               redirectUrl: "https://safetyjim.xyz/login"
           }
         : {
-              clientId: "322714040344510464",
+              clientId: "881152939530534913",
               apiUrl: "http://localhost:8080",
               redirectUrl: "http://localhost:3000/login"
           };

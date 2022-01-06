@@ -44,7 +44,7 @@ export interface GuildSettings {
     silentCommandsLevel: number;
     modActionConfirmationMessage: boolean;
     wordFilter: boolean;
-    wordFilterBlacklist: string | null;
+    wordFilterBlocklist: string | null;
     wordFilterLevel: number;
     wordFilterAction: number;
     wordFilterActionDuration: number;

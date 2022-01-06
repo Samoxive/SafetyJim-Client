@@ -133,8 +133,8 @@ export class SettingsRoute extends Component<
 
     onWordFilter = (enabled: boolean) => this.onSetting("wordFilter", enabled);
 
-    onWordFilterBlacklist = (wordFilterBlacklist: string) =>
-        this.onSetting("wordFilterBlacklist", wordFilterBlacklist);
+    onWordFilterBlocklist = (wordFilterBlocklist: string) =>
+        this.onSetting("wordFilterBlocklist", wordFilterBlocklist);
 
     onWordFilterLevel = (level: number) =>
         this.onSetting("wordFilterLevel", level);
@@ -420,11 +420,11 @@ export class SettingsRoute extends Component<
                     </Form.Row>
                     <Form.Row>
                         <TextArea
-                            label="Blacklisted Words"
-                            defaultValue={s.wordFilterBlacklist || ""}
+                            label="Blocklisted Words"
+                            defaultValue={s.wordFilterBlocklist || ""}
                             placeholder="Using Jim's default list..."
                             rows={3}
-                            onChange={this.onWordFilterBlacklist}
+                            onChange={this.onWordFilterBlocklist}
                         />
                     </Form.Row>
                     <Form.Row>
