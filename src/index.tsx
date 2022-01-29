@@ -11,12 +11,13 @@ import {
     faHammer,
     faExclamationCircle,
     faMicrophoneSlash,
-    faTimesCircle
+    faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import App from "./app";
 import * as serviceWorker from "./serviceWorker";
 import moment from "moment";
 import momentLocalizer from "react-widgets-moment";
+import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
 
 moment.locale("en");
 momentLocalizer();
@@ -29,6 +30,7 @@ library.add(faHammer);
 library.add(faExclamationCircle);
 library.add(faMicrophoneSlash);
 library.add(faTimesCircle);
+library.add(faAsterisk);
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

@@ -1,75 +1,76 @@
-import { Card, Button, Accordion } from "react-bootstrap";
+import { Card, Table } from "react-bootstrap";
 import * as React from "react";
 import "./commands.css";
-import { commands } from "./commands_resource";
+import { slashCommands } from "./commands_resource";
 import { MetaTag } from "../../components/meta_tag";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const Commands = () => (
-    <div style={{ margin: "8px 8px 8px 8px" }} className="commands">
-        <MetaTag
-            title="Safety Jim - Commands"
-            description="Commands and stuff"
-        />
-        {commands
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map((command) => {
-                const usagesAccordion = (
-                    <Accordion>
-                        <Accordion.Toggle
-                            as={Button}
-                            variant="link"
-                            eventKey={`usages-popover-${command.name}`}
-                        >
-                            Usages
-                        </Accordion.Toggle>
-                        <Accordion.Collapse
-                            eventKey={`usages-popover-${command.name}`}
-                        >
-                            <ul>
-                                {command.usages.map((usage, i) => (
-                                    <li key={i}>
-                                        <code>{usage}</code>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Accordion.Collapse>
-                    </Accordion>
-                );
-                const examplesAccordion = (
-                    <Accordion>
-                        <Accordion.Toggle
-                            as={Button}
-                            variant="link"
-                            eventKey={`examples-popover-${command.name}`}
-                        >
-                            Examples
-                        </Accordion.Toggle>
-                        <Accordion.Collapse
-                            eventKey={`examples-popover-${command.name}`}
-                        >
-                            <ul>
-                                {command.examples.map((example, i) => (
-                                    <li key={i}>
-                                        <code>{example}</code>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Accordion.Collapse>
-                    </Accordion>
-                );
-                return (
-                    <Card key={command.name} className="command">
-                        <Card.Body>
-                            <Card.Title>{command.name}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">
-                                {command.tooltip}
-                            </Card.Subtitle>
-                            <Card.Text>{command.description}</Card.Text>
-                            {usagesAccordion}
-                            {examplesAccordion}
-                        </Card.Body>
-                    </Card>
-                );
-            })}
-    </div>
+    <>
+        <div style={{ margin: "8px 8px 0px 8px" }}>
+            <FontAwesomeIcon icon="asterisk" size="xs" color="red" /> = required
+            parameter
+        </div>
+        <div style={{ margin: "0px 8px 8px 8px" }} className="commands">
+            <MetaTag
+                title="Safety Jim - Commands"
+                description="Commands and stuff"
+            />
+
+            {slashCommands
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((command) => {
+                    let parameterTable;
+                    if (command.parameters.length > 0) {
+                        parameterTable = (
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>Parameter Name</th>
+                                        <th>Description</th>
+                                        <th>Example Value</th>
+                                    </tr>
+                                </thead>
+                                {command.parameters.map((parameter) => {
+                                    let optionalIcon =
+                                        parameter.optional ? null : (
+                                            <FontAwesomeIcon
+                                                icon="asterisk"
+                                                size="xs"
+                                                color="red"
+                                                style={{ marginLeft: "1px" }}
+                                            />
+                                        );
+
+                                    return (
+                                        <tr id={parameter.name}>
+                                            <td>
+                                                {parameter.name}
+                                                {optionalIcon}
+                                            </td>
+                                            <td>{parameter.description}</td>
+                                            <td>{parameter.example}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </Table>
+                        );
+                    } else {
+                        parameterTable = null;
+                    }
+
+                    return (
+                        <Card key={command.name} className="command">
+                            <Card.Body>
+                                <Card.Title>{command.name}</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">
+                                    {command.tooltip}
+                                </Card.Subtitle>
+                                {parameterTable}
+                            </Card.Body>
+                        </Card>
+                    );
+                })}
+        </div>
+    </>
 );
