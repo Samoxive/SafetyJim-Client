@@ -71,4 +71,5 @@ export interface GuildSettings {
     warnActionDuration: number;
     warnActionDurationType: number;
     modsCanEditTags: boolean;
+    spamFilter: boolean;
 }

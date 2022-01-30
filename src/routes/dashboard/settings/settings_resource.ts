@@ -29,5 +29,7 @@ export const INFO_TEXT: { [index: string]: string } = {
         "You can set threshold of a specific action to 0 to disable automatic actions, to prevent infinite loops, chain of automatic actions will only be issued 3 times. (scenario of kicked because threshold of mutes was exceeded because threshold of warnings was exceeded).\n\n" +
         "Actions are taken after **every** violation of the threshold (if threshold is 3, automatic action will be taken for 3rd, 4th, 5th... violation). You can pardon past violations to reduce a user's violation count.",
     tagPermission:
-        "If enabled this setting allows non-administrator moderators to add, modify, and delete tags."
+        "If enabled this setting allows non-administrator moderators to add, modify, and delete tags.",
+    spamFilter:
+        "If enabled, users who send messages containing the same message 6 times in a short duration will be hardbanned. You can use this to prevent spam and Discord nitro scams."
 };

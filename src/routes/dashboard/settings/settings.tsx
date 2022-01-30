@@ -198,6 +198,8 @@ export class SettingsRoute extends Component<
     onModsCanEditTags = (canThey: boolean) =>
         this.onSetting("modsCanEditTags", canThey);
 
+    onSpamFilter = (enabled: boolean) => this.onSetting("spamFilter", enabled);
+
     onSave = () => {
         const { settings } = this.state;
         const { guild } = this.props;
@@ -520,6 +522,15 @@ export class SettingsRoute extends Component<
                             label="Mods can edit tags"
                             defaultValue={s.modsCanEditTags}
                             onChange={this.onModsCanEditTags}
+                        />
+                    </Form.Row>
+                </SettingsGroup>
+                <SettingsGroup title="Spam Filter" infoKey="spamFilter">
+                    <Form.Row>
+                        <Checkbox
+                            label="Enable"
+                            defaultValue={s.spamFilter}
+                            onChange={this.onSpamFilter}
                         />
                     </Form.Row>
                 </SettingsGroup>
