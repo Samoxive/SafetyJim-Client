@@ -13,6 +13,13 @@ export const faqs: FAQEntry[] = [
             'After enabling developer mode you can simply right click their username and click "Copy ID" button.',
     },
     {
+        title: "Why can't I see Jim's slash commands in my chat prompt?",
+        description:
+            "If you invited Jim after 24th of March, 2021 you need to kick him and invite back for slash commands to appear in your server.\n\n" +
+            "This is due to Discord grandfathering servers that already invited at that point into having slash commands permissions for Jim, any server " +
+            "that invited Jim afterwards lacks the permissions Jim needs to display slash commands.",
+    },
+    {
         title: "Can everyone use the commands of Jim?",
         description:
             "No, for some commands you need to have a specific permission.\n\n" +
