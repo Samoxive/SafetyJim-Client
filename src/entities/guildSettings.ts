@@ -3,8 +3,6 @@ import { Guild } from "./guild";
 import { Role } from "./role";
 
 export const GuildSettingsConstants = {
-    SILENT_COMMANDS_MOD_ONLY: 0,
-    SILENT_COMMANDS_ALL: 1,
     WORD_FILTER_LEVEL_LOW: 0,
     WORD_FILTER_LEVEL_HIGH: 1,
     ACTION_NOTHING: 0,
@@ -36,13 +34,7 @@ export interface GuildSettings {
     welcomeMessage: boolean;
     message: string;
     welcomeMessageChannel: Channel | null;
-    prefix: string;
-    silentCommands: boolean;
-    noSpacePrefix: boolean;
-    statistics: boolean;
     joinCaptcha: boolean;
-    silentCommandsLevel: number;
-    modActionConfirmationMessage: boolean;
     wordFilter: boolean;
     wordFilterBlocklist: string | null;
     wordFilterLevel: number;

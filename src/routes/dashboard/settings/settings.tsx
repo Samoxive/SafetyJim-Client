@@ -23,7 +23,6 @@ import {
     IntegerSelect,
     StringSelect,
     TextArea,
-    TextInput,
 } from "../../../components/form_components";
 
 const C = GuildSettingsConstants;
@@ -112,24 +111,8 @@ export class SettingsRoute extends Component<
     onWelcomeMessageChannel = (channelId: string) =>
         this.onSetting("welcomeMessageChannel", this.findChannel(channelId));
 
-    onPrefix = (message: string) => this.onSetting("prefix", message);
-
-    onSilentCommands = (enabled: boolean) =>
-        this.onSetting("silentCommands", enabled);
-
-    onNoSpacePrefix = (enabled: boolean) =>
-        this.onSetting("noSpacePrefix", enabled);
-
-    onStatistics = (enabled: boolean) => this.onSetting("statistics", enabled);
-
     onJoinCaptcha = (enabled: boolean) =>
         this.onSetting("joinCaptcha", enabled);
-
-    onSilentCommandsLevel = (level: number) =>
-        this.onSetting("silentCommandsLevel", level);
-
-    onModActionConfirmationMessage = (enabled: boolean) =>
-        this.onSetting("modActionConfirmationMessage", enabled);
 
     onWordFilter = (enabled: boolean) => this.onSetting("wordFilter", enabled);
 
@@ -254,22 +237,6 @@ export class SettingsRoute extends Component<
                         />
                     </Form.Row>
                 </SettingsGroup>
-                <SettingsGroup title="Prefix Settings" infoKey="prefix">
-                    <Form.Row>
-                        <Checkbox
-                            label="No Space Prefix"
-                            defaultValue={s.noSpacePrefix}
-                            onChange={this.onNoSpacePrefix}
-                        />
-
-                        <TextInput
-                            label="Prefix"
-                            placeholder="-mod"
-                            defaultValue={s.prefix}
-                            onChange={this.onPrefix}
-                        />
-                    </Form.Row>
-                </SettingsGroup>
                 <SettingsGroup
                     title="Welcome Messages"
                     infoKey="welcomeMessage"
@@ -368,38 +335,6 @@ export class SettingsRoute extends Component<
                             onDurationType={
                                 this.onInviteLinkRemoverActionDurationType
                             }
-                        />
-                    </Form.Row>
-                </SettingsGroup>
-                <SettingsGroup title="Silent Commands" infoKey="silentCommands">
-                    <Form.Row>
-                        <Checkbox
-                            label="Enable"
-                            defaultValue={s.silentCommands}
-                            onChange={this.onSilentCommands}
-                        />
-                        <Checkbox
-                            label="Confirmation Message"
-                            defaultValue={s.modActionConfirmationMessage}
-                            onChange={this.onModActionConfirmationMessage}
-                        />
-                        <IntegerSelect
-                            label="Silence Level"
-                            defaultOption={s.silentCommandsLevel}
-                            onSelect={this.onSilentCommandsLevel}
-                            options={[
-                                [C.SILENT_COMMANDS_MOD_ONLY, "Moderation Only"],
-                                [C.SILENT_COMMANDS_ALL, "All"],
-                            ]}
-                        />
-                    </Form.Row>
-                </SettingsGroup>
-                <SettingsGroup title="Statistics" infoKey="statistics">
-                    <Form.Row>
-                        <Checkbox
-                            label="Enable"
-                            defaultValue={s.statistics}
-                            onChange={this.onStatistics}
                         />
                     </Form.Row>
                 </SettingsGroup>
