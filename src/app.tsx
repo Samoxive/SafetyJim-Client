@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { clearToken, getToken } from "./endpoint/utils";
 import { fetchSelfUser } from "./endpoint/selfUser";
 import { FAQ } from "./routes/faq/faq";
+import ToS from "./routes/tos";
+import PrivacyPolicy from "./routes/privacy_policy";
 
 export type SelfUserProps = { selfUser?: SelfUser };
 
@@ -88,6 +90,12 @@ const NavbarComponent = ({ selfUser }: SelfUserProps) => (
                         <Nav.Link>Login</Nav.Link>
                     </LinkContainer>
                 )}
+                <LinkContainer to="/terms-of-service">
+                    <Nav.Link>Terms</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/privacy-policy">
+                    <Nav.Link>Privacy</Nav.Link>
+                </LinkContainer>
             </Nav>
         </Navbar.Collapse>
     </Navbar>
@@ -116,6 +124,8 @@ class App extends Component<{}, { selfUser?: SelfUser }> {
                         <Route path="/commands" component={Commands} />
                         <Route path="/faq" component={FAQ} />
                         <Route path="/login" component={Login} />
+                        <Route path="/terms-of-service" component={ToS} />
+                        <Route path="/privacy-policy" component={PrivacyPolicy} />
                         <Route
                             path="/dashboard/:guildId"
                             render={this.renderDashboard}
