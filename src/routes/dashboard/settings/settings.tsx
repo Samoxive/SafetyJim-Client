@@ -91,6 +91,9 @@ export class SettingsRoute extends Component<
     onModLogChannel = (channelId: string) =>
         this.onSetting("modLogChannel", this.findChannel(channelId));
 
+    onReportChannel = (channelId: string) =>
+        this.onSetting("reportChannel", this.findChannel(channelId));
+
     onHoldingRoom = (enabled: boolean) =>
         this.onSetting("holdingRoom", enabled);
 
@@ -224,6 +227,24 @@ export class SettingsRoute extends Component<
                                 s.modLogChannel ? s.modLogChannel.id : "none"
                             }
                             onSelect={this.onModLogChannel}
+                            options={[
+                                ["none", "None"],
+                                ...s.channels.map(
+                                    (channel) =>
+                                        [channel.id, channel.name] as [
+                                            string,
+                                            string
+                                        ]
+                                ),
+                            ]}
+                        />
+
+                        <StringSelect
+                            label="Report Channel"
+                            defaultOption={
+                                s.reportChannel ? s.reportChannel.id : "None"
+                            }
+                            onSelect={this.onReportChannel}
                             options={[
                                 ["none", "None"],
                                 ...s.channels.map(

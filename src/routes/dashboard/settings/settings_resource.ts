@@ -1,6 +1,6 @@
 export const INFO_TEXT: { [index: string]: string } = {
     modLog:
-        "Enabling this will log moderation actions like bans, kicks, warnings in given channel.",
+        "Enabling this will log moderation actions like bans, kicks, warnings in log channel, user reports in report channel. Users can report messages by right clicking > Apps > Report (Safety Jim)",
     holdingRoom:
         "Enabling this will assign the specified role to the new members after specified amount of time has passed. This role can be used to grant permissions to view exclusive channels, send messages and so on. Cannot be used while **Join Captcha** is enabled.",
     joinCaptcha:

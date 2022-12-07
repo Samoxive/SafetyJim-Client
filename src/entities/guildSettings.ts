@@ -26,7 +26,8 @@ export interface GuildSettings {
     channels: Channel[];
     roles: Role[];
     modLog: boolean;
-    modLogChannel: Channel | null;
+    modLogChannel: Channel | null
+    reportChannel: Channel | null
     holdingRoom: boolean;
     holdingRoomRole: Role | null;
     holdingRoomMinutes: number;
