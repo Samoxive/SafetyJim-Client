@@ -14,7 +14,7 @@ import {
     faMicrophoneSlash,
     faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import App from "./App";
+import App from "./app";
 import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
 import { HelmetProvider } from "react-helmet-async";
 
