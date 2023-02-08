@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Guild } from "../../../entities/guild";
 import "./settings.css";
-import { OverlayTrigger, Form, Button, Popover } from "react-bootstrap";
+import { OverlayTrigger, Form, Button, Popover, Row, Stack } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     GuildSettings,
@@ -24,6 +24,7 @@ import {
     StringSelect,
     TextArea,
 } from "../../../components/form_components";
+import { dashboardRoute, DashboardRouteProps } from "../dashboard";
 
 const C = GuildSettingsConstants;
 
@@ -35,24 +36,25 @@ type SettingsGroupProps = {
 
 const SettingsGroup = ({ children, title, infoKey }: SettingsGroupProps) => (
     <Form className="setting-group">
-        <Form.Row>
+        <Row>
             <h5>{title}</h5>
-        </Form.Row>
-        <Form.Row>
+        </Row>
+        <Row>
             <h6>
                 <small className="text-muted setting-tooltip">
-                    <Markdown source={INFO_TEXT[infoKey]} />
+                    <Markdown children={INFO_TEXT[infoKey]} />
                 </small>
             </h6>
-        </Form.Row>
+        </Row>
         {children}
     </Form>
 );
 
+type SettingsRouteProps = DashboardRouteProps & { guild: Guild };
 type SettingsRouteState = { settings?: GuildSettings };
 
-export class SettingsRoute extends Component<
-    { guild: Guild },
+export class ActualSettingsRoute extends Component<
+    SettingsRouteProps,
     SettingsRouteState
 > {
     state: SettingsRouteState = {
@@ -214,7 +216,7 @@ export class SettingsRoute extends Component<
         return (
             <div className="setting-groups">
                 <SettingsGroup title="Moderator Log" infoKey="modLog">
-                    <Form.Row>
+                    <Row>
                         <Checkbox
                             label="Enable"
                             defaultValue={s.modLog}
@@ -256,13 +258,13 @@ export class SettingsRoute extends Component<
                                 ),
                             ]}
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
                 <SettingsGroup
                     title="Welcome Messages"
                     infoKey="welcomeMessage"
                 >
-                    <Form.Row>
+                    <Row>
                         <Checkbox
                             label="Enable"
                             defaultValue={s.welcomeMessage}
@@ -285,9 +287,9 @@ export class SettingsRoute extends Component<
                                 ),
                             ]}
                         />
-                    </Form.Row>
+                    </Row>
 
-                    <Form.Row>
+                    <Row>
                         <TextArea
                             label="Message"
                             defaultValue={s.message}
@@ -295,10 +297,10 @@ export class SettingsRoute extends Component<
                             rows={3}
                             onChange={this.onMessage}
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
                 <SettingsGroup title="Holding Room" infoKey="holdingRoom">
-                    <Form.Row>
+                    <Row>
                         <Checkbox
                             label="Enable"
                             defaultValue={s.holdingRoom}
@@ -327,19 +329,19 @@ export class SettingsRoute extends Component<
                             defaultValue={s.holdingRoomMinutes}
                             onChange={this.onHoldingRoomMinutes}
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
                 <SettingsGroup title="Join Captcha" infoKey="joinCaptcha">
-                    <Form.Row>
+                    <Row>
                         <Checkbox
                             label="Enable"
                             defaultValue={s.joinCaptcha}
                             onChange={this.onJoinCaptcha}
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
                 <SettingsGroup title="Invite Link Remover" infoKey="inviteLink">
-                    <Form.Row>
+                    <Row>
                         <Checkbox
                             label="Enable"
                             defaultValue={s.inviteLinkRemover}
@@ -357,10 +359,10 @@ export class SettingsRoute extends Component<
                                 this.onInviteLinkRemoverActionDurationType
                             }
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
                 <SettingsGroup title="Word Filter" infoKey="wordFilter">
-                    <Form.Row>
+                    <Row>
                         <Checkbox
                             label="Enable"
                             defaultValue={s.wordFilter}
@@ -375,8 +377,8 @@ export class SettingsRoute extends Component<
                                 [C.WORD_FILTER_LEVEL_HIGH, "High"],
                             ]}
                         />
-                    </Form.Row>
-                    <Form.Row>
+                    </Row>
+                    <Row>
                         <TextArea
                             label="Blocklisted Words"
                             defaultValue={s.wordFilterBlocklist || ""}
@@ -384,8 +386,8 @@ export class SettingsRoute extends Component<
                             rows={3}
                             onChange={this.onWordFilterBlocklist}
                         />
-                    </Form.Row>
-                    <Form.Row>
+                    </Row>
+                    <Row>
                         <ModActionSelect
                             defaultAction={s.wordFilterAction}
                             defaultDuration={s.wordFilterActionDuration}
@@ -394,10 +396,10 @@ export class SettingsRoute extends Component<
                             onDuration={this.onWordFilterActionDuration}
                             onDurationType={this.onWordFilterActionDurationType}
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
                 <SettingsGroup title="Privacy" infoKey="privacy">
-                    <Form.Row>
+                    <Row>
                         <PrivacySelect
                             label="Settings"
                             defaultPrivacy={s.privacySettings}
@@ -408,10 +410,10 @@ export class SettingsRoute extends Component<
                             defaultPrivacy={s.privacyModLog}
                             onPrivacy={this.onPrivacyModLog}
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
                 <SettingsGroup title="Automatic Actions" infoKey="autoActions">
-                    <Form.Row>
+                    <Row>
                         <IntegerInput
                             label="After x count of soft bans"
                             defaultValue={s.softbanThreshold}
@@ -425,8 +427,8 @@ export class SettingsRoute extends Component<
                             onDuration={this.onSoftbanActionDuration}
                             onDurationType={this.onSoftbanActionDurationType}
                         />
-                    </Form.Row>
-                    <Form.Row>
+                    </Row>
+                    <Row>
                         <IntegerInput
                             label="After x count of kicks"
                             defaultValue={s.kickThreshold}
@@ -440,8 +442,8 @@ export class SettingsRoute extends Component<
                             onDuration={this.onKickActionDuration}
                             onDurationType={this.onKickActionDurationType}
                         />
-                    </Form.Row>
-                    <Form.Row>
+                    </Row>
+                    <Row>
                         <IntegerInput
                             label="After x count of mutes"
                             defaultValue={s.muteThreshold}
@@ -455,8 +457,8 @@ export class SettingsRoute extends Component<
                             onDuration={this.onMuteActionDuration}
                             onDurationType={this.onMuteActionDurationType}
                         />
-                    </Form.Row>
-                    <Form.Row>
+                    </Row>
+                    <Row>
                         <IntegerInput
                             label="After x count of warns"
                             defaultValue={s.warnThreshold}
@@ -470,57 +472,62 @@ export class SettingsRoute extends Component<
                             onDuration={this.onWarnActionDuration}
                             onDurationType={this.onWarnActionDurationType}
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
                 <SettingsGroup title="Tag Permission" infoKey="tagPermission">
-                    <Form.Row>
+                    <Row>
                         <Checkbox
                             label="Mods can edit tags"
                             defaultValue={s.modsCanEditTags}
                             onChange={this.onModsCanEditTags}
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
                 <SettingsGroup title="Spam Filter" infoKey="spamFilter">
-                    <Form.Row>
+                    <Row>
                         <Checkbox
                             label="Enable"
                             defaultValue={s.spamFilter}
                             onChange={this.onSpamFilter}
                         />
-                    </Form.Row>
+                    </Row>
                 </SettingsGroup>
-                <Form.Row style={{ height: "16px" }} />
-                <Form.Row style={{ justifyContent: "center" }}>
-                    <OverlayTrigger
-                        trigger={["click", "focus"]}
-                        placement="auto"
-                        overlay={
-                            <Popover
-                                id="settings-reset-popover"
-                                title="Are you sure?"
-                            >
-                                <Button variant="danger" onClick={this.onReset}>
-                                    <FontAwesomeIcon
-                                        icon="exclamation-triangle"
-                                        style={{ marginRight: "4px" }}
-                                    />
-                                    Reset Settings
-                                </Button>
-                            </Popover>
-                        }
-                    >
-                        <Button variant="danger">Reset</Button>
-                    </OverlayTrigger>
-                    <Button
-                        variant="primary"
-                        onClick={this.onSave}
-                        style={{ marginLeft: "8px" }}
-                    >
-                        Save
-                    </Button>
-                </Form.Row>
+                <Row style={{ height: "16px" }} />
+                <Stack direction="horizontal" style={{ "justifyContent": "space-evenly" }}>
+                    <div>
+                        <OverlayTrigger
+                            trigger={["click", "focus"]}
+                            placement="auto"
+                            overlay={
+                                <Popover
+                                    id="settings-reset-popover"
+                                    title="Are you sure?"
+                                >
+                                    <Button variant="danger" onClick={this.onReset}>
+                                        <FontAwesomeIcon
+                                            icon="circle-exclamation"
+                                            style={{ marginRight: "4px" }}
+                                        />
+                                        Reset Settings
+                                    </Button>
+                                </Popover>
+                            }
+                        >
+                            <Button variant="danger">Reset</Button>
+                        </OverlayTrigger>
+                    </div>
+                    <div>
+                        <Button
+                            variant="primary"
+                            onClick={this.onSave}
+                        >
+                            Save
+                        </Button>
+                    </div>
+                </Stack>
             </div>
         );
     }
 }
+
+export const SettingsRoute = dashboardRoute(ActualSettingsRoute);

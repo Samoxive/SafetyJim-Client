@@ -8,32 +8,33 @@ import {
 } from "../../../endpoint/modLog";
 import { ColumnType, EntityModal, ModLogList } from "./modLogList";
 import { Softban } from "../../../entities/modLogEntities";
-import { RouteComponentProps } from "react-router";
+import { dashboardRoute, DashboardRouteProps } from "../dashboard";
 
-type SoftbanListRouteProps = RouteComponentProps<{ softbanId?: string }> & {
+type SoftbanListRouteProps = DashboardRouteProps & {
     guild: Guild;
 };
 type SoftbanListRouteState = {};
 
-export class SoftbanListRoute extends Component<
+export class ActualSoftbanListRoute extends Component<
     SoftbanListRouteProps,
     SoftbanListRouteState
 > {
     state: SoftbanListRouteState = {};
     onSelectSoftban = (softban: Softban) =>
-        this.props.history.push(
+        this.props.navigate(
             `/dashboard/${this.props.guild.id}/softbans/${softban.id}`
         );
     onModalBack = () =>
-        this.props.history.push(`/dashboard/${this.props.guild.id}/softbans`);
+        this.props.navigate(`/dashboard/${this.props.guild.id}/softbans`);
 
     render() {
         const {
             guild,
-            match: {
-                params: { softbanId }
-            }
+            params
         } = this.props;
+
+        const softbanId = params.softbanId;
+
         return (
             <>
                 {softbanId && (
@@ -77,3 +78,5 @@ export class SoftbanListRoute extends Component<
         );
     }
 }
+
+export const SoftbanListRoute = dashboardRoute(ActualSoftbanListRoute);

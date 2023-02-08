@@ -4,32 +4,33 @@ import { Guild } from "../../../entities/guild";
 import { Kick } from "../../../entities/modLogEntities";
 import { fetchKick, fetchKicks, updateKick } from "../../../endpoint/modLog";
 import { ColumnType, EntityModal, ModLogList } from "./modLogList";
-import { RouteComponentProps } from "react-router";
+import { dashboardRoute, DashboardRouteProps } from "../dashboard";
 
-type KickListRouteProps = RouteComponentProps<{ kickId?: string }> & {
+type KickListRouteProps = DashboardRouteProps & {
     guild: Guild;
 };
 type KickListRouteState = {};
 
-export class KickListRoute extends Component<
+export class ActualKickListRoute extends Component<
     KickListRouteProps,
     KickListRouteState
 > {
     state: KickListRouteState = {};
     onSelectKick = (kick: Kick) =>
-        this.props.history.push(
+        this.props.navigate(
             `/dashboard/${this.props.guild.id}/kicks/${kick.id}`
         );
     onModalBack = () =>
-        this.props.history.push(`/dashboard/${this.props.guild.id}/kicks`);
+        this.props.navigate(`/dashboard/${this.props.guild.id}/kicks`);
 
     render() {
         const {
             guild,
-            match: {
-                params: { kickId }
-            }
+            params
         } = this.props;
+
+        const kickId = params.kickId;
+
         return (
             <>
                 {kickId && (
@@ -73,3 +74,5 @@ export class KickListRoute extends Component<
         );
     }
 }
+
+export const KickListRoute = dashboardRoute(ActualKickListRoute);

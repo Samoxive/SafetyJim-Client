@@ -1,7 +1,5 @@
-$font-path: "~react-widgets/lib/fonts";
-$img-path: "~react-widgets/lib/img";
-
-@import "~react-widgets/lib/scss/react-widgets";
+@import "react-widgets/scss/styles.scss";
+@import "react-toastify/dist/ReactToastify.css";
 
 table > * {
     font-size: 12px;

@@ -12,22 +12,12 @@ export const FAQ = () => (
         />
         <Accordion>
             {faqs.map((faq, i) => (
-                <Card key={i}>
-                    <Card.Header>
-                        <Accordion.Toggle
-                            as={Button}
-                            variant="link"
-                            eventKey={`${i}`}
-                        >
-                            {faq.title}
-                        </Accordion.Toggle>
-                    </Card.Header>
-                    <Accordion.Collapse eventKey={`${i}`}>
-                        <Card.Body>
-                            <Markdown source={faq.description} />
-                        </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
+                <Accordion.Item key={i} eventKey={`${i}`}>
+                    <Accordion.Header>{faq.title}</Accordion.Header>
+                    <Accordion.Body>
+                        <Markdown children={faq.description} />
+                    </Accordion.Body>
+                </Accordion.Item>
             ))}
         </Accordion>
     </div>

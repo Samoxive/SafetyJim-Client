@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./app.scss";
 import { Navbar, Image, Nav, NavDropdown } from "react-bootstrap";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Commands } from "./routes/commands/commands";
 import { Dashboard } from "./routes/dashboard/dashboard";
@@ -14,6 +14,14 @@ import { fetchSelfUser } from "./endpoint/selfUser";
 import { FAQ } from "./routes/faq/faq";
 import ToS from "./routes/tos";
 import PrivacyPolicy from "./routes/privacy_policy";
+import { ToastContainer } from "react-toastify";
+import { SettingsRoute } from "./routes/dashboard/settings/settings";
+import { BanListRoute } from "./routes/dashboard/modlog/banList";
+import { SoftbanListRoute } from "./routes/dashboard/modlog/softbanList";
+import { HardbanListRoute } from "./routes/dashboard/modlog/hardbanList";
+import { KickListRoute } from "./routes/dashboard/modlog/kickList";
+import { MuteListRoute } from "./routes/dashboard/modlog/muteList";
+import { WarnListRoute } from "./routes/dashboard/modlog/warnList";
 
 export type SelfUserProps = { selfUser?: SelfUser };
 
@@ -70,7 +78,7 @@ const NavbarUserMenu = ({ selfUser }: SelfUserProps) => {
 };
 
 const NavbarComponent = ({ selfUser }: SelfUserProps) => (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" style={{ paddingLeft: "16px", paddingRight: "16px" }}>
         <LinkContainer to="/">
             <Navbar.Brand>Safety Jim</Navbar.Brand>
         </LinkContainer>
@@ -104,10 +112,6 @@ const NavbarComponent = ({ selfUser }: SelfUserProps) => (
 class App extends Component<{}, { selfUser?: SelfUser }> {
     state = { selfUser: undefined };
 
-    renderDashboard = (props: any) => (
-        <Dashboard {...props} selfUser={this.state.selfUser} />
-    );
-
     componentDidMount() {
         if (getToken()) {
             fetchSelfUser().then(selfUser => this.setState({ selfUser }));
@@ -116,24 +120,55 @@ class App extends Component<{}, { selfUser?: SelfUser }> {
 
     render() {
         return (
-            <Router>
+            <BrowserRouter>
                 <>
                     <NavbarComponent selfUser={this.state.selfUser} />
-                    <Switch>
-                        <Route exact={true} path="/" component={Home} />
-                        <Route path="/commands" component={Commands} />
-                        <Route path="/faq" component={FAQ} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/terms-of-service" component={ToS} />
-                        <Route path="/privacy-policy" component={PrivacyPolicy} />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/commands" element={<Commands />} />
+                        <Route path="/faq" element={<FAQ />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/terms-of-service" element={<ToS />} />
+                        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                         <Route
                             path="/dashboard/:guildId"
-                            render={this.renderDashboard}
-                        />
-                        <Route component={NotFound} />
-                    </Switch>
+                            element={<Dashboard selfUser={this.state.selfUser} />}
+                        >
+                            <Route
+                                path="settings"
+                                element={<SettingsRoute />}
+                                action={undefined}
+                            />
+                            <Route
+                                path="bans/:banId?"
+                                element={<BanListRoute />}
+                            />
+                            <Route
+                                path="softbans/:softbanId?"
+                                element={<SoftbanListRoute />}
+                            />
+                            <Route
+                                path="hardbans/:hardbanId?"
+                                element={<HardbanListRoute />}
+                            />
+                            <Route
+                                path="kicks/:kickId?"
+                                element={<KickListRoute />}
+                            />
+                            <Route
+                                path="mutes/:muteId?"
+                                element={<MuteListRoute />}
+                            />
+                            <Route
+                                path="warns/:warnId?"
+                                element={<WarnListRoute />}
+                            />
+                        </Route>
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                    <ToastContainer />
                 </>
-            </Router>
+            </BrowserRouter>
         );
     }
 }

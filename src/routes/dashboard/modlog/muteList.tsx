@@ -4,32 +4,33 @@ import { Guild } from "../../../entities/guild";
 import { Mute } from "../../../entities/modLogEntities";
 import { ColumnType, EntityModal, ModLogList } from "./modLogList";
 import { fetchMute, fetchMutes, updateMute } from "../../../endpoint/modLog";
-import { RouteComponentProps } from "react-router";
+import { dashboardRoute, DashboardRouteProps } from "../dashboard";
 
-type MuteListRouteProps = RouteComponentProps<{ muteId?: string }> & {
+type MuteListRouteProps = DashboardRouteProps & {
     guild: Guild;
 };
 type MuteListRouteState = {};
 
-export class MuteListRoute extends Component<
+export class ActualMuteListRoute extends Component<
     MuteListRouteProps,
     MuteListRouteState
 > {
     state: MuteListRouteState = {};
     onSelectMute = (mute: Mute) =>
-        this.props.history.push(
+        this.props.navigate(
             `/dashboard/${this.props.guild.id}/mutes/${mute.id}`
         );
     onModalBack = () =>
-        this.props.history.push(`/dashboard/${this.props.guild.id}/mutes`);
+        this.props.navigate(`/dashboard/${this.props.guild.id}/mutes`);
 
     render() {
         const {
             guild,
-            match: {
-                params: { muteId }
-            }
+            params
         } = this.props;
+
+        const muteId = params.muteId;
+
         return (
             <>
                 {muteId && (
@@ -81,3 +82,5 @@ export class MuteListRoute extends Component<
         );
     }
 }
+
+export const MuteListRoute = dashboardRoute(ActualMuteListRoute);

@@ -8,32 +8,33 @@ import {
     updateHardban
 } from "../../../endpoint/modLog";
 import { ColumnType, EntityModal, ModLogList } from "./modLogList";
-import { RouteComponentProps } from "react-router";
+import { dashboardRoute, DashboardRouteProps } from "../dashboard";
 
-type HardbanListRouteProps = RouteComponentProps<{ hardbanId?: string }> & {
+type HardbanListRouteProps = DashboardRouteProps & {
     guild: Guild;
 };
 type HardbanListRouteState = {};
 
-export class HardbanListRoute extends Component<
+export class ActualHardbanListRoute extends Component<
     HardbanListRouteProps,
     HardbanListRouteState
 > {
     state: HardbanListRouteState = {};
     onSelectHardban = (hardban: Hardban) =>
-        this.props.history.push(
+        this.props.navigate(
             `/dashboard/${this.props.guild.id}/hardbans/${hardban.id}`
         );
     onModalBack = () =>
-        this.props.history.push(`/dashboard/${this.props.guild.id}/hardbans`);
+        this.props.navigate(`/dashboard/${this.props.guild.id}/hardbans`);
 
     render() {
         const {
             guild,
-            match: {
-                params: { hardbanId }
-            }
+            params
         } = this.props;
+
+        const hardbanId = params.hardbanId;
+
         return (
             <>
                 {hardbanId && (
@@ -76,3 +77,5 @@ export class HardbanListRoute extends Component<
         );
     }
 }
+
+export const HardbanListRoute = dashboardRoute(ActualHardbanListRoute);

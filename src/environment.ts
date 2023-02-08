@@ -1,5 +1,5 @@
 const environment =
-    process.env.NODE_ENV === "production"
+    import.meta.env.PROD
         ? {
               clientId: "313749262687141888",
               apiUrl: "https://api.safetyjim.xyz",

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Redirect, Route, RouteComponentProps } from "react-router";
+import { Location, Navigate, NavigateFunction, Outlet, Params, Route, useNavigate, useNavigation, useOutletContext } from "react-router";
 import { Guild } from "../../entities/guild";
 import { SettingsRoute } from "./settings/settings";
 import { routeToOauth, notifyError } from "../../utils";
-import { SelfUserProps } from "../../app";
+import { SelfUserProps } from "../../App";
 import { Modal, Button, Container, Row, Col, ListGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LinkContainer } from "react-router-bootstrap";
@@ -17,6 +17,8 @@ import { HardbanListRoute } from "./modlog/hardbanList";
 import { KickListRoute } from "./modlog/kickList";
 import { MuteListRoute } from "./modlog/muteList";
 import { WarnListRoute } from "./modlog/warnList";
+import { useParams } from "react-router";
+import { useLocation } from "react-router";
 
 type SidebarMenuItemProps = {
     to: string;
@@ -32,7 +34,7 @@ const SidebarMenuItem = ({
     title
 }: SidebarMenuItemProps) => (
     <LinkContainer to={to}>
-        <ListGroup.Item>
+        <ListGroup.Item action>
             {icon ? (
                 <FontAwesomeIcon icon={icon} style={{ marginRight: "4px" }} />
             ) : (
@@ -43,19 +45,31 @@ const SidebarMenuItem = ({
     </LinkContainer>
 );
 
-type GenericGuildRouteProps = { guild: Guild } & any;
+export type DashboardRouteProps = { guild: Guild, location: Location, navigate: NavigateFunction, params: Params };
 
-function injectGuild(
-    guild: Guild,
-    Component: React.ComponentType<GenericGuildRouteProps>
-): React.FunctionComponent<any> {
-    return (props: any) => <Component {...props} guild={guild} />;
+export function dashboardRoute(ModLogComponent: React.ComponentClass<DashboardRouteProps>) {
+    return (): JSX.Element => {
+        let guild = useOutletContext<Guild>();
+        let location = useLocation();
+        let navigate = useNavigate();
+        let params = useParams();
+
+        return <ModLogComponent guild={guild} location={location} navigate={navigate} params={params} />;
+    }
 }
 
-type DashboardProps = RouteComponentProps<{ guildId: string }> & SelfUserProps;
+export function Dashboard(props: SelfUserProps): JSX.Element {
+    let { guildId } = useParams();
+    let location = useLocation();
+    let pathname = location.pathname;
 
-export class Dashboard extends React.Component<
-    DashboardProps,
+    return <ActualDashboard guildId={guildId} pathname={pathname} selfUser={props.selfUser} />;
+}
+
+type ActualDashboardProps = { guildId?: string, pathname: string } & SelfUserProps;
+
+export class ActualDashboard extends React.Component<
+    ActualDashboardProps,
     { redirectHome: boolean }
 > {
     state = {
@@ -63,17 +77,15 @@ export class Dashboard extends React.Component<
     };
 
     onModalClose = () => this.setState({ redirectHome: true });
-    onModalConfirm = () => routeToOauth(this.props.location.pathname);
+    onModalConfirm = () => routeToOauth(this.props.pathname);
 
     render() {
-        const { match, selfUser } = this.props;
+        const { guildId, selfUser } = this.props;
         const { redirectHome } = this.state;
-        const path = match.path;
-        const guildId = match.params.guildId;
 
         if (!getToken()) {
             if (redirectHome) {
-                return <Redirect to="/" />;
+                return <Navigate to="/" />;
             } else {
                 return (
                     <Modal show={true}>
@@ -112,10 +124,9 @@ export class Dashboard extends React.Component<
 
         if (selectedGuild == null) {
             notifyError(
-                "Invalid URL",
                 "You have navigated to an invalid URL, redirecting..."
             );
-            return <Redirect to="/" />;
+            return <Navigate to="/" />;
         }
 
         return (
@@ -124,89 +135,44 @@ export class Dashboard extends React.Component<
                     <Col xs="12" md="3" lg="2" style={{ padding: "0px" }}>
                         <ListGroup className="dashboard-sidenav">
                             <SidebarMenuItem
-                                to={`/dashboard/${guildId}/settings`}
+                                to="settings"
                                 icon="cog"
                                 title="Settings"
                             />
                             <SidebarMenuItem
-                                to={`/dashboard/${guildId}/bans`}
+                                to="bans"
                                 icon="hammer"
                                 title="Bans"
                             />
                             <SidebarMenuItem
-                                to={`/dashboard/${guildId}/softbans`}
+                                to="softbans"
                                 icon="hammer"
                                 title="Softbans"
                             />
                             <SidebarMenuItem
-                                to={`/dashboard/${guildId}/hardbans`}
+                                to="hardbans"
                                 icon="hammer"
                                 title="Hardbans"
                             />
                             <SidebarMenuItem
-                                to={`/dashboard/${guildId}/kicks`}
+                                to="kicks"
                                 iconEmoji="🥾"
                                 title="Kicks"
                             />
                             <SidebarMenuItem
-                                to={`/dashboard/${guildId}/mutes`}
+                                to="mutes"
                                 icon="microphone-slash"
                                 title="Mutes"
                             />
                             <SidebarMenuItem
-                                to={`/dashboard/${guildId}/warns`}
+                                to="warns"
                                 icon="exclamation-circle"
                                 title="Warnings"
                             />
                         </ListGroup>
                     </Col>
                     <Col xs="12" md="9" lg="10">
-                        <Route
-                            path={`${path}/settings`}
-                            component={injectGuild(
-                                selectedGuild,
-                                SettingsRoute
-                            )}
-                        />
-                        <Route
-                            path={`${path}/bans/:banId?`}
-                            component={injectGuild(selectedGuild, BanListRoute)}
-                        />
-                        <Route
-                            path={`${path}/softbans/:softbanId?`}
-                            component={injectGuild(
-                                selectedGuild,
-                                SoftbanListRoute
-                            )}
-                        />
-                        <Route
-                            path={`${path}/hardbans/:hardbanId?`}
-                            component={injectGuild(
-                                selectedGuild,
-                                HardbanListRoute
-                            )}
-                        />
-                        <Route
-                            path={`${path}/kicks/:kickId?`}
-                            component={injectGuild(
-                                selectedGuild,
-                                KickListRoute
-                            )}
-                        />
-                        <Route
-                            path={`${path}/mutes/:muteId?`}
-                            component={injectGuild(
-                                selectedGuild,
-                                MuteListRoute
-                            )}
-                        />
-                        <Route
-                            path={`${path}/warns/:warnId?`}
-                            component={injectGuild(
-                                selectedGuild,
-                                WarnListRoute
-                            )}
-                        />
+                        <Outlet context={selectedGuild} />
                     </Col>
                 </Row>
             </Container>

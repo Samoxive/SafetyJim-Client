@@ -1,7 +1,13 @@
 import * as React from "react";
+import { MetaTag } from "../components/meta_tag";
 
 const ToS: React.FC<{}> = () => (
     <div style={{ maxWidth: "600px", marginLeft: "auto", marginRight: "auto" }}>
+        <MetaTag
+            title="Safety Jim - Terms of Service"
+            description="Your terms of the deal with Jim."
+        />
+
         <h1>Terms and Conditions of safetyjim.xyz</h1>
         <p>
             These Terms govern: the use of this Website, and, any other related

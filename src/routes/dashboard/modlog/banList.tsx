@@ -4,32 +4,33 @@ import { Guild } from "../../../entities/guild";
 import { Ban } from "../../../entities/modLogEntities";
 import { fetchBan, fetchBans, updateBan } from "../../../endpoint/modLog";
 import { ColumnType, EntityModal, ModLogList } from "./modLogList";
-import { RouteComponentProps } from "react-router";
+import { dashboardRoute, DashboardRouteProps } from "../dashboard";
 
-type BanListRouteProps = RouteComponentProps<{ banId?: string }> & {
+type BanListRouteProps = DashboardRouteProps & {
     guild: Guild;
 };
 type BanListRouteState = {};
 
-export class BanListRoute extends Component<
+export class ActualBanListRoute extends Component<
     BanListRouteProps,
     BanListRouteState
 > {
     state: BanListRouteState = {};
     onSelectBan = (ban: Ban) =>
-        this.props.history.push(
+        this.props.navigate(
             `/dashboard/${this.props.guild.id}/bans/${ban.id}`
         );
     onModalBack = () =>
-        this.props.history.push(`/dashboard/${this.props.guild.id}/bans`);
+        this.props.navigate(`/dashboard/${this.props.guild.id}/bans`);
 
     render() {
         const {
             guild,
-            match: {
-                params: { banId }
-            }
+            params
         } = this.props;
+
+        const banId = params.banId;
+
         return (
             <>
                 {banId && (
@@ -80,3 +81,5 @@ export class BanListRoute extends Component<
         );
     }
 }
+
+export const BanListRoute = dashboardRoute(ActualBanListRoute)

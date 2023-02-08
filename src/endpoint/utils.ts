@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosError } from "axios";
-import cogoToast from "cogo-toast";
+import { toast } from "react-toastify";
 
 export function getToken(): string | null {
     return localStorage.getItem("token");
@@ -12,23 +12,35 @@ export function clearToken(redirectHref: string) {
 
 export function getHTTPParams(): AxiosRequestConfig {
     return {
-        headers: { token: getToken() ?? "" }
+        headers: { token: getToken() ?? "" },
     };
 }
 
 export function handleError(error: AxiosError): undefined {
     if (error.response == null) {
-        cogoToast.error("Could not communicate with Jim!", {
+        toast.error("Could not communicate with Jim!", {
             position: "top-right",
-            heading: "Error"
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
         });
         return;
     }
 
     if (error.response.status > 500) {
-        cogoToast.error("Jim could not deal with your request!", {
+        toast.error("Jim could not deal with your request!", {
             position: "top-right",
-            heading: "Error"
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
         });
         return;
     }
@@ -38,8 +50,14 @@ export function handleError(error: AxiosError): undefined {
         return;
     }
 
-    cogoToast.warn(error.response.data, {
+    toast.warn(error.response.data as string, {
         position: "top-right",
-        heading: "Warning"
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
     });
 }

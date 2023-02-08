@@ -1,4 +1,5 @@
 import React from "react";
+import { createRoot } from "react-dom/client";
 import ReactDOM from "react-dom";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -13,14 +14,9 @@ import {
     faMicrophoneSlash,
     faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import App from "./app";
-import * as serviceWorker from "./serviceWorker";
-import moment from "moment";
-import momentLocalizer from "react-widgets-moment";
+import App from "./App";
 import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
-
-moment.locale("en");
-momentLocalizer();
+import { HelmetProvider } from "react-helmet-async";
 
 library.add(faSignOutAlt);
 library.add(faInfoCircle);
@@ -32,6 +28,4 @@ library.add(faMicrophoneSlash);
 library.add(faTimesCircle);
 library.add(faAsterisk);
 
-ReactDOM.render(<App />, document.getElementById("root"));
-
-serviceWorker.register();
+createRoot(document.getElementById("root")!!).render(<React.StrictMode><HelmetProvider><App /></HelmetProvider></React.StrictMode>);

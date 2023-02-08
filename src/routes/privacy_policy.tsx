@@ -1,7 +1,13 @@
 import * as React from "react";
+import { MetaTag } from "../components/meta_tag";
 
 const PrivacyPolicy: React.FC<{}> = (props) => (
     <div style={{ maxWidth: "600px", marginLeft: "auto", marginRight: "auto" }}>
+        <MetaTag
+            title="Safety Jim - Privacy Policy"
+            description="Minimal amount of anonymous data is collected"
+        />
+
         <h1>Privacy Policy of safetyjim.xyz</h1>
         <p>
             This website uses GoatCounter for non-invasive analytics about Users

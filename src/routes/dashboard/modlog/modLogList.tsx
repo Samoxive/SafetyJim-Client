@@ -5,6 +5,7 @@ import { Guild } from "../../../entities/guild";
 import { Loading } from "../../../components/loading/loading";
 import {
     Button,
+    Col,
     Container,
     Form,
     Image,
@@ -16,9 +17,11 @@ import {
 import { User } from "../../../entities/user";
 import { UserText } from "../../../components/user_text";
 import { Checkbox, TextArea } from "../../../components/form_components";
-import { DateTimePicker } from "react-widgets";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./modLogList.css";
+import DatePicker from "react-widgets/DatePicker";
+import Localization from "react-widgets/Localization";
+import { DateLocalizer } from "react-widgets/IntlLocalizer";
 
 const TextColumn = ({ text }: { text: string }) => <>{text}</>;
 const BooleanColumn = ({ value }: { value: boolean }) => (
@@ -32,8 +35,7 @@ const UserColumn = ({ user }: { user: User }) => (
         <Image
             src={user.avatarUrl}
             rounded
-            width="32px"
-            style={{ marginRight: "4px" }}
+            style={{ width: "24px", marginRight: "2px" }}
         />
         <UserText user={user} />
     </>
@@ -111,7 +113,7 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
         }));
     };
 
-    onExpirationTime = (date?: Date) => {
+    onExpirationTime = (date: Date | null | undefined, rawValue: string) => {
         if (!this.props.expires) {
             return;
         }
@@ -212,43 +214,32 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Row>
+                        <Row>
                             <label>User</label>
-                        </Form.Row>
-                        <Form.Row>
-                            <UserColumn user={entity.user} />
-                        </Form.Row>
-                        <Form.Row>
+                        </Row>
+                        <UserColumn user={entity.user} />
+                        <Row>
                             <label>Responsible Moderator</label>
-                        </Form.Row>
-                        <Form.Row className="modal-disable-padding">
-                            <UserColumn user={entity.moderatorUser} />
-                        </Form.Row>
-                        <Form.Row>
+                        </Row>
+                        <UserColumn user={entity.moderatorUser} />
+                        <Row>
                             <label>Issued on</label>
-                        </Form.Row>
-                        <Form.Row>
+                        </Row>
+                        <Row>
                             <DateColumn timestamp={entity.actionTime} />
-                        </Form.Row>
+                        </Row>
                         {expires && (
                             <>
-                                <Form.Row>
+                                <Row>
                                     <label>Expires on</label>
-                                </Form.Row>
-                                <Form.Row>
-                                    <DateTimePicker
-                                        date
-                                        time
-                                        value={
-                                            expirationTime !== 0
-                                                ? new Date(
-                                                      expirationTime * 1000
-                                                  )
-                                                : undefined
-                                        }
-                                        onChange={this.onExpirationTime}
-                                        disabled={expired}
-                                    />
+                                </Row>
+                                    <Localization date={new DateLocalizer({ culture: 'en-GB' })}>
+                                        <DatePicker includeTime value={expirationTime !== 0
+                                            ? new Date(
+                                                expirationTime * 1000
+                                            )
+                                            : undefined} onChange={this.onExpirationTime} disabled={expired} style={{display:"inline-flex"}}/>
+                                    </Localization>
                                     <Button
                                         style={{ marginLeft: "8px" }}
                                         variant="outline-danger"
@@ -256,18 +247,15 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
                                     >
                                         <FontAwesomeIcon icon="times-circle" />
                                     </Button>
-                                </Form.Row>
-                                <Form.Row className="modal-disable-padding">
                                     <Checkbox
                                         label="Expired"
                                         defaultValue={expired}
                                         onChange={this.onExpired}
                                         disabled={expired}
                                     />
-                                </Form.Row>
                             </>
                         )}
-                        <Form.Row className="modal-disable-padding">
+                        <Row className="modal-disable-padding">
                             {pardonable && (
                                 <Checkbox
                                     label="Pardoned"
@@ -276,8 +264,8 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
                                     disabled={pardoned}
                                 />
                             )}
-                        </Form.Row>
-                        <Form.Row className="modal-disable-padding">
+                        </Row>
+                        <Row className="modal-disable-padding">
                             <TextArea
                                 label="Reason"
                                 defaultValue={entity.reason}
@@ -285,7 +273,7 @@ export class EntityModal<EntityT extends ModLogEntity> extends Component<
                                 rows={3}
                                 onChange={this.onReason}
                             />
-                        </Form.Row>
+                        </Row>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

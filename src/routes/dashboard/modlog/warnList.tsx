@@ -4,32 +4,33 @@ import { Guild } from "../../../entities/guild";
 import { Warn } from "../../../entities/modLogEntities";
 import { fetchWarn, fetchWarns, updateWarn } from "../../../endpoint/modLog";
 import { ColumnType, EntityModal, ModLogList } from "./modLogList";
-import { RouteComponentProps } from "react-router";
+import { dashboardRoute, DashboardRouteProps } from "../dashboard";
 
-type WarnListRouteProps = RouteComponentProps<{ warnId?: string }> & {
+type WarnListRouteProps = DashboardRouteProps & {
     guild: Guild;
 };
 type WarnListRouteState = {};
 
-export class WarnListRoute extends Component<
+export class ActualWarnListRoute extends Component<
     WarnListRouteProps,
     WarnListRouteState
 > {
     state: WarnListRouteState = {};
     onSelectWarn = (warn: Warn) =>
-        this.props.history.push(
+        this.props.navigate(
             `/dashboard/${this.props.guild.id}/warns/${warn.id}`
         );
     onModalBack = () =>
-        this.props.history.push(`/dashboard/${this.props.guild.id}/warns`);
+        this.props.navigate(`/dashboard/${this.props.guild.id}/warns`);
 
     render() {
         const {
             guild,
-            match: {
-                params: { warnId }
-            }
+            params
         } = this.props;
+
+        const warnId = params.warnId;
+        
         return (
             <>
                 {warnId && (
@@ -73,3 +74,5 @@ export class WarnListRoute extends Component<
         );
     }
 }
+
+export const WarnListRoute = dashboardRoute(ActualWarnListRoute);

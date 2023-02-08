@@ -31,28 +31,30 @@ export const Commands = () => (
                                         <th>Example Value</th>
                                     </tr>
                                 </thead>
-                                {command.parameters.map((parameter) => {
-                                    let optionalIcon =
-                                        parameter.optional ? null : (
-                                            <FontAwesomeIcon
-                                                icon="asterisk"
-                                                size="xs"
-                                                color="red"
-                                                style={{ marginLeft: "1px" }}
-                                            />
-                                        );
+                                <tbody>
+                                    {command.parameters.map((parameter) => {
+                                        let optionalIcon =
+                                            parameter.optional ? null : (
+                                                <FontAwesomeIcon
+                                                    icon="asterisk"
+                                                    size="xs"
+                                                    color="red"
+                                                    style={{ marginLeft: "1px" }}
+                                                />
+                                            );
 
-                                    return (
-                                        <tr id={parameter.name}>
-                                            <td>
-                                                {parameter.name}
-                                                {optionalIcon}
-                                            </td>
-                                            <td>{parameter.description}</td>
-                                            <td>{parameter.example}</td>
-                                        </tr>
-                                    );
-                                })}
+                                        return (
+                                            <tr id={parameter.name} key={`${command.name}-${parameter.name}`}>
+                                                <td>
+                                                    {parameter.name}
+                                                    {optionalIcon}
+                                                </td>
+                                                <td>{parameter.description}</td>
+                                                <td>{parameter.example}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
                             </Table>
                         );
                     } else {
